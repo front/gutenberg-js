@@ -1,0 +1,41 @@
+{
+  "name": "gutenberg_test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/js/gutenberg.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "NODE_ENV=production webpack",
+    "webpack": "NODE_ENV=development webpack"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "gutenberg": "git://github.com/WordPress/gutenberg.git#09f681d"
+  },
+  "devDependencies": {
+    "@wordpress/babel-plugin-makepot": "1.0.1",
+    "@wordpress/custom-templated-path-webpack-plugin": "1.0.2",
+    "@wordpress/scripts": "1.2.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "7.2.3",
+    "babel-jest": "20.0.3",
+    "babel-loader": "7.1.4",
+    "babel-preset-react-app": "^3.1.1",
+    "babel-runtime": "6.26.0",
+    "extract-text-webpack-plugin": "4.0.0-beta.0",
+    "node-sass": "git://github.com/sass/node-sass.git#v4.7.0",
+    "path-replace-loader": "^2.0.0",
+    "pegjs": "0.10.0",
+    "pegjs-loader": "0.5.4",
+    "postcss-color-function": "4.0.1",
+    "postcss-loader": "^2.1.5",
+    "raw-loader": "0.5.1",
+    "react": "16.4.1",
+    "sass-loader": "6.0.7",
+    "webpack": "^4.14.0",
+    "webpack-cli": "^3.0.8",
+    "webpack-livereload-plugin": "2.1.1",
+    "webpack-rtl-plugin": "github:yoavf/webpack-rtl-plugin#develop"
+  }
+}
