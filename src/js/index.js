@@ -21,14 +21,14 @@ import * as plugins from '@wordpress/plugins';
 const storypage = {};
 
 export {
-	i18n,
-	blocks,
-	components,
-	coreBlocks,
-	element,
-	data,
-	editor,
-	editPost,
-	plugins,
-	storypage,
+  i18n,
+  blocks,
+  components,
+  coreBlocks,
+  element,
+  data,
+  editor,
+  editPost,
+  plugins,
+  storypage,
 };

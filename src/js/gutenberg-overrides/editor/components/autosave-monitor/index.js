@@ -2,32 +2,34 @@ import { ifCondition } from '@wordpress/components';
 import { compose } from '@wordpress/element';
 import { withSelect, withDispatch } from '@wordpress/data';
 
-import * as others from 'gutenberg/editor/components/autosave-monitor/index.js?source=node_modules';
+import * as others from 'gutenberg/editor/components/autosave-monitor?source=node_modules';
 
-export default compose( [
-	withSelect( ( select ) => {
-		const {
-			isEditedPostDirty,
-			isEditedPostAutosaveable,
-			getEditorSettings,
-		} = select( 'core/editor' );
+const { AutosaveMonitor } = others;
 
-		const { autosaveInterval, canSave, canAutosave } = getEditorSettings();
+export default compose([
+  withSelect(select => {
+    const {
+      isEditedPostDirty,
+      isEditedPostAutosaveable,
+      getEditorSettings,
+    } = select('core/editor');
 
-		return {
-			isDirty: isEditedPostDirty(),
-			isAutosaveable: isEditedPostAutosaveable(),
-			autosaveInterval,
-			canSave,
-			canAutosave,
-		};
-	} ),
-	withDispatch( ( dispatch ) => ( {
-		autosave: dispatch( 'core/editor' ).autosave,
-	} ) ),
-	// added ifCondition to enable/disable 
-	// the autoave feature according 'canSave' and 'canAutosave' settings
-	ifCondition( ( { canSave, canAutosave } ) => canSave && canAutosave ),
-] )( others.AutosaveMonitor );
+    const { autosaveInterval, canSave, canAutosave } = getEditorSettings();
 
-export * from 'gutenberg/editor/components/autosave-monitor/index.js?source=node_modules';
+    return {
+      isDirty: isEditedPostDirty(),
+      isAutosaveable: isEditedPostAutosaveable(),
+      autosaveInterval,
+      canSave,
+      canAutosave,
+    };
+  }),
+  withDispatch(dispatch => ({
+    autosave: dispatch('core/editor').autosave,
+  })),
+  // added ifCondition to enable/disable 
+  // the autoave feature according 'canSave' and 'canAutosave' settings
+  ifCondition(({ canSave, canAutosave }) => canSave && canAutosave),
+])(AutosaveMonitor);
+
+export * from 'gutenberg/editor/components/autosave-monitor?source=node_modules';

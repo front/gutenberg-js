@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import React from 'react';
+
+/**
  * WordPress dependencies
  */
 import { createSlotFill, PanelBody, Panel } from '@wordpress/components';
@@ -18,21 +23,21 @@ import MetaBoxes from 'gutenberg/edit-post/components/meta-boxes';
 import SettingsHeader from 'gutenberg/edit-post/components/sidebar/settings-header';
 import Sidebar from 'gutenberg/edit-post/components/sidebar';
 
-export const { Fill, Slot } = createSlotFill( 'PluginDocumentSidebarPanel' );
+export const { Fill, Slot } = createSlotFill('PluginDocumentSidebarPanel');
 
 // Plugin to add panels to document sidebar
-const PluginDocumentSidebarPanel = ( { children, className, title, initialOpen = false, isOpened, onTogglePanel } ) => (
-	<Fill>
-		<PanelBody
-			className={ className }
-			initialOpen={ initialOpen || ! title }
-			title={ title }
-			opened={ isOpened }
-			onToggle={ onTogglePanel }
-		>
-			{ children }
-		</PanelBody>
-	</Fill>
+const PluginDocumentSidebarPanel = ({ children, className, title, initialOpen = false, isOpened, onTogglePanel }) => (
+  <Fill>
+    <PanelBody
+      className={ className }
+      initialOpen={ initialOpen || ! title }
+      title={ title }
+      opened={ isOpened }
+      onToggle={ onTogglePanel }
+    >
+      { children }
+    </PanelBody>
+  </Fill>
 );
 
 PluginDocumentSidebarPanel.Slot = Slot;
@@ -42,23 +47,23 @@ export { PluginDocumentSidebarPanel };
 const SIDEBAR_NAME = 'edit-post/document';
 
 const DocumentSidebar = () => (
-	<Sidebar
-		name={ SIDEBAR_NAME }
-		label={ __( 'Editor settings' ) }
-	>
-		<SettingsHeader sidebarName={ SIDEBAR_NAME } />
-		<Panel>
-			<PostStatus />
-			<PluginDocumentSidebarPanel.Slot />
-			<LastRevision />
-			<PostTaxonomies />
-			<FeaturedImage />
-			<PostExcerpt />
-			<DiscussionPanel />
-			<PageAttributes />
-			<MetaBoxes location="side" usePanel />
-		</Panel>
-	</Sidebar>
+  <Sidebar
+    name={ SIDEBAR_NAME }
+    label={ __('Editor settings') }
+  >
+    <SettingsHeader sidebarName={ SIDEBAR_NAME } />
+    <Panel>
+      <PostStatus />
+      <PluginDocumentSidebarPanel.Slot />
+      <LastRevision />
+      <PostTaxonomies />
+      <FeaturedImage />
+      <PostExcerpt />
+      <DiscussionPanel />
+      <PageAttributes />
+      <MetaBoxes location="side" usePanel />
+    </Panel>
+  </Sidebar>
 );
 
 export default DocumentSidebar;
