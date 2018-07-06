@@ -4,4 +4,4 @@
 
 ### Added
 
-- `data` property to `mediaObject` in `mediaUpload` function (`mediaupload.js`)
+- `data` property to `mediaObject` and use `get` function to obtain image `title` in `mediaUpload` function (`mediaupload.js`)
