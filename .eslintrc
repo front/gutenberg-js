@@ -104,10 +104,10 @@
 		"yield-star-spacing": "warn",
 
 		"valid-jsdoc": ["warn", {
-      "requireReturn": false,
-      "requireReturnDescription": false,
-      "requireParamDescription": false
-    }],
+			"requireReturn": false,
+			"requireReturnDescription": false,
+			"requireParamDescription": false
+		}],
 
 		"react/display-name": "off",
 		"react/jsx-curly-spacing": "off",
@@ -120,7 +120,7 @@
 		"react/jsx-tag-spacing": "warn",
 		"react/no-children-prop": "off",
 		"react/no-find-dom-node": "warn",
-    "react/no-unescaped-entities": "off",
+		"react/no-unescaped-entities": "off",
 		"react/prop-types": "off",
 
 		"jsx-a11y/label-has-for": [ "error", { "required": "id" }],

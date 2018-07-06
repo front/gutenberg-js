@@ -10,7 +10,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "NODE_ENV=production webpack",
-    "webpack": "NODE_ENV=development webpack"
+    "webpack": "NODE_ENV=development webpack",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "homepage": "https://github.com/front/gutenberg-js#readme",
   "bugs": {
