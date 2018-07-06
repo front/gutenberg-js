@@ -1,9 +1,9 @@
 {
-  "name": "gutenberg_test",
+  "name": "@frontkom/gutenberg-js",
   "version": "0.0.1",
   "description": "gutenberg-js - An extension of the Wordpress Gutenberg editor",
   "main": "build/js/gutenberg-js.js",
-    "repository": {
+  "repository": {
     "type": "git",
     "url": "git+https://github.com/front/gutenberg-js.git"
   },
@@ -29,7 +29,13 @@
     "WYSIWYG"
   ],
   "dependencies": {
-    "gutenberg": "git://github.com/WordPress/gutenberg.git#09f681d"
+    "classnames": "2.2.5",
+    "gutenberg": "git://github.com/WordPress/gutenberg.git#09f681d",
+    "jquery": "3.3.1",
+    "lodash": "4.17.5",
+    "memize": "1.0.5",
+    "moment": "2.22.1",
+    "tinymce": "4.7.2"
   },
   "devDependencies": {
     "@wordpress/babel-plugin-makepot": "1.0.1",
