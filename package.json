@@ -1,15 +1,33 @@
 {
   "name": "gutenberg_test",
-  "version": "1.0.0",
-  "description": "",
-  "main": "build/js/gutenberg.js",
+  "version": "0.0.1",
+  "description": "gutenberg-js - An extension of the Wordpress Gutenberg editor",
+  "main": "build/js/gutenberg-js.js",
+    "repository": {
+    "type": "git",
+    "url": "git+https://github.com/front/gutenberg-js.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "NODE_ENV=production webpack",
     "webpack": "NODE_ENV=development webpack"
   },
-  "author": "",
+  "homepage": "https://github.com/front/gutenberg-js#readme",
+  "bugs": {
+    "url": "https://github.com/front/gutenberg-js/issues"
+  },
+  "author": "The Frontkom Contributors",
   "license": "ISC",
+  "keywords": [
+    "CMS",
+    "Drupal",
+    "Editor",
+    "Frontkom",
+    "Gutenberg",
+    "Page builder",
+    "WordPress",
+    "WYSIWYG"
+  ],
   "dependencies": {
     "gutenberg": "git://github.com/WordPress/gutenberg.git#09f681d"
   },

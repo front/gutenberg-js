@@ -194,7 +194,7 @@ const config = {
 
 	entry: './src/js/index.js',
 	output: {
-		filename: 'js/gutenberg.js',
+		filename: 'js/gutenberg-js.js',
 		path: resolve( __dirname, 'build' ),
 		libraryTarget: 'this',
 	},
