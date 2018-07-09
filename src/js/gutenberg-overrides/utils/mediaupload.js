@@ -9,7 +9,7 @@ import { compact, forEach, get, has, includes, noop, startsWith } from 'lodash';
 import { __, sprintf } from '@wordpress/i18n';
 import apiRequest from '@wordpress/api-request';
 
-import def, * as others from 'gutenberg/utils/mediaupload?source=node_modules';
+import * as others from 'gutenberg/utils/mediaupload?source=node_modules';
 
 const { getMimeTypesArray } = others;
 
@@ -135,5 +135,4 @@ others.mediaUpload = ({
   });
 };
 
-export default def;
 export * from 'gutenberg/utils/mediaupload?source=node_modules';

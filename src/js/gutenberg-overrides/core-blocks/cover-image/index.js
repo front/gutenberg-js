@@ -21,7 +21,7 @@ import {
   RichText,
 } from '@wordpress/editor';
 
-import def, * as others from 'gutenberg/core-blocks/cover-image?source=node_modules';
+import * as others from 'gutenberg/core-blocks/cover-image?source=node_modules';
 
 // required local functions
 function dimRatioToClass (ratio) {
@@ -212,5 +212,4 @@ others.settings.save = ({ attributes, className }) => {
   );
 };
 
-export default def;
 export * from 'gutenberg/core-blocks/cover-image?source=node_modules';
