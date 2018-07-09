@@ -32,7 +32,7 @@
   ],
   "dependencies": {
     "classnames": "2.2.5",
-    "gutenberg": "git://github.com/WordPress/gutenberg.git#09f681d",
+    "gutenberg": "git://github.com/WordPress/gutenberg.git#3d009d2",
     "jquery": "3.3.1",
     "lodash": "4.17.5",
     "memize": "1.0.5",
