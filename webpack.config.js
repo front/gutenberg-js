@@ -13,6 +13,8 @@ const { basename, resolve } = require('path');
  */
 const CustomTemplatedPathPlugin = require('@wordpress/custom-templated-path-webpack-plugin');
 const LibraryExportDefaultPlugin = require('./node_modules/gutenberg/packages/library-export-default-webpack-plugin');
+const PostCssWrapper = require( 'postcss-wrapper-loader' );
+const StringReplacePlugin = require( 'string-replace-webpack-plugin' );
 
 // Main CSS loader for everything but blocks..
 const mainCSSExtractTextPlugin = new ExtractTextPlugin({
@@ -237,6 +239,7 @@ const config = {
         test: /style\.s?css$/,
         include: [
           /core-blocks/,
+          /js\/blocks/,
         ],
         use: blocksCSSPlugin.extract(extractConfig),
       },
@@ -244,13 +247,28 @@ const config = {
         test: /editor\.s?css$/,
         include: [
           /core-blocks/,
+          /js\/blocks/,
         ],
-        use: editBlocksCSSPlugin.extract(extractConfig),
+        use: editBlocksCSSPlugin.extract({
+          use: [
+            ...extractConfig.use,
+            {
+              // remove .gutenberg class in editor.scss files
+              loader: StringReplacePlugin.replace( {
+                replacements: [ {
+                  pattern: /.gutenberg /ig,
+                  replacement: () => ( '' ),
+                } ],
+              } ),
+            },
+          ],
+        } ),
       },
       {
         test: /theme\.s?css$/,
         include: [
           /core-blocks/,
+          /js\/blocks/,
         ],
         use: themeBlocksCSSPlugin.extract(extractConfig),
       },
@@ -258,6 +276,7 @@ const config = {
         test: /\.s?css$/,
         exclude: [
           /core-blocks/,
+          /js\/blocks/,
         ],
         use: mainCSSExtractTextPlugin.extract(extractConfig),
       },
@@ -268,6 +287,9 @@ const config = {
     editBlocksCSSPlugin,
     themeBlocksCSSPlugin,
     mainCSSExtractTextPlugin,
+    // wrapping editor style with .gutenberg__editor class
+    new PostCssWrapper( './css/core-blocks/edit-blocks.css', '.gutenberg__editor' ),
+    new StringReplacePlugin(),
     // Create RTL files with a -rtl suffix
     new WebpackRTLPlugin({
       suffix: '-rtl',
