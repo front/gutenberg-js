@@ -1,4 +1,9 @@
 /**
+ * External Dependencies
+ */
+import React from 'react';
+
+/**
  * WordPress dependencies
  */
 import { Fragment } from '@wordpress/element';
@@ -12,19 +17,19 @@ import PostHeaderToggle from './post-header-toggle';
 import PostThemeStyleToggle from './post-theme-style-toggle';
 
 const TemplateSettingsPanel = () => (
-	<Fragment>
-		<PanelRow>
-			<PostThemeStyleToggle />
-		</PanelRow>
+  <Fragment>
+    <PanelRow>
+      <PostThemeStyleToggle />
+    </PanelRow>
 
-		<PanelRow>
-			<PostHeaderToggle />
-		</PanelRow>
+    <PanelRow>
+      <PostHeaderToggle />
+    </PanelRow>
 
-		<PanelRow>
-			<PostFooterToggle />
-		</PanelRow>
-	</Fragment>
+    <PanelRow>
+      <PostFooterToggle />
+    </PanelRow>
+  </Fragment>
 );
 
 export default TemplateSettingsPanel;
