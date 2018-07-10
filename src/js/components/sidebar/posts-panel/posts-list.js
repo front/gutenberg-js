@@ -1,6 +1,7 @@
 /**
  * External Dependencies
  */
+import React from 'react';
 import { map } from 'lodash';
 
 /**

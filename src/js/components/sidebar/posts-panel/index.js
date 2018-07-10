@@ -1,10 +1,17 @@
 /**
+ * External dependencies
+ */
+import React from 'react';
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { TextControl, CategorySelect } from '@wordpress/components';
+import { TextControl } from '@wordpress/components';
 import { Component, Fragment } from '@wordpress/element';
 import { withSelect } from '@wordpress/data';
+
+import CategorySelect from 'gutenberg/components/query-controls/category-select';
 
 /**
  * Internal Dependencies

@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+import React from 'react';
 import classnames from 'classnames';
 
 /**
@@ -25,7 +26,7 @@ class PostItemDraggable extends Component {
 
 		if ( ! this.state.block.uid ) {
 			// create a new block
-			const block = createBlock( 'storypage/post', {
+			const block = createBlock( 'gutenbergjs/post', {
 				id: post.id,
 				title: [ post.title.rendered ],
 				link: post.link,

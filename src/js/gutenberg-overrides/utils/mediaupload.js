@@ -111,7 +111,6 @@ others.mediaUpload = ({
         setAndUpdateFiles(idx, mediaObject);
       },
       response => {
-        console.log('response');
         // Reset to empty on failure.
         setAndUpdateFiles(idx, null);
         let message;

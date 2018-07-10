@@ -18,7 +18,6 @@ const { asType, parseWithAttributeSchema } = others;
 function parseDataAttributes (innerHTML, attributeSchema, value) {
   const data = get(attributeSchema.query, [ 'data' ]);
 
-  // getting elements html
   const schema = {
     source: attributeSchema.source,
     selector: attributeSchema.selector,
@@ -30,10 +29,11 @@ function parseDataAttributes (innerHTML, attributeSchema, value) {
     },
   };
 
+  // getting elements html
   const elements = parseWithAttributeSchema(innerHTML, schema);
 
   value = map(value, (attrs, k) => {
-    // using jQuery to get data attrs easylly
+    // using jQuery to get data attrs easily
     const dataAttrs = jQuery(elements[ k ].elements).data();
 
     attrs.data = mapKeys(dataAttrs, (v, key) => {
@@ -63,6 +63,7 @@ others.getBlockAttribute = (attributeKey, attributeSchema, innerHTML, commentAtt
     case 'query':
       value = parseWithAttributeSchema(innerHTML, attributeSchema);
 
+      // checks 'data' attribute 
       data = get(attributeSchema.query, [ 'data' ]);
 
       if (data && data.type === 'object') {

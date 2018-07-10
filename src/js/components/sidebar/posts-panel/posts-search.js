@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+import React from 'react';
 import { get, isUndefined, pickBy } from 'lodash';
 import { stringify } from 'querystringify';
 
@@ -18,12 +19,12 @@ function PostsSearch( { postsList } ) {
 	return ( <PostsList posts={ get( postsList, [ 'data' ], {} ) } /> );
 }
 
-export default withAPIData( ( props ) => {
+export default withAPIData( ( { options } ) => {
 	const postsListQuery = stringify( pickBy( {
-		category_id: props.options.categoryId || '',
-		search: props.options.term || '',
-		order: props.options.order || 'desc',
-		orderby: props.options.orderBy || 'date',
+		category_id: options.categoryId || '',
+		search: options.term || '',
+		order: options.order || 'desc',
+		orderby: options.orderBy || 'date',
 		per_page: 10,
 		// datetime: Date.now(), // make postsList is always updated
 	}, ( value ) => ! isUndefined( value ) ) );
