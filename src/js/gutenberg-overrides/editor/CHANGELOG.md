@@ -14,3 +14,4 @@
 
 - `ifCondition` to **PostSavedState**, controlled by `canSave` setting (`components/post-saved-state/index.js`)
 
+- `setContent` override (commented `bookmark` workaround) (`components/rich-text/index.js`)
