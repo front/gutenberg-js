@@ -17,3 +17,5 @@
 - `setContent` override (commented `bookmark` workaround) (`components/rich-text/index.js`)
 
 - `onDrop` override in order to accept blocks from PostItemDraggable  (`components/block-drop-zone/index.js`)
+
+- `INSERTER_UTILITY_HIGH`, `INSERTER_UTILITY_MEDIUM` and `INSERTER_UTILITY_LOW` overrides with `INSERTER_UTILITY_NONE` so there is no different levels of utility and consequently no **Most Used** panel (`store/selectors.js`)
