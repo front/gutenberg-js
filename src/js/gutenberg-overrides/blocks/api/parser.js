@@ -63,7 +63,7 @@ others.getBlockAttribute = (attributeKey, attributeSchema, innerHTML, commentAtt
     case 'query':
       value = parseWithAttributeSchema(innerHTML, attributeSchema);
 
-      // checks 'data' attribute 
+      // checks 'data' property
       data = get(attributeSchema.query, [ 'data' ]);
 
       if (data && data.type === 'object') {

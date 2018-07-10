@@ -108,10 +108,18 @@ class PostEdit extends Component {
   }
 
   onSelectImage (media) {
-    this.props.setAttributes({
-      mediaUrl: media.url,
-      mediaId: media.id,
-    });
+    const toUpdate = { mediaUrl: media.url, mediaId: media.id };
+
+    if (media.data) {
+      toUpdate.data = reduce(media.data, (result, value, key) => {
+        key = key.replace('_', '-');
+        result[ `data-${key}` ] = value;
+
+        return result;
+      }, {});
+    }
+
+    this.props.setAttributes(toUpdate);
   }
 
   toggleImage () {

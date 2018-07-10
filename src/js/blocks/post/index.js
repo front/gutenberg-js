@@ -70,6 +70,10 @@ const blockAttributes = {
   customFontSize: {
     type: 'number',
   },
+  data: {
+    type: 'object',
+    default: {},
+  }
 };
 
 export const name = 'gutenbergjs/post';
@@ -99,6 +103,7 @@ export const settings = {
       customTextColor,
       fontSize,
       customFontSize,
+      data,
     } = attributes;
 
     // Image
@@ -132,6 +137,7 @@ export const settings = {
         <div
           className={ imageClasses }
           style={ imageStyle }
+          { ...data }
         ></div>
         }
         <RichText.Content

@@ -55,14 +55,12 @@ others.settings.edit = withNotices(({ attributes, setAttributes, isSelected, cla
     const toUpdate = { url: media.url, id: media.id };
 
     if (media.data) {
-      const nextData = reduce(media.data, (result, value, key) => {
+      toUpdate.data = reduce(media.data, (result, value, key) => {
         key = key.replace('_', '-');
         result[ `data-${key}` ] = value;
 
         return result;
       }, {});
-
-      toUpdate.data = nextData;
     }
 
     setAttributes(toUpdate);

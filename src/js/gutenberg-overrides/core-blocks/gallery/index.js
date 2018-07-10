@@ -11,7 +11,7 @@ import { defaultColumnsNumber } from 'gutenberg/core-blocks/gallery/edit';
 import * as others from 'gutenberg/core-blocks/gallery?source=node_modules';
 
 // added data attributes (which is an object)
-others.settings.attributes.images.data = {
+others.settings.attributes.images.query.data = {
 	source: 'attribute',
 	selector: 'img',
 	parent: 'figure',

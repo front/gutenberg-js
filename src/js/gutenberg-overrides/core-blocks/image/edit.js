@@ -129,14 +129,12 @@ class ImageEdit extends Component {
     };
 
     if (media.data) {
-      const nextData = reduce(media.data, (result, value, key) => {
+      toUpdate.data = reduce(media.data, (result, value, key) => {
         key = key.replace('_', '-');
         result[ `data-${key}` ] = value;
 
         return result;
       }, {});
-
-      toUpdate.data = nextData;
     }
 
     this.props.setAttributes(toUpdate);
@@ -228,7 +226,7 @@ class ImageEdit extends Component {
 
   render () {
     const { attributes, setAttributes, isLargeViewport, isSelected, className, maxWidth, noticeOperations, noticeUI, toggleSelection, isRTL } = this.props;
-    const { url, alt, caption, align, id, href, linkDestination, width, height } = attributes;
+    const { url, alt, caption, align, id, href, linkDestination, width, height, data } = attributes;
 
     const controls = (
       <BlockControls>
@@ -396,7 +394,7 @@ class ImageEdit extends Component {
               // Disable reason: Image itself is not meant to be
               // interactive, but should direct focus to block
               // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-              const img = <img src={ url } alt={ alt } onClick={ this.onImageClick } />;
+              const img = <img src={ url } alt={ alt } onClick={ this.onImageClick } { ...data } />;
 
               if (! isResizable || ! imageWidthWithinContainer) {
                 return (
