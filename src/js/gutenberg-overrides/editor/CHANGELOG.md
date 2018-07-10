@@ -15,3 +15,5 @@
 - `ifCondition` to **PostSavedState**, controlled by `canSave` setting (`components/post-saved-state/index.js`)
 
 - `setContent` override (commented `bookmark` workaround) (`components/rich-text/index.js`)
+
+- `onDrop` override in order to accept blocks from PostItemDraggable  (`components/block-drop-zone/index.js`)
