@@ -73,7 +73,7 @@ const blockAttributes = {
   data: {
     type: 'object',
     default: {},
-  }
+  },
 };
 
 export const name = 'gutenbergjs/post';

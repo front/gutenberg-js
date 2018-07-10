@@ -230,10 +230,10 @@ const config = {
             loader: 'path-replace-loader',
             options: {
               path: resolve(__dirname, 'node_modules/gutenberg'),
-              replacePath: resolve(__dirname, 'src/js/gutenberg-overrides'),				
+              replacePath: resolve(__dirname, 'src/js/gutenberg-overrides'),
             },
           },
-        ],				
+        ],
       },
       {
         test: /style\.s?css$/,
