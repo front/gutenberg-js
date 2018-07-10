@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import React from 'react';
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
@@ -8,15 +13,16 @@ import { InnerBlocks } from '@wordpress/editor';
  * Internal dependencies
  */
 import edit from './edit';
+import './style.scss';
 
-export const name = 'storypage/row';
+export const name = 'gutenbergjs/row';
 
 export const settings = {
 	title: __( 'Row' ),
 
 	icon: 'columns',
 
-	category: 'storypage',
+	category: 'gutenbergjs',
 
 	attributes: {
 		columns: {

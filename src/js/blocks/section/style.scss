@@ -1,4 +1,4 @@
-.wp-block-storypage-section {
+.wp-block-gutenbergjs-section {
 	display: grid;
 	grid-gap: 1em;
 	position: relative;
@@ -22,7 +22,7 @@
 	}
 
 	&.has-background-dim {
-		.wp-block-storypage-section-content {
+		.wp-block-gutenbergjs-section-content {
 			position: absolute;
 			top: 0;
 			left: 0;

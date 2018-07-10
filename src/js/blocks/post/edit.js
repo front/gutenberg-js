@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+import React from 'react';
 import classnames from 'classnames';
 import { isUndefined, pickBy, find, map } from 'lodash';
 import { stringify } from 'querystringify';
@@ -17,7 +18,6 @@ import {
 import {
 	ButtonGroup,
 	Button,
-	CategorySelect,
 	FontSizePicker,
 	IconButton,
 	PanelBody,
@@ -35,10 +35,11 @@ import {
 	MediaPlaceholder,
 	MediaUpload,
 	PanelColor,
-	PostTypeSupportCheck,
 	RichText,
 } from '@wordpress/editor';
 import { withSelect } from '@wordpress/data';
+
+import CategorySelect from 'gutenberg/components/query-controls/category-select';
 
 /**
  * Internal dependencies
@@ -80,7 +81,7 @@ const FONT_SIZES = [
 	},
 ];
 
-const POST_TYPES = [
+/*const POST_TYPES = [
 	{
 		name: __( 'Auto' ),
 		slug: 'auto',
@@ -93,7 +94,7 @@ const POST_TYPES = [
 		name: __( 'Static' ),
 		slug: 'static',
 	},
-];
+];*/
 
 class PostEdit extends Component {
 	constructor() {
@@ -151,7 +152,7 @@ class PostEdit extends Component {
 		} );
 	}
 
-	componentDidUpdate( prevProps ) {
+	/*componentDidUpdate( prevProps ) {
 		const { post, media, postResults, setAttributes } = this.props;
 		const { type } = this.props.attributes;
 
@@ -179,7 +180,7 @@ class PostEdit extends Component {
 		if ( attributes ) {
 			setAttributes( attributes );
 		}
-	}
+	}*/
 
 	render() {
 		const {
@@ -221,27 +222,25 @@ class PostEdit extends Component {
 			<Fragment>
 				<BlockControls>
 					<Toolbar>
-						<PostTypeSupportCheck supportKeys="media-library">
-							<MediaUpload
-								onSelect={ this.onSelectImage }
-								type="image"
-								value={ mediaId }
-								render={ ( { open } ) => (
-									<IconButton
-										className="components-toolbar__control"
-										label={ __( 'Edit image' ) }
-										icon="edit"
-										onClick={ open }
-									/>
-								) }
-							/>
-						</PostTypeSupportCheck>
+						<MediaUpload
+							onSelect={ this.onSelectImage }
+							type="image"
+							value={ mediaId }
+							render={ ( { open } ) => (
+								<IconButton
+									className="components-toolbar__control"
+									label={ __( 'Edit image' ) }
+									icon="edit"
+									onClick={ open }
+								/>
+							) }
+						/>
 					</Toolbar>
 				</BlockControls>
 				<InspectorControls>
-					<PanelBody title={ __( 'Post Settings' ) }>
+					{ false && <PanelBody title={ __( 'Post Settings' ) }>
 						<div className="components-post-type-picker__buttons">
-							<ButtonGroup aria-label={ __( 'Column width' ) }>
+							<ButtonGroup aria-label={ __( 'Post type' ) }>
 								{
 									map( POST_TYPES, ( { name, slug } ) => {
 										return (
@@ -285,7 +284,7 @@ class PostEdit extends Component {
 								} }
 							/>
 						}
-					</PanelBody>
+					</PanelBody> }
 					<PanelBody title={ __( 'Image Settings' ) }>
 						<ToggleControl
 							label={ __( 'Show image' ) }
@@ -392,12 +391,12 @@ class PostEdit extends Component {
 
 export default compose(
 	withSelect( ( select, props ) => {
-		const { getMedia, getCategories, getEntityRecord } = select( 'core' );
+		const { getMedia/*, getCategories, getEntityRecord */} = select( 'core' );
 		const { attributes } = props;
 
 		const res = {};
 
-		switch ( attributes.type ) {
+		/*switch ( attributes.type ) {
 			case 'auto':
 				res.categories = getCategories();
 				break;
@@ -410,7 +409,7 @@ export default compose(
 					}
 				}
 				break;
-		}
+		}*/
 
 		if ( attributes.mediaId ) {
 			res.media = getMedia( attributes.mediaId );
@@ -420,7 +419,7 @@ export default compose(
 	} ),
 	withColors( { textColor: 'color' } ),
 	FallbackStyles,
-	withAPIData( ( props ) => {
+	/*withAPIData( ( props ) => {
 		if ( props.attributes.type === 'auto' ) {
 			const postQuery = stringify( pickBy( {
 				category_id: props.attributes.categoryId,
@@ -437,7 +436,7 @@ export default compose(
 		return {
 			postResults: null,
 		};
-	} ),
+	} ),*/
 )( PostEdit );
 
 export function dimRatioToClass( ratio ) {

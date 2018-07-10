@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+import React from 'react';
 import classnames from 'classnames';
 import { reduce } from 'lodash';
 
@@ -25,7 +26,6 @@ import {
 	MediaPlaceholder,
 	MediaUpload,
 	PanelColor,
-	PostTypeSupportCheck,
 } from '@wordpress/editor';
 
 class SectionBlockEdit extends Component {
@@ -48,11 +48,20 @@ class SectionBlockEdit extends Component {
 			return;
 		}
 
-		this.props.setAttributes( { url: media.url, id: media.id } );
+		const toUpdate = { url: media.url, id: media.id };
 
-		if ( media.data ) {
-			this.updateData( media.data );
-		}
+		if (media.data) {
+	      const nextData = reduce(media.data, (result, value, key) => {
+	        key = key.replace('_', '-');
+	        result[ `data-${key}` ] = value;
+
+	        return result;
+	      }, {});
+
+	      toUpdate.data = nextData;
+	    }
+
+    	this.props.setAttributes(toUpdate);
 	}
 
 	toggleParallax() {
@@ -61,17 +70,6 @@ class SectionBlockEdit extends Component {
 
 	setDimRatio( ratio ) {
 		this.props.setAttributes( { dimRatio: ratio } );
-	}
-
-	updateData( nextData ) {
-		nextData = reduce( nextData, ( result, value, key ) => {
-			key = key.replace( '_', '-' );
-			result[ `data-${ key }` ] = value;
-
-			return result;
-		}, {} );
-
-		this.props.setAttributes( { data: nextData } );
 	}
 
 	render() {
@@ -114,21 +112,19 @@ class SectionBlockEdit extends Component {
 			<Fragment>
 				<BlockControls>
 					<Toolbar>
-						<PostTypeSupportCheck supportKeys="media-library">
-							<MediaUpload
-								onSelect={ this.onSelectImage }
-								type="image"
-								value={ id }
-								render={ ( { open } ) => (
-									<IconButton
-										className="components-toolbar__control"
-										label={ __( 'Edit image' ) }
-										icon="edit"
-										onClick={ open }
-									/>
-								) }
-							/>
-						</PostTypeSupportCheck>
+						<MediaUpload
+							onSelect={ this.onSelectImage }
+							type="image"
+							value={ id }
+							render={ ( { open } ) => (
+								<IconButton
+									className="components-toolbar__control"
+									label={ __( 'Edit image' ) }
+									icon="edit"
+									onClick={ open }
+								/>
+							) }
+						/>
 					</Toolbar>
 				</BlockControls>
 				<InspectorControls>

@@ -1,21 +1,18 @@
 /**
  * External dependencies
  */
+import React from 'react';
 import classnames from 'classnames';
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import {
-	getColorClass,
-	RichText,
-} from '@wordpress/editor';
+import { getColorClass, RichText } from '@wordpress/editor';
+
 /**
  * Internal dependencies
  */
-// import '../paragraph/style.scss';
-// import '../cover-image/style.scss';
 import edit, {
 	dimRatioToClass,
 	backgroundImageStyles,
@@ -75,7 +72,7 @@ const blockAttributes = {
 	},
 };
 
-export const name = 'storypage/post';
+export const name = 'gutenbergjs/post';
 
 export const settings = {
 	title: __( 'Post' ),
@@ -84,7 +81,7 @@ export const settings = {
 
 	icon: 'universal-access-alt',
 
-	category: 'storypage',
+	category: 'gutenbergjs',
 
 	attributes: blockAttributes,
 

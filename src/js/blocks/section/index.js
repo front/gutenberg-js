@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+import React from 'react';
 import classnames from 'classnames';
 
 /**
@@ -19,14 +20,14 @@ import edit, {
 
 import './style.scss';
 
-export const name = 'storypage/section';
+export const name = 'gutenbergjs/section';
 
 export const settings = {
 	title: __( 'Section' ),
 
 	icon: 'editor-table',
 
-	category: 'storypage',
+	category: 'gutenbergjs',
 
 	attributes: {
 		maxWidth: {

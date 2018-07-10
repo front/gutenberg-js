@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+import React from 'react';
 import { times, range, map } from 'lodash';
 import classnames from 'classnames';
 import memoize from 'memize';
@@ -24,7 +25,6 @@ import {
 /**
  * Internal dependencies
  */
-import './style.scss';
 import './editor.scss';
 
 const COLUMNS_TOTAL = 12;
