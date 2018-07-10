@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import classnames from 'classnames';
-import { isUndefined, pickBy, find, map } from 'lodash';
+import { isUndefined, pickBy, find, map, reduce } from 'lodash';
 import { stringify } from 'querystringify';
 
 /**
