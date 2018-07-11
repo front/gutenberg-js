@@ -68,5 +68,6 @@
     "webpack-cli": "^3.0.8",
     "webpack-livereload-plugin": "2.1.1",
     "webpack-rtl-plugin": "github:yoavf/webpack-rtl-plugin#develop"
-  }
+  },
+  "private": false
 }
