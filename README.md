@@ -1,10 +1,10 @@
 # gutenberg-js
 
-We made [Gutenberg](https://github.com/Wordpress/gutenberg) editor a little more **customizable**! 
+We made [Gutenberg](https://github.com/Wordpress/gutenberg) editor a little more **customizable**!
 
-Gutenberg editor can **be easly included in your apps** with this [package](https://github.com/front/gutenberg). Also you can customize blocks menu panels, blocks categories, document panels and more! 
+Gutenberg editor can **be easly included in your apps** with this [package](https://github.com/front/gutenberg). Also you can customize blocks menu panels, blocks categories, document panels and more!
 
-This package is based on [Gutenberg v3.1.1](https://github.com/WordPress/gutenberg/releases/tag/v3.1.1).
+This package is based on [Gutenberg v3.2.0](https://github.com/WordPress/gutenberg/releases/tag/v3.2.0).
 
 ## Table of contents
 * [Installation](#installation)
@@ -21,7 +21,7 @@ This package is based on [Gutenberg v3.1.1](https://github.com/WordPress/gutenbe
     * [Gutenberg Stores](#gutenberg-stores)
     * [Registering Custom Blocks](#registering-custom-blocks)
     * [Inserter Menu (blocks)](#inserter-menu-blocks)
-* [Customize your Gutenberg](#customize-your-gutenberg)    
+* [Customize your Gutenberg](#customize-your-gutenberg)
     * [Events](#events)
 * [StoryPage Module](#storypage-module)
     * [Post block](#post-block)
@@ -60,9 +60,9 @@ module.exports = {
 }
 ```
 
-## Global variables 
+## Global variables
 
-Gutenberg depends on several global variables: `wp`, `userSettings`, `wpEditorL10n`, `wpApiSettings`, etc and probably during your Gutenberg experiencie you will discover other required variables, please share with us if you feel they are important to Gutenberg execution. 
+Gutenberg depends on several global variables: `wp`, `userSettings`, `wpEditorL10n`, `wpApiSettings`, etc and probably during your Gutenberg experiencie you will discover other required variables, please share with us if you feel they are important to Gutenberg execution.
 
 Here we're only presenting those variables which - by our experience - we belive are crucial to Gutenberg and already set to them default values. If you don't set them up, you'll see that Gutenberg editor won't run.
 
@@ -72,7 +72,7 @@ So we recommend you to set up them all in one file called `globals.js` or `setti
 // globals.js
 
 window.wp = {
-    apiRequest, 
+    apiRequest,
     url: { addQueryArgs },
     ...,
 };
@@ -82,7 +82,7 @@ window.userSettings = {
 };
 
 // set your root path
-window.wpApiSettings = { 
+window.wpApiSettings = {
     root: 'YOUR_ROOT_PATH',
     ...,
 };
@@ -94,13 +94,13 @@ We are working to include on **gutenberg-js** all settings that shouldn't be par
 
 ### apiRequest
 
-Those two are very important for comunication between the editor and remaining app, so you should set them up accordingly your needs. 
+Those two are very important for comunication between the editor and remaining app, so you should set them up accordingly your needs.
 
 ***apiRequest*** is the method that will handle with data operations on Gutenberg, like getting resources (categories for example), saving page changes or deleting pages, etc. It receives an object with `path`, `method`, `data`, etc, so you can treat it as you want.
 
 ```js
 function apiRequest( options ) {
-    // Do something with those options like calling an API 
+    // Do something with those options like calling an API
     // or actions from your store...
 }
 ```
@@ -111,17 +111,7 @@ Next, we will show some commons API requests Gutenberg does and the respective r
 
 #### Post Types
 
-The Gutenberg editor will ask for available **Post Types** through `/wp/v2/types/?context=edit` request. In addition to the _type_ properties that can be checked in [WordPress documentation](https://developer.wordpress.org/rest-api/reference/post-types/), **gutenberg-js** provides the following:
-
-```js
-{
-    ...,   
-    supports: {
-        ...,
-        'media-library': false,    // to disable Media library from WordPress
-    },
-}
-```
+The Gutenberg editor will ask for available **Post Types** through `/wp/v2/types/?context=edit` request. The _type_ properties that can be checked in [WordPress documentation](https://developer.wordpress.org/rest-api/reference/post-types/).
 
 [↑ Go up to Table of contents](#table-of-contents)
 
@@ -161,7 +151,7 @@ Here is the WordPress API documentation for [Media](https://developer.wordpress.
 ```js
 {
     ...,
-    id: 1527069591355,    
+    id: 1527069591355,
     link: MEDIA_LINK_HERE,
     source_url: MEDIA_URL_HERE,
     // Additionaly, you can add some data attributes for images for example
@@ -208,7 +198,7 @@ We've tried to make it easy to import **gutenberg-js** modules to your apps.
 
 ```js
 // Importing global variables that Gutenberg requires
-import './globals'; 
+import './globals';
 
 // Importing editPost module
 import { editPost } from '@frontkom/gutenberg-js';
@@ -227,11 +217,11 @@ const postType = 'post'; // or 'page'
 const postId = 123;
 
 // Some editor settings
-const settings = { 
+const settings = {
     alignWide: true,
     availableTemplates: [],
-    allowedBlockTypes: true, 
-    disableCustomColors: false, 
+    allowedBlockTypes: true,
+    disableCustomColors: false,
     disablePostFormats: false,
     titlePlaceholder: "Add title",
     bodyPlaceholder: "Write your story",
@@ -284,7 +274,7 @@ You can create your custom blocks using the `registerBlockType` method from `blo
 ```js
 import { blocks, editor } from '@frontkom/gutenberg-js';
 
-const {    
+const {
     AlignmentToolbar,
     BlockControls,
     RichText,
@@ -443,7 +433,7 @@ const postBlock = storypage.blocks.post;
 blocks.registerBlockType( postBlock.name, postBlock.settings );
 ```
 
-We are trying to provide new types of blocks: **auto posts** and **hand-picked posts** which are experimental for now. Theose blocks are dynamic and the render must be implemented server-side. 
+We are trying to provide new types of blocks: **auto posts** and **hand-picked posts** which are experimental for now. Theose blocks are dynamic and the render must be implemented server-side.
 
 [↑ Go up to Table of contents](#table-of-contents)
 
@@ -512,7 +502,7 @@ const MyPluginDocumentSidebarPanel = () => (
         title={ 'My Stories' }
         initialOpen={ true }
     >
-        <PostsPanel />              
+        <PostsPanel />
     </PluginDocumentSidebarPanel>
 );
 
@@ -522,4 +512,3 @@ plugins.registerPlugin( 'plugin-document-sidebar', {
 ```
 
 [↑ Go up to Table of contents](#table-of-contents)
-

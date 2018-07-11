@@ -4,6 +4,8 @@
 import './wp-init.js';
 import '../scss/style.scss';
 import '@wordpress/core-data';
+import * as gjsBlocks from './blocks';
+import * as gjsComponents from './components';
 
 /**
  * WordPress dependencies
@@ -18,17 +20,20 @@ import * as editor from '@wordpress/editor';
 import * as editPost from '@wordpress/edit-post';
 import * as plugins from '@wordpress/plugins';
 
-const storypage = {};
+const lib = {
+  blocks: gjsBlocks,
+  components: gjsComponents,
+};
 
 export {
-	i18n,
-	blocks,
-	components,
-	coreBlocks,
-	element,
-	data,
-	editor,
-	editPost,
-	plugins,
-	storypage,
+  i18n,
+  blocks,
+  components,
+  coreBlocks,
+  element,
+  data,
+  editor,
+  editPost,
+  plugins,
+  lib,
 };
