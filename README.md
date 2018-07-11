@@ -44,20 +44,22 @@ Some of the Gutenberg features depend of the [TinyMCE](https://www.tinymce.com/)
 
 ```js
 // webpack.config.js
-const CopyWebpackPlugin = require( 'copy-webpack-plugin' );
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
    ...
     plugins: [
-        new CopyWebpackPlugin( [
+        new CopyWebpackPlugin([
             { from: 'node_modules/tinymce/plugins', to: `${ your_root_path }/plugins` },
             { from: 'node_modules/tinymce/themes', to: `${ your_root_path }/themes` },
             { from: 'node_modules/tinymce/skins', to: `${ your_root_path }/skins` },
-        ], {} ),
+        ], {}),
     ],
    ...
 }
 ```
+
+[↑ Go up to Table of contents](#table-of-contents)
 
 ## Global variables
 
@@ -98,7 +100,7 @@ Those two are very important for comunication between the editor and remaining a
 ***apiRequest*** is the method that will handle with data operations on Gutenberg, like getting resources (categories for example), saving page changes or deleting pages, etc. It receives an object with `path`, `method`, `data`, etc, so you can treat it as you want.
 
 ```js
-function apiRequest( options ) {
+function apiRequest(options) {
     // Do something with those options like calling an API
     // or actions from your store...
 }
@@ -180,7 +182,7 @@ import { parse as parseQueryString, stringify } from 'querystring';
  *
  * @return {String}       Updated URL
  */
-export function addQueryArgs( url, args ) {
+export function addQueryArgs(url, args) {
     const parsedURL = parse( url, true );
     const query = { ...parsedURL.query, ...args };
     delete parsedURL.search;
@@ -237,7 +239,7 @@ const settings = {
 const overridePost = {};
 
 // Et voilá... Initializing the editor!
-editPost.initializeEditor( target, postType, postId, settings, overridePost );
+editPost.initializeEditor(target, postType, postId, settings, overridePost);
 ```
 
 **Note**: Gutenberg requires utf-8 encoding, so don't forget to add `<meta charset="utf-8">` tag to your html `<head>`.
@@ -253,8 +255,8 @@ Additionally, after initializing the editor, you can have access to Gutenberg st
 import { data } from '@frontkom/gutenberg-js';
 
 // Use dispatch to change the state of something
-data.dispatch( 'core/edit-post' ).openGeneralSidebar( 'edit-post/block' );
-data.dispatch( 'core/edit-post' ).closeGeneralSidebar();
+data.dispatch('core/edit-post').openGeneralSidebar('edit-post/block');
+data.dispatch('core/edit-post').closeGeneralSidebar();
 
 // Use select to get the state of something
 data.select( 'core/editor' ).getEditedPostContent();
@@ -279,7 +281,7 @@ const {
     RichText,
 } = editor;
 
-blocks.registerBlockType( 'custom/my-block', {
+blocks.registerBlockType('custom/my-block', {
     title: 'My first block',
     icon: 'universal-access-alt',
     category: 'common',
@@ -293,7 +295,7 @@ blocks.registerBlockType( 'custom/my-block', {
             type: 'string',
         },
     },
-    edit( { attributes, className, setAttributes } ) {
+    edit({ attributes, className, setAttributes }) {
         const { content, alignment } = attributes;
 
         function onChangeContent( newContent ) {
@@ -320,7 +322,7 @@ blocks.registerBlockType( 'custom/my-block', {
             />
         ];
     },
-    save( { attributes, className } ) {
+    save({ attributes, className }) {
         const { content, alignment } = attributes;
 
         return (
@@ -331,7 +333,7 @@ blocks.registerBlockType( 'custom/my-block', {
             />
         );
     },
-} );
+});
 
 ```
 
@@ -353,20 +355,17 @@ Important to say that Gutenberg works perfectly without the settings of this obj
 
 ### Events
 
-**gutenberg-js** makes possible to define callbacks (or effects) for Gutenberg actions. Since it is an experimental feature, we are only providing this for 'OPEN_GENERAL_SIDEBAR', 'CLOSE_GENERAL_SIDEBAR' and 'REMOVE_BLOCKS' actions.
+**gutenberg-js** makes possible to define callbacks (or effects) for Gutenberg actions. Since it is an experimental feature, we are only providing this for 'OPEN_GENERAL_SIDEBAR' and 'CLOSE_GENERAL_SIDEBAR' actions.
 
 ```js
 window.customGutenberg = {
     ...,
     events: {
-        'OPEN_GENERAL_SIDEBAR': function( action, store ) {
+        'OPEN_GENERAL_SIDEBAR': function(action, store) {
             console.log( 'OPEN_GENERAL_SIDEBAR', action, store );
         },
-        'CLOSE_GENERAL_SIDEBAR': function( action, store ) {
+        'CLOSE_GENERAL_SIDEBAR': function(action, store) {
             console.log( 'CLOSE_GENERAL_SIDEBAR', action, store );
-        },
-        'REMOVE_BLOCKS': function( action, store ) {
-            console.log( 'REMOVE_BLOCKS', action, store );
         },
     },
     ...,
@@ -382,8 +381,8 @@ The Gutenberg JS library contains a bunch of blocks and components to complement
 ```js
 import { lib } from '@frontkom/gutenberg-js';
 
-console.log( 'blocks', lib.blocks );
-console.log( 'components', lib.components );
+console.log('blocks', lib.blocks);
+console.log('components', lib.components);
 ```
 
 [↑ Go up to Table of contents](#table-of-contents)
@@ -395,12 +394,12 @@ The **Post Block** is another kind of blocks created by **gutenberg-js** which i
 ```js
 import {
     blocks,
-    storypage,
+    lib,
 } from '@frontkom/gutenberg-js';
 
-const postBlock = storypage.blocks.post;
+const postBlock = lib.blocks.post;
 
-blocks.registerBlockType( postBlock.name, postBlock.settings );
+blocks.registerBlockType(postBlock.name, postBlock.settings);
 ```
 
 We are trying to provide new types of blocks: **auto posts** and **hand-picked posts** which are experimental for now. Theose blocks are dynamic and the render must be implemented server-side.
@@ -414,12 +413,12 @@ Rows work like columns but they could be slipt in spots with different widths.
 ```js
 import {
     blocks,
-    storypage,
+    lib,
 } from '@frontkom/gutenberg-js';
 
-const rowBlock = storypage.blocks.row;
+const rowBlock = lib.blocks.row;
 
-blocks.registerBlockType( rowBlock.name, rowBlock.settings );
+blocks.registerBlockType(rowBlock.name, rowBlock.settings);
 ```
 
 [↑ Go up to Table of contents](#table-of-contents)
@@ -431,12 +430,12 @@ blocks.registerBlockType( rowBlock.name, rowBlock.settings );
 ```js
 import {
     blocks,
-    storypage,
+    lib,
 } from '@frontkom/gutenberg-js';
 
-const sectionBlock = storypage.blocks.section;
+const sectionBlock = lib.blocks.section;
 
-blocks.registerBlockType( sectionBlock.name, sectionBlock.settings );
+blocks.registerBlockType(sectionBlock.name, sectionBlock.settings);
 ```
 
 After register the block and initialize the editor, you can set **Section** as default block:
@@ -444,10 +443,10 @@ After register the block and initialize the editor, you can set **Section** as d
 ```
 import {
     data,
-    storypage,
+    lib,
 } from '@frontkom/gutenberg-js';
 
-data.dispatch( 'core/blocks' ).setDefaultBlockName( storypage.blocks.section.name );
+data.dispatch('core/blocks').setDefaultBlockName(lib.blocks.section.name);
 ```
 
 [↑ Go up to Table of contents](#table-of-contents)
@@ -460,11 +459,11 @@ The **Posts Panel** contains a list of posts which could be filtered by category
 import {
     editPost,
     plugins,
-    storypage,
+    lib,
 } from '@frontkom/gutenberg-js';
 
 const { PluginDocumentSidebarPanel } = editPost;
-const { PostsPanel } = storypage.components;
+const { PostsPanel } = lib.components;
 
 const MyPluginDocumentSidebarPanel = () => (
     <PluginDocumentSidebarPanel
@@ -476,9 +475,9 @@ const MyPluginDocumentSidebarPanel = () => (
     </PluginDocumentSidebarPanel>
 );
 
-plugins.registerPlugin( 'plugin-document-sidebar', {
+plugins.registerPlugin('plugin-document-sidebar', {
     render: MyPluginDocumentSidebarPanel,
-} );
+});
 ```
 
 [↑ Go up to Table of contents](#table-of-contents)
