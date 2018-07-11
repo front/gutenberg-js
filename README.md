@@ -20,10 +20,9 @@ This package is based on [Gutenberg v3.2.0](https://github.com/WordPress/gutenbe
 * [Usage](#usage)
     * [Gutenberg Stores](#gutenberg-stores)
     * [Registering Custom Blocks](#registering-custom-blocks)
-    * [Inserter Menu (blocks)](#inserter-menu-blocks)
 * [Customize your Gutenberg](#customize-your-gutenberg)
     * [Events](#events)
-* [StoryPage Module](#storypage-module)
+* [Gutenberg-js Lib](#gutenberg-js-lib)
     * [Post block](#post-block)
     * [Row block](#row-block)
     * [Section block](#section-block)
@@ -88,13 +87,13 @@ window.wpApiSettings = {
 };
 ```
 
-[↑ Go up to Table of contents](#table-of-contents)
-
 We are working to include on **gutenberg-js** all settings that shouldn't be part of your apps, but you always can override them if you need.
+
+[↑ Go up to Table of contents](#table-of-contents)
 
 ### apiRequest
 
-Those two are very important for comunication between the editor and remaining app, so you should set them up accordingly your needs.
+Those two are very important for comunication between the editor and remaining app, so you should set them up according your needs.
 
 ***apiRequest*** is the method that will handle with data operations on Gutenberg, like getting resources (categories for example), saving page changes or deleting pages, etc. It receives an object with `path`, `method`, `data`, etc, so you can treat it as you want.
 
@@ -338,37 +337,6 @@ blocks.registerBlockType( 'custom/my-block', {
 
 [↑ Go up to Table of contents](#table-of-contents)
 
-### Inserter Menu (blocks)
-
-You can customize the panels which are displayed on the editor *Add block popup*. By default, Gutenberg displays `suggested` and `shared` panels but you can hide them:
-
-```js
-import { data, blocks } from '@frontkom/gutenberg-js';
-
-const { SHARED_PANEL, SUGGESTED_PANEL } = blocks;
-
-// Hidding 'shared' and 'suggested' panels
-data.dispatch( 'core/blocks' ).hideInserterMenuPanel( SHARED_PANEL );
-data.dispatch( 'core/blocks' ).hideInserterMenuPanel( SUGGESTED_PANEL );
-```
-
-Also, you can manage blocks categories using `getCategories` selector and `setCategories` action:
-
-```js
-import { reject } from 'lodash';
-import { data } from '@frontkom/gutenberg-js';
-
-// Removing 'widgets' category
-data.select( 'core/blocks' ).getCategories();
-
-const categories = reject( select( 'core/blocks' ).getCategories(), { slug: 'widgets' } )
-
-data.dispatch( 'core/blocks' ).setCategories( categories );
-
-```
-
-[↑ Go up to Table of contents](#table-of-contents)
-
 ## Customize your Gutenberg
 
 Following the same logic, we've created the `customGutenberg` global object where you can set eveything that we made customizable on Gutenberg.
@@ -407,13 +375,15 @@ window.customGutenberg = {
 
 [↑ Go up to Table of contents](#table-of-contents)
 
-## StoryPage Module
+## Gutenberg-js Lib
+
+The Gutenberg JS library contains a bunch of blocks and components to complement and simplify your Gutenberg experience.
 
 ```js
-import { storypage } from '@frontkom/gutenberg-js';
+import { lib } from '@frontkom/gutenberg-js';
 
-console.log( 'blocks', storypage.blocks );
-console.log( 'components', storypage.components );
+console.log( 'blocks', lib.blocks );
+console.log( 'components', lib.components );
 ```
 
 [↑ Go up to Table of contents](#table-of-contents)
