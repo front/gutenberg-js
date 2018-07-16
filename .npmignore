@@ -1,2 +1,5 @@
 languages
 webpack.config.js
+.babelrc
+.eslintignore
+.eslintrc
