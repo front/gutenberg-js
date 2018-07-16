@@ -98,7 +98,7 @@ export const settings = {
 
     return (
       <div className={ classes } style={ style } { ...data }>
-        <div className="wp-block-storypage-section-content">
+        <div className="wp-block-gutenbergjs-section-content">
           <InnerBlocks.Content />
         </div>
       </div>
