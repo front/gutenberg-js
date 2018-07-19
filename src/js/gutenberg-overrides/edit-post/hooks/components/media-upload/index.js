@@ -1,5 +1,91 @@
-// overriding MediaUpload component to do nothing
-const MediaUpload = () => ('');
+/**
+ * External dependencies
+ */
+import React, { Component, Fragment } from 'react';
+
+import { __ } from '@wordpress/i18n';
+import { Popover } from '@wordpress/components';
+import { withSelect } from '@wordpress/data';
+
+class MediaContainer extends Component {
+  constructor (props) {
+    super(props);
+
+    this.onImageClick = this.onImageClick.bind(this);
+  }
+
+  onImageClick (img) {
+    const { onSelect, closePopover, gallery = false, multiple = false } = this.props;
+
+    if (gallery || multiple) {
+      onSelect([{ ...img, url: img.source_url }]);
+    } else {
+      onSelect({ ...img, url: img.source_url });
+    }
+
+    closePopover();
+  }
+
+  render () {
+    const { images } = this.props;
+
+    return (
+      <div className="media-library__popover__content">
+        { images.map(img => {
+          return <button
+            key={ img.id }
+            className="media-library-thumbnail"
+            style={{ backgroundImage: `url(${img.source_url})` }}
+            onClick={ () => this.onImageClick(img) }
+          ></button>;
+        }) }
+      </div>
+    );
+  }
+}
+
+const MediaLibrary = withSelect(select => ({
+  images: select('core').getMediaItems(),
+}))(MediaContainer);
+
+class MediaUpload extends Component {
+  constructor (props) {
+    super(props);
+    this.state = { isVisible: false };
+
+    this.openPopover = this.openPopover.bind(this);
+    this.closePopover = this.closePopover.bind(this);
+  }
+
+  openPopover () {
+    this.setState({ isVisible: true });
+  }
+
+  closePopover () {
+    this.setState({ isVisible: false });
+  }
+
+  render () {
+    const { isVisible } = this.state;
+
+    return <Fragment>
+      { isVisible &&
+      <Popover
+        className="media-library__popover"
+        onClose={ this.closePopover }
+        onClick={ event => event.stopPropagation() }
+        position="middle left"
+        headerTitle={ __('Media Library') }
+      >
+        <MediaLibrary
+          { ...this.props }
+          closePopover={ this.closePopover }
+        />
+      </Popover>
+      }
+      { this.props.render({ open: this.openPopover }) }
+    </Fragment>;
+  }
+}
 
 export default MediaUpload;
-export * from 'gutenberg/edit-post/hooks/components/media-upload?source=node_modules';

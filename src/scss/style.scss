@@ -1,3 +1,5 @@
+@import 'media-library';
+
 @media (min-width: 600px) {
     body .gutenberg__editor {
         position: relative;
@@ -50,8 +52,8 @@
                 left: 0;
             }
 
-            .notice, 
-            div.error, 
+            .notice,
+            div.error,
             div.updated {
                 background: #fff;
                 border-left: 4px solid #fff;
@@ -59,13 +61,13 @@
 
             .notice-alt {
                 box-shadow: none;
-            } 
+            }
 
             .notice-success.notice-alt {
                 background-color: #ecf7ed;
             }
 
-            .notice-success, 
+            .notice-success,
             div.updated {
                 border-left-color: #46b450;
             }
@@ -80,7 +82,7 @@
                 background: 0 0;
                 color: #72777c;
                 cursor: pointer;
-            }    
+            }
         }
 
         .edit-post-text-editor {
@@ -109,8 +111,8 @@
         }
     }
 
-    .screen-reader-text, 
-    .screen-reader-text span, 
+    .screen-reader-text,
+    .screen-reader-text span,
     .ui-helper-hidden-accessible {
         border: 0;
         clip: rect(1px,1px,1px,1px);
