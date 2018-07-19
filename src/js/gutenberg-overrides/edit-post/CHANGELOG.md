@@ -4,7 +4,7 @@
 
 ### Added
 
-- **MediaUpload** override [edit-post/hooks/componnets/media-upload/index.js](https://github.com/front/gutenberg-js/blob/v0.0.1/src/js/gutenberg-overrides/edit-post/hooks/componnets/media-upload/index.js))
+- **MediaUpload** override [edit-post/hooks/components/media-upload/index.js](https://github.com/front/gutenberg-js/blob/v0.0.1/src/js/gutenberg-overrides/edit-post/hooks/components/media-upload/index.js))
 
 - `OPEN_GENERAL_SIDEBAR` and `CLOSE_GENERAL_SIDEBAR` effects [edit-post/store/effects.js](https://github.com/front/gutenberg-js/blob/v0.0.1/src/js/gutenberg-overrides/edit-post/store/effects.js))
 
@@ -16,4 +16,4 @@
 
 ### Changed
 
-- **MediaUpload** component and implement the Media Library with existing images
+- **MediaUpload** component and implement the Media Library with existing images [edit-post/hooks/components/media-upload/index.js](https://github.com/front/gutenberg-js/blob/v0.1.0/src/js/gutenberg-overrides/edit-post/hooks/components/media-upload/index.js))
