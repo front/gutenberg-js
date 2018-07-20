@@ -16,6 +16,7 @@ This package is based on [Gutenberg v3.2.0](https://github.com/WordPress/gutenbe
         * [Categories](#categories)
         * [Index](#index)
         * [Media](#media)
+        * [Taxonomies](#taxonomies)
     * [url](#url)
 * [Usage](#usage)
     * [Gutenberg Stores](#gutenberg-stores)
@@ -142,6 +143,12 @@ Gutenberg will ask for the [theme features](https://codex.wordpress.org/Theme_Fe
     ...,
 }
 ```
+
+[↑ Go up to Table of contents](#table-of-contents)
+
+#### Taxonomies
+
+Taxonomies and Categories are requested to fill Categories panel in Document sidebar. Check the WordPress API documentation for [Taxonomies](https://developer.wordpress.org/rest-api/reference/taxonomies/).
 
 [↑ Go up to Table of contents](#table-of-contents)
 
