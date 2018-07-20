@@ -89,12 +89,40 @@ window.wp.editor.removep = window.wp.editor.removep || function () {};
 
 window.wp.oldEditor = window.wp.editor;
 
+// wp api
 window.wp.api = window.wp.api || {};
+
 window.wp.api.models = window.wp.api.models || {};
 window.wp.api.collections = window.wp.api.collections || {};
 window.wp.api.views = window.wp.api.views || {};
+
+// postTypes
+window.wp.api.postTypeRestBaseMapping = window.wp.api.postTypeRestBaseMapping || {
+  attachment: 'media',
+  custom_css: 'custom_css',
+  customize_changeset: 'customize_changeset',
+  nav_menu_item: 'nav_menu_item',
+  oembed_cache: 'oembed_cache',
+  page: 'pages',
+  post: 'posts',
+  revision: 'revision',
+  user_request: 'user_request',
+  wp_block: 'blocks',
+};
 window.wp.api.getPostTypeRoute = window.wp.api.getPostTypeRoute || function (postType) {
-  return postType;
+  return window.wp.api.postTypeRestBaseMapping[ postType ];
+};
+
+// taxonomies
+window.wp.api.taxonomyRestBaseMapping = window.wp.api.taxonomyRestBaseMapping || {
+  category: 'categories',
+  link_category: 'link_category',
+  nav_menu : 'nav_menu',
+  post_format : 'post_format',
+  post_tag : 'tags',
+};
+window.wp.api.getTaxonomyRoute = window.wp.api.getTaxonomyRoute || function (taxonomy) {
+  return window.wp.api.taxonomyRestBaseMapping[ taxonomy ];
 };
 
 // User settings
