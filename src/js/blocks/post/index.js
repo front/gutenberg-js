@@ -151,4 +151,5 @@ export const settings = {
 
     return (link ? <a href={ link }>{ post }</a> : post);
   },
+  draggablePost: true,
 };
