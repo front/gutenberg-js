@@ -15,8 +15,14 @@ import { withAPIData } from '@wordpress/components';
  */
 import PostsList from './posts-list';
 
-function PostsSearch ({ postsList }) {
-  return (<PostsList posts={ get(postsList, [ 'data' ], {}) } />);
+function PostsSearch ({ postsList, options }) {
+  const { blockType } = options;
+
+  // add block type to each post
+  let posts = get(postsList, [ 'data' ], []);
+  posts = posts.map(post => ({ ...post, blockType }));
+
+  return (<PostsList posts={ posts } />);
 }
 
 export default withAPIData(({ options }) => {

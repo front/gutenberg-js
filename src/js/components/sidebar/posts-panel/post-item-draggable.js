@@ -8,7 +8,7 @@ import classnames from 'classnames';
  * WordPress dependencies
  */
 import { Draggable } from '@wordpress/components';
-import { Component, compose } from '@wordpress/element';
+import { Component } from '@wordpress/element';
 import { createBlock } from '@wordpress/blocks';
 import { withSelect } from '@wordpress/data';
 
@@ -21,12 +21,11 @@ class PostItemDraggable extends Component {
     };
   }
 
-  componentDidMount () {
+  componentDidUpdate (prevProps) {
     const { post } = this.props;
 
-    if (! this.state.block.uid) {
-      // create a new block
-      const block = createBlock('gutenbergjs/post', {
+    if (prevProps.post !== post) {
+      const block = createBlock(post.blockType, {
         id: post.id,
         title: [ post.title.rendered ],
         link: post.link,
@@ -70,8 +69,6 @@ class PostItemDraggable extends Component {
   }
 }
 
-export default compose([
-  withSelect(select => ({
-    insertionPoint: select('core/editor').getBlockInsertionPoint(),
-  })),
-])(PostItemDraggable);
+export default withSelect(select => ({
+  insertionPoint: select('core/editor').getBlockInsertionPoint(),
+}))(PostItemDraggable);
