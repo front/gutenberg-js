@@ -6,6 +6,12 @@
     }
 }
 
+@media (min-width: 782px) {
+    .gutenberg__editor .edit-post-sidebar {
+        top: 56px;
+    }
+}
+
 .gutenberg__editor {
     position: relative;
 
