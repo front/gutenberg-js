@@ -17,6 +17,7 @@ import edit, {
   dimRatioToClass,
   backgroundImageStyles,
 } from './edit';
+import * as controls from './controls';
 
 import './style.scss';
 
@@ -27,22 +28,21 @@ const blockAttributes = {
   title: { 		// post.title
     type: 'array',
     source: 'children',
-    selector: 'p',
+    selector: 'h1,h2,h3,h4,h5,h6',
   },
   link: { 		// post.link
     type: 'string',
   },
-  mediaId: { 		// post media.id
+  imageId: { 		// post media.id
     type: 'number',
   },
-  mediaUrl: { 	// post media.url
+  imageUrl: { 	// post media.url
     type: 'string',
-  },
-  type: {
-    type: 'string',
-    default: 'static',
   },
   categoryId: {
+    type: 'number',
+  },
+  authorId: {
     type: 'number',
   },
   hasImage: {
@@ -74,6 +74,10 @@ const blockAttributes = {
     type: 'object',
     default: {},
   },
+  type: {
+    type: 'string',
+    default: 'static',
+  },
 };
 
 export const name = 'gutenbergjs/post';
@@ -95,7 +99,7 @@ export const settings = {
     const {
       title,
       link,
-      mediaUrl,
+      imageUrl,
       hasImage,
       hasParallax,
       dimRatio,
@@ -107,7 +111,7 @@ export const settings = {
     } = attributes;
 
     // Image
-    const imageStyle = backgroundImageStyles(mediaUrl);
+    const imageStyle = backgroundImageStyles(imageUrl);
     const imageClasses = classnames(
       'wp-block-cover-image',
       dimRatioToClass(dimRatio),
@@ -151,5 +155,8 @@ export const settings = {
 
     return (link ? <a href={ link }>{ post }</a> : post);
   },
+
   draggablePost: true,
 };
+
+export { controls };
