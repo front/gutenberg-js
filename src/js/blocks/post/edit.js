@@ -3,8 +3,8 @@
  */
 import React from 'react';
 import classnames from 'classnames';
-import { isUndefined, pickBy } from 'lodash';
-import { stringify } from 'querystringify';
+// import { isUndefined, pickBy } from 'lodash';
+// import { stringify } from 'querystringify';
 
 /**
  * WordPress dependencies
@@ -18,7 +18,7 @@ import {
 import {
   Toolbar,
   withFallbackStyles,
-  withAPIData,
+  // withAPIData,
 } from '@wordpress/components';
 import {
   withColors,
@@ -35,7 +35,7 @@ import { withSelect } from '@wordpress/data';
 import {
   ImageSettingsPanel,
   MediaUploadToolbar,
-  PostSettingsPanel,
+  // PostSettingsPanel,
   TextColorPanel,
   TextSettingsPanel,
   getFontSize,
@@ -43,6 +43,7 @@ import {
   dimRatioToClass,
   backgroundImageStyles,
   withSelectMedia,
+  didUpdateMedia,
 } from './controls';
 import './editor.scss';
 
@@ -50,7 +51,12 @@ const { getComputedStyle } = window;
 
 class PostEdit extends Component {
   componentDidUpdate (prevProps) {
-    const { post, media, postResults, setAttributes } = this.props;
+    const { setAttributes } = this.props;
+
+    setAttributes({
+      ...didUpdateMedia(prevProps, this.props),
+    });
+    /* const { post, media, postResults, setAttributes } = this.props;
     const { type } = this.props.attributes;
 
     const attributes = {};
@@ -76,7 +82,7 @@ class PostEdit extends Component {
 
     if (attributes) {
       setAttributes(attributes);
-    }
+    } */
   }
 
   render () {
@@ -116,7 +122,7 @@ class PostEdit extends Component {
           </Toolbar>
         </BlockControls>
         <InspectorControls>
-          <PostSettingsPanel props={ this.props } />
+          { /* <PostSettingsPanel props={ this.props } /> */ }
           <ImageSettingsPanel props={ this.props } />
           <TextSettingsPanel props={ this.props } />
           <TextColorPanel props={ this.props } />
@@ -126,7 +132,7 @@ class PostEdit extends Component {
 
     const richText = (
       <RichText
-        tagName="p"
+        tagName="h1"
         className={ classnames('wp-block-paragraph', {
           [ textColor.class ]: textColor.class,
         }) }
@@ -186,12 +192,12 @@ class PostEdit extends Component {
 
 export default compose(
   withSelect((select, props) => {
-    const { getCategories, getEntityRecord } = select('core');
-    const { attributes } = props;
+    // const { getCategories, getEntityRecord } = select('core');
+    // const { attributes } = props;
 
     const res = {};
 
-    switch (attributes.type) {
+    /* switch (attributes.type) {
       case 'auto':
         res.categories = getCategories();
         break;
@@ -204,7 +210,7 @@ export default compose(
           }
         }
         break;
-    }
+    } */
 
     return {
       ...res,
@@ -221,7 +227,7 @@ export default compose(
       fallbackFontSize: fontSize || customFontSize || ! computedStyles ? undefined : parseInt(computedStyles.fontSize) || undefined,
     };
   }),
-  withAPIData(props => {
+  /* withAPIData(props => {
     if (props.attributes.type === 'auto') {
       const postQuery = stringify(pickBy({
         category_id: props.attributes.categoryId,
@@ -238,5 +244,5 @@ export default compose(
     return {
       postResults: null,
     };
-  }),
+  }), */
 )(PostEdit);

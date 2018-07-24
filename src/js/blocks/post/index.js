@@ -13,30 +13,32 @@ import { getColorClass, RichText } from '@wordpress/editor';
 /**
  * Internal dependencies
  */
-import edit, {
-  dimRatioToClass,
-  backgroundImageStyles,
-} from './edit';
+import edit from './edit';
 import * as controls from './controls';
 
 import './style.scss';
 
+const {
+  dimRatioToClass,
+  backgroundImageStyles,
+} = controls;
+
 const blockAttributes = {
-  id: { 			// post.id
+  id: { // post.id
     type: 'number',
   },
-  title: { 		// post.title
+  title: { // post.title
     type: 'array',
     source: 'children',
     selector: 'h1,h2,h3,h4,h5,h6',
   },
-  link: { 		// post.link
+  link: {	// post.link
     type: 'string',
   },
-  imageId: { 		// post media.id
+  imageId: { // post media.id
     type: 'number',
   },
-  imageUrl: { 	// post media.url
+  imageUrl: { // post media.url
     type: 'string',
   },
   categoryId: {
@@ -145,7 +147,7 @@ export const settings = {
         ></div>
         }
         <RichText.Content
-          tagName="p"
+          tagName="h1"
           style={ textStyle }
           className={ textClasses ? textClasses : undefined }
           value={ title }
