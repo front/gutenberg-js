@@ -313,9 +313,9 @@ export function withSelectAuthor (select, props) {
 
 // componentDidUpdate
 export function didUpdateMedia (prevProps, props) {
-  const { media } = props;
+  const { media, attributes } = props;
 
-  if (media && media !== prevProps.media) {
+  if (media && (media !== prevProps.media || media.source_url !== attributes.imageUrl)) {
     return { imageUrl: media.source_url };
   }
 
@@ -323,9 +323,9 @@ export function didUpdateMedia (prevProps, props) {
 }
 
 export function didUpdateCategory (prevProps, props) {
-  const { category } = props;
+  const { category, attributes } = props;
 
-  if (category && category !== prevProps.category) {
+  if (category && (category !== prevProps.category || category.name !== attributes.category)) {
     return {
       category: category.name,
       categoryUrl: category.link,
@@ -336,9 +336,9 @@ export function didUpdateCategory (prevProps, props) {
 }
 
 export function didUpdateAuthor (prevProps, props) {
-  const { author } = props;
+  const { author, attributes } = props;
 
-  if (author && author !== prevProps.author) {
+  if (author && (author !== prevProps.author || author.name !== attributes.author)) {
     return {
       author: author.name,
       authorUrl: author.link,
