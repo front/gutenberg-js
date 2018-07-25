@@ -31,7 +31,8 @@ class PostItemDraggable extends Component {
         link: post.link,
         imageId: post.featured_media,
         categoryId: post.categories[ 0 ],
-        type: 'withid',
+        authorId: post.author,
+        // type: 'withid',
         layout: '',
       });
 
