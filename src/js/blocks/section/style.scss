@@ -1,11 +1,8 @@
 .wp-block-gutenbergjs-section {
-	display: grid;
-	grid-gap: 1em;
+	display: flex;
 	position: relative;
 	background-size: cover;
 	background-position: 50%;
-	min-height: 430px;
-	width: 100%;
 
 	&.has-parallax {
 		background-attachment: fixed;
@@ -21,15 +18,9 @@
 		background-color: rgba( #000, 0.5 );
 	}
 
-	&.has-background-dim {
-		.wp-block-gutenbergjs-section-content {
-			position: absolute;
-			top: 0;
-			left: 0;
-			bottom: 0;
-			right: 0;
-			z-index: 1;
-		}
+	.wp-block-gutenbergjs-section-content {
+		z-index: 1;
+		width: 100%;
 	}
 
 	@for $i from 1 through 10 {

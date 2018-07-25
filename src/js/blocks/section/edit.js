@@ -110,7 +110,7 @@ class SectionBlockEdit extends Component {
 
     const controls = (
       <Fragment>
-        <BlockControls>
+        { hasImage && <BlockControls>
           <Toolbar>
             <MediaUpload
               onSelect={ this.onSelectImage }
@@ -126,7 +126,7 @@ class SectionBlockEdit extends Component {
               ) }
             />
           </Toolbar>
-        </BlockControls>
+        </BlockControls> }
         <InspectorControls>
           <PanelBody title={ __('Section Settings') }>
             <TextControl
@@ -200,7 +200,7 @@ class SectionBlockEdit extends Component {
           style={ style }
           { ...data }
         >
-          <div className="wp-block-storypage-section-content">
+          <div className="wp-block-gutenbergjs-section-content">
             <InnerBlocks />
           </div>
         </div>
