@@ -4,8 +4,6 @@
 import './wp-init.js';
 import '../scss/style.scss';
 import '@wordpress/core-data';
-import * as gjsBlocks from './blocks';
-import * as gjsComponents from './components';
 
 /**
  * WordPress dependencies
@@ -20,11 +18,6 @@ import * as editor from '@wordpress/editor';
 import * as editPost from '@wordpress/edit-post';
 import * as plugins from '@wordpress/plugins';
 
-const lib = {
-  blocks: gjsBlocks,
-  components: gjsComponents,
-};
-
 export {
   i18n,
   blocks,
@@ -35,5 +28,4 @@ export {
   editor,
   editPost,
   plugins,
-  lib,
 };
