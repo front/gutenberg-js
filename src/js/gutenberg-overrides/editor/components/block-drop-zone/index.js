@@ -65,10 +65,11 @@ class BlockDropZone extends Component {
       return;
     }
 
-    let uid, type, rootUID, fromIndex, blocks;
+    let uid, type, rootUID, fromIndex, attributes;
 
     try {
-      ({ uid, type, rootUID, fromIndex, blocks } = JSON.parse(event.dataTransfer.getData('text')));
+      // // GUTENBERG JS - receive attributes
+      ({ uid, type, rootUID, fromIndex, attributes } = JSON.parse(event.dataTransfer.getData('text')));
     }
     catch (err) {
       return;
@@ -85,8 +86,10 @@ class BlockDropZone extends Component {
     const insertIndex = index && fromIndex < index && rootUID === this.props.rootUID ? positionIndex - 1 : positionIndex;
 
     // check blocks and insert them
-    if (blocks) {
-      this.props.insertBlocks(blocks, insertIndex);
+    if (attributes) {
+      // GUTENBERG JS
+      // this.props.insertBlocks(blocks, insertIndex);
+      this.props.updateBlockAttributes(this.props.uid, attributes);
     }
     else {
       this.props.moveBlockToPosition(uid, rootUID, insertIndex);

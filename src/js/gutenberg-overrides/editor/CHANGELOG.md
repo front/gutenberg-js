@@ -1,5 +1,15 @@
 # editor changelog
 
+## 1.1.0 2018-07-27
+
+### Added
+
+- `ui` prop in BlockDropZone call ([editor/components/block-list/block.js](https://github.com/front/gutenberg-js/blob/v1.1.0/src/js/gutenberg-overrides/editor/components/block-list/block.js))
+
+### Changed
+
+- `blocks` to `attribute` and `updateBlockAttributes` instead of insert a new one, in `onDrop` ([editor/components/block-drop-zone/index.js](https://github.com/front/gutenberg-js/blob/v1.1.0/src/js/gutenberg-overrides/editor/components/block-drop-zone/index.js))
+
 ## 0.0.1 2018-07-11
 
 ### Added
