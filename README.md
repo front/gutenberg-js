@@ -23,11 +23,6 @@ This package is based on [Gutenberg v3.2.0](https://github.com/WordPress/gutenbe
     * [Registering Custom Blocks](#registering-custom-blocks)
 * [Customize your Gutenberg](#customize-your-gutenberg)
     * [Events](#events)
-* [Gutenberg-js Lib](#gutenberg-js-lib)
-    * [Post block](#post-block)
-    * [Row block](#row-block)
-    * [Section block](#section-block)
-    * [PostsPanel component](#postspanel-component)
 
 ## Installation
 
@@ -377,114 +372,6 @@ window.customGutenberg = {
     },
     ...,
 };
-```
-
-[↑ Go up to Table of contents](#table-of-contents)
-
-## Gutenberg-js Lib
-
-The Gutenberg JS library contains a bunch of blocks and components to complement and simplify your Gutenberg experience.
-
-```js
-import { lib } from '@frontkom/gutenberg-js';
-
-console.log('blocks', lib.blocks);
-console.log('components', lib.components);
-```
-
-[↑ Go up to Table of contents](#table-of-contents)
-
-### Post block
-
-The **Post Block** is another kind of blocks created by **gutenberg-js** which is composed by a cover image and a title.
-
-```js
-import {
-    blocks,
-    lib,
-} from '@frontkom/gutenberg-js';
-
-const postBlock = lib.blocks.post;
-
-blocks.registerBlockType(postBlock.name, postBlock.settings);
-```
-
-We are trying to provide new types of blocks: **auto posts** and **hand-picked posts** which are experimental for now. Theose blocks are dynamic and the render must be implemented server-side.
-
-[↑ Go up to Table of contents](#table-of-contents)
-
-### Row block
-
-Rows work like columns but they could be slipt in spots with different widths.
-
-```js
-import {
-    blocks,
-    lib,
-} from '@frontkom/gutenberg-js';
-
-const rowBlock = lib.blocks.row;
-
-blocks.registerBlockType(rowBlock.name, rowBlock.settings);
-```
-
-[↑ Go up to Table of contents](#table-of-contents)
-
-### Section block
-
-**Section** is a row with just one column. You can add blocks inside and add classes to style that section.
-
-```js
-import {
-    blocks,
-    lib,
-} from '@frontkom/gutenberg-js';
-
-const sectionBlock = lib.blocks.section;
-
-blocks.registerBlockType(sectionBlock.name, sectionBlock.settings);
-```
-
-After register the block and initialize the editor, you can set **Section** as default block:
-
-```
-import {
-    data,
-    lib,
-} from '@frontkom/gutenberg-js';
-
-data.dispatch('core/blocks').setDefaultBlockName(lib.blocks.section.name);
-```
-
-[↑ Go up to Table of contents](#table-of-contents)
-
-### PostsPanel component
-
-The **Posts Panel** contains a list of posts which could be filtered by category and/or searched be name. Posts can be added to your page as (Post block)[#post-block] by drag and drop.
-
-```js
-import {
-    editPost,
-    plugins,
-    lib,
-} from '@frontkom/gutenberg-js';
-
-const { PluginDocumentSidebarPanel } = editPost;
-const { PostsPanel } = lib.components;
-
-const MyPluginDocumentSidebarPanel = () => (
-    <PluginDocumentSidebarPanel
-        className="my-plugin-post-publish-panel"
-        title={ 'My Stories' }
-        initialOpen={ true }
-    >
-        <PostsPanel />
-    </PluginDocumentSidebarPanel>
-);
-
-plugins.registerPlugin('plugin-document-sidebar', {
-    render: MyPluginDocumentSidebarPanel,
-});
 ```
 
 [↑ Go up to Table of contents](#table-of-contents)
