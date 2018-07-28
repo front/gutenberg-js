@@ -1,5 +1,11 @@
 # editor changelog
 
+## 1.2.0 2018-07-28
+
+### Changed
+
+- `onDrop` and added a workaround to check if the editor was initialized before set the content ([editor/components/rich-text/index.js](https://github.com/front/gutenberg-js/blob/v1.2.0/src/js/gutenberg-overrides/editor/components/rich-text/index.js))
+
 ## 1.1.0 2018-07-27
 
 ### Added
@@ -16,7 +22,7 @@
 
 - `canPublish`, `canSave` and `canAutosave` properties and default values to `EDITOR_SETTINGS_DEFAULTS` ([editor/store/defaults.js](https://github.com/front/gutenberg-js/blob/v0.0.1/src/js/gutenberg-overrides/editor/store/defaults.js))
 
-- `insertDefaultBlock` override ([editor/store/actions.js](https://github.com/front/gutenberg-js/blob/v0.0.1/src/js/gutenberg-overrides/
+- `insertDefaultBlock` override ([editor/store/actions.js](https://github.com/front/gutenberg-js/blob/v0.0.1/src/js/gutenberg-overrides/editor/store/actions.js))
 
 - `ifCondition` to **AutosaveMonitor**, controlled by `canSave` and `canAutosave` settings ([editor/components/autosave-monitor/index.js](https://github.com/front/gutenberg-js/blob/v0.0.1/src/js/gutenberg-overrides/editor/components/autosave-monitor/index.js))
 

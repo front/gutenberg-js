@@ -116,6 +116,20 @@ export function getFormatProperties (formatName, parents) {
   }
 }
 
+function checkEditor (that, content) {
+  const { format } = that.props;
+
+  if (that.editor.initialized) {
+    that.savedContent = content;
+    that.editor.setContent(valueToString(content, format));
+  }
+  else {
+    setTimeout(function () {
+      checkEditor(that, content);
+    }, 100);
+  }
+}
+
 const DEFAULT_FORMATS = [ 'bold', 'italic', 'strikethrough', 'link', 'code' ];
 
 export class RichText extends Component {
@@ -762,22 +776,25 @@ export class RichText extends Component {
   }
 
   setContent (content) {
-    const { format } = this.props;
+    // GUTENBERG JS
+    checkEditor(this, content);
+
+    /* const { format } = this.props;
 
     // If editor has focus while content is being set, save the selection
     // and restore caret position after content is set.
-    // let bookmark;
+    let bookmark;
 
-    // if ( this.editor.hasFocus() ) {
-    // 	bookmark = this.editor.selection.getBookmark( 2, true );
-    // }
+    if (this.editor.hasFocus()) {
+      bookmark = this.editor.selection.getBookmark(2, true);
+    }
 
     this.savedContent = content;
     this.editor.setContent(valueToString(content, format));
 
-    // if ( bookmark ) {
-    // 	this.editor.selection.moveToBookmark( bookmark );
-    // }
+    if (bookmark) {
+      this.editor.selection.moveToBookmark(bookmark);
+    } */
   }
 
   getContent () {
