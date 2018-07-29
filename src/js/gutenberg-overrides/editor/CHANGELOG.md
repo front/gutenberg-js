@@ -4,7 +4,9 @@
 
 ### Changed
 
-- `onDrop` and added a workaround to check if the editor was initialized before set the content ([editor/components/rich-text/index.js](https://github.com/front/gutenberg-js/blob/v1.2.0/src/js/gutenberg-overrides/editor/components/rich-text/index.js))
+- `onDrop` adding a workaround (`checkEditor`) to check if the editor was initialized before set the content ([editor/components/rich-text/index.js](https://github.com/front/gutenberg-js/blob/v1.2.0/src/js/gutenberg-overrides/editor/components/rich-text/index.js))
+
+- `onPastePreProcess` checking if is a dropped post (with attributes) ([editor/components/rich-text/index.js](https://github.com/front/gutenberg-js/blob/v1.2.0/src/js/gutenberg-overrides/editor/components/rich-text/index.js))
 
 ## 1.1.0 2018-07-27
 

@@ -108,6 +108,7 @@ class BlockDropZone extends Component {
         className={ classnames('editor-block-drop-zone', {
           'is-appender': isAppender,
         }) }
+        label={ 'Drop here' }
         onFilesDrop={ this.onFilesDrop }
         onHTMLDrop={ this.onHTMLDrop }
         onDrop={ this.onDrop }

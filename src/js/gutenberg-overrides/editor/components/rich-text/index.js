@@ -335,6 +335,12 @@ export class RichText extends Component {
 
     event.preventDefault();
 
+    // GUTENBERG JS - do not drop post attributes as html
+    const parsed = JSON.parse(HTML.replace(/&quot;/g, '"'));
+    if (parsed && parsed.attributes) {
+      return;
+    }
+
     // Allows us to ask for this information when we get a report.
     window.console.log('Received HTML:\n\n', HTML);
     window.console.log('Received plain text:\n\n', this.pastedPlainText);
