@@ -2,6 +2,7 @@
  * External dependencies
  */
 import React, { Component, Fragment } from 'react';
+import { get } from 'lodash';
 
 import { __ } from '@wordpress/i18n';
 import { Popover } from '@wordpress/components';
@@ -19,7 +20,8 @@ class MediaContainer extends Component {
 
     if (gallery || multiple) {
       onSelect([{ ...img, url: img.source_url }]);
-    } else {
+    }
+    else {
       onSelect({ ...img, url: img.source_url });
     }
 
@@ -28,14 +30,14 @@ class MediaContainer extends Component {
 
   render () {
     const { images } = this.props;
-
     return (
       <div className="media-library__popover__content">
         { images.map(img => {
+          const source_url = get(img, 'media_details.sizes.thumbnail.source_url', img.source_url);
           return <button
             key={ img.id }
             className="media-library-thumbnail"
-            style={{ backgroundImage: `url(${img.source_url})` }}
+            style={{ backgroundImage: `url(${source_url})` }}
             onClick={ () => this.onImageClick(img) }
           ></button>;
         }) }
