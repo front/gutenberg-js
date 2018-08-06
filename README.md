@@ -2,27 +2,28 @@
 
 We made [Gutenberg](https://github.com/Wordpress/gutenberg) editor a little more **customizable**!
 
-Gutenberg editor can **be easly included in your apps** with this [package](https://github.com/front/gutenberg). Also you can customize blocks menu panels, blocks categories, document panels and more!
+Gutenberg editor can **be easly included in your apps** with this [package](https://github.com/front/gutenberg-js). Also you can customize blocks menu panels, blocks categories, document panels and more!
 
 This package is based on [Gutenberg v3.2.0](https://github.com/WordPress/gutenberg/releases/tag/v3.2.0).
 
 ## Table of contents
+
 * [Installation](#installation)
-    * [Dependencies](#dependencies)
+  * [Dependencies](#dependencies)
 * [Global variables](#global-variables)
-    * [apiRequest](#apirequest)
-        * [Post Types](#post-types)
-        * [Posts and Pages](#posts-and-pages)
-        * [Categories](#categories)
-        * [Index](#index)
-        * [Media](#media)
-        * [Taxonomies](#taxonomies)
-    * [url](#url)
+  * [apiRequest](#apirequest)
+    * [Post Types](#post-types)
+    * [Posts and Pages](#posts-and-pages)
+    * [Categories](#categories)
+    * [Index](#index)
+    * [Media](#media)
+    * [Taxonomies](#taxonomies)
+  * [url](#url)
 * [Usage](#usage)
-    * [Gutenberg Stores](#gutenberg-stores)
-    * [Registering Custom Blocks](#registering-custom-blocks)
+  * [Gutenberg Stores](#gutenberg-stores)
+  * [Registering Custom Blocks](#registering-custom-blocks)
 * [Customize your Gutenberg](#customize-your-gutenberg)
-    * [Events](#events)
+  * [Events](#events)
 
 ## Installation
 
