@@ -11,13 +11,16 @@ const { get } = require('lodash');
 const { basename, resolve } = require('path');
 
 /**
+ * Gutenberg-js dependencies
+ */
+const PostCssWrapper = require('postcss-wrapper-loader');
+const StringReplacePlugin = require('string-replace-webpack-plugin');
+
+/**
  * WordPress dependencies
  */
 const CustomTemplatedPathPlugin = require('./node_modules/gutenberg/packages/custom-templated-path-webpack-plugin');
 const LibraryExportDefaultPlugin = require('./node_modules/gutenberg/packages/library-export-default-webpack-plugin');
-
-const PostCssWrapper = require('postcss-wrapper-loader');
-const StringReplacePlugin = require('string-replace-webpack-plugin');
 
 // Main CSS loader for everything but blocks..
 const mainCSSExtractTextPlugin = new ExtractTextPlugin({
@@ -87,7 +90,6 @@ const entryPointNames = [
 
 const gutenbergPackages = [
   'a11y',
-  // 'api-fetch',
   'autop',
   'blob',
   'blocks',
@@ -110,15 +112,12 @@ const gutenbergPackages = [
   'plugins',
   'redux-routine',
   'shortcode',
-  'token-list',
-  'url',
   'viewport',
   'wordcount',
 ];
 
 const coreGlobals = [
   'api-fetch',
-  // 'api-request',
   'url',
 ];
 
@@ -160,10 +159,10 @@ const config = {
   },
   module: {
     rules: [
-      {
+      /* {
         test: /\.pegjs/,
         use: 'pegjs-loader',
-      },
+      }, */
       {
         test: /\.js$/,
         exclude: [
@@ -277,8 +276,8 @@ const config = {
     ].map(camelCaseDash)),
     new CopyWebpackPlugin(
       gutenbergPackages.map(packageName => ({
-        from: `./packages/${packageName}/build-style/*.css`,
-        to: `./build/${packageName}/`,
+        from: `./node_modules/gutenberg/packages/${packageName}/build-style/*.css`,
+        to: `./css/${packageName}/`,
         flatten: true,
         transform: content => {
           if (config.mode === 'production') {
