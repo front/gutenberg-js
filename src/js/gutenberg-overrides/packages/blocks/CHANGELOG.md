@@ -1,5 +1,11 @@
 # blocks changelog
 
+## 2.0.0 2018-08
+
+### Changed
+
+- blocks overrides to `packages/blocks/build-module` folder
+
 ## 0.0.1 2018-07-11
 
 ### Added
