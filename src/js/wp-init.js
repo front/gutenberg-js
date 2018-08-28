@@ -9,6 +9,7 @@ import memoize from 'memize';
 
 window.jQuery = window.jQuery || jQuery;
 window.tinymce = window.tinymce || tinymce;
+window.React = window.React || React;
 
 window.wp = window.wp || {};
 window.wp.blocks = window.wp.blocks || {};
