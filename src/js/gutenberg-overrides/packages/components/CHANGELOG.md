@@ -1,5 +1,11 @@
 # components changelog
 
+## 2.0.0 2018-08
+
+### Changed
+
+- components overrides to `packages/components/build-module` folder
+
 ## 0.4.0 2018-07-26
 
 ### Added
