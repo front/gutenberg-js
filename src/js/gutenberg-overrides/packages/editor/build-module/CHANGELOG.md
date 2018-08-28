@@ -1,5 +1,11 @@
 # editor changelog
 
+## 2.0.0 2018-08
+
+### Changed
+
+- editor overrides to `packages/editor/build-module` folder
+
 ## 1.2.0 2018-07-28
 
 ### Changed

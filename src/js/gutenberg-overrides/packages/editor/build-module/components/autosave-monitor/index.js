@@ -1,8 +1,10 @@
-import { ifCondition } from '@wordpress/components';
-import { compose } from '@wordpress/element';
+/**
+ * WordPress dependencies
+ */
+import { compose, ifCondition } from '@wordpress/compose';
 import { withSelect, withDispatch } from '@wordpress/data';
 
-import * as others from 'gutenberg/editor/components/autosave-monitor?source=node_modules';
+import * as others from 'gutenberg/packages/editor/build-module/components/autosave-monitor?source=node_modules';
 
 const { AutosaveMonitor } = others;
 
@@ -20,6 +22,7 @@ export default compose([
       isDirty: isEditedPostDirty(),
       isAutosaveable: isEditedPostAutosaveable(),
       autosaveInterval,
+      // GUTENBERG JS
       canSave,
       canAutosave,
     };
@@ -27,9 +30,10 @@ export default compose([
   withDispatch(dispatch => ({
     autosave: dispatch('core/editor').autosave,
   })),
-  // added ifCondition to enable/disable 
+  // GUTENBERG JS
+  // added ifCondition to enable/disable
   // the autoave feature according 'canSave' and 'canAutosave' settings
   ifCondition(({ canSave, canAutosave }) => canSave && canAutosave),
 ])(AutosaveMonitor);
 
-export * from 'gutenberg/editor/components/autosave-monitor?source=node_modules';
+export * from 'gutenberg/packages/editor/build-module/components/autosave-monitor?source=node_modules';
