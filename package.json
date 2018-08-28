@@ -41,8 +41,6 @@
   },
   "devDependencies": {
     "@wordpress/babel-plugin-makepot": "1.0.1",
-    "@wordpress/custom-templated-path-webpack-plugin": "1.0.2",
-    "@wordpress/library-export-default-webpack-plugin": "1.0.3",
     "@wordpress/scripts": "1.2.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "7.2.3",

@@ -14,7 +14,7 @@ const { basename, resolve } = require('path');
  * WordPress dependencies
  */
 const CustomTemplatedPathPlugin = require('./node_modules/gutenberg/packages/custom-templated-path-webpack-plugin');
-const LibraryExportDefaultPlugin = require('@wordpress/library-export-default-webpack-plugin');
+const LibraryExportDefaultPlugin = require('./node_modules/gutenberg/packages/library-export-default-webpack-plugin');
 
 const PostCssWrapper = require('postcss-wrapper-loader');
 const StringReplacePlugin = require('string-replace-webpack-plugin');
