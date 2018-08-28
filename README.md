@@ -11,7 +11,7 @@ This package is based on [Gutenberg v3.6.2](https://github.com/WordPress/gutenbe
 * [Installation](#installation)
   * [Dependencies](#dependencies)
 * [Global variables](#global-variables)
-  * [apiRequest](#apirequest)
+  * [apiFetch](#apifetch)
     * [Post Types](#post-types)
       * [Wp block](#wp-block)
     * [Posts and Pages](#posts-and-pages)
@@ -72,7 +72,7 @@ So we recommend you to set up them all in one file called `globals.js` or `setti
 // globals.js
 
 window.wp = {
-    apiRequest,
+    apiFetch,
     url: { addQueryArgs },
     ...,
 };
@@ -92,14 +92,14 @@ We are working to include on **gutenberg-js** all settings that shouldn't be par
 
 [↑ Go up to Table of contents](#table-of-contents)
 
-### apiRequest
+### apiFetch
 
 Those two are very important for comunication between the editor and remaining app, so you should set them up according your needs.
 
-***apiRequest*** is the method that will handle with data operations on Gutenberg, like getting resources (categories for example), saving page changes or deleting pages, etc. It receives an object with `path`, `method`, `data`, etc, so you can treat it as you want.
+***apiFetch*** is the method that will handle with data operations on Gutenberg, like getting resources (categories for example), saving page changes or deleting pages, etc. It receives an object with `path`, `method`, `data`, etc, so you can treat it as you want.
 
 ```js
-function apiRequest(options) {
+function apiFetch(options) {
     // Do something with those options like calling an API
     // or actions from your store...
 }
