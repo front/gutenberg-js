@@ -4,7 +4,7 @@ We made [Gutenberg](https://github.com/Wordpress/gutenberg) editor a little more
 
 Gutenberg editor can **be easly included in your apps** with this [package](https://github.com/front/gutenberg-js). Also you can customize blocks menu panels, blocks categories, document panels and more!
 
-This package is based on [Gutenberg v3.2.0](https://github.com/WordPress/gutenberg/releases/tag/v3.2.0).
+This package is based on [Gutenberg v3.6.2](https://github.com/WordPress/gutenberg/releases/tag/v3.6.2).
 
 ## Table of contents
 
@@ -13,11 +13,13 @@ This package is based on [Gutenberg v3.2.0](https://github.com/WordPress/gutenbe
 * [Global variables](#global-variables)
   * [apiRequest](#apirequest)
     * [Post Types](#post-types)
+      * [Wp block](#wp-block)
     * [Posts and Pages](#posts-and-pages)
     * [Categories](#categories)
     * [Index](#index)
     * [Media](#media)
     * [Taxonomies](#taxonomies)
+    * [Blocks](#blocks)
   * [url](#url)
 * [Usage](#usage)
   * [Gutenberg Stores](#gutenberg-stores)
@@ -111,6 +113,34 @@ Next, we will show some commons API requests Gutenberg does and the respective r
 
 The Gutenberg editor will ask for available **Post Types** through `/wp/v2/types/?context=edit` request. The _type_ properties that can be checked in [WordPress documentation](https://developer.wordpress.org/rest-api/reference/post-types/).
 
+**Post Types:** _post_, _pages_, _attachment_, _wp_block_
+
+**Request for post type settings:** `/wp/v2/types/post?context=edit`
+
+**Request for page type settings:** `/wp/v2/types/page?context=edit`
+
+[↑ Go up to Table of contents](#table-of-contents)
+
+##### Wp Block
+
+There is no documentation for `/wp/v2/types/wp_block?context=edit` request yet, but the response should be similar to post and page responses:
+
+```js
+{
+    "capabilities": { ... }
+    "description": "",
+    "hierarchical": false,
+    "labels": { ... }
+    "name": "Blocks",
+    "slug": "wp_block",
+    "taxonomies": [],
+    "rest_base": "blocks",
+    "supports": { ... }
+    "viewable": false,
+    "_links": { ... }
+}
+```
+
 [↑ Go up to Table of contents](#table-of-contents)
 
 #### Posts and Pages
@@ -166,6 +196,18 @@ Here is the WordPress API documentation for [Media](https://developer.wordpress.
 
 [↑ Go up to Table of contents](#table-of-contents)
 
+#### Blocks
+
+There is no documentation for `/wp/v2/wp_blocks` or `/wp/v2/blocks` request yet, but the response should be similar to posts and pages responses with and `id` and `content`:
+
+```js
+{
+    content: "<!-- wp:paragraph -->↵	<p>3</p>↵	<!-- /wp:paragraph -->",
+    id: 131,
+    title: "my block",
+}
+```
+
 ### url
 
 ***url*** should has a function called `addQueryArgs( url, args )` that handles with `url` and `args` and returns the final url to different actions. The original implementation is the following, feel free to keep it or change it according to your needs.
@@ -208,10 +250,12 @@ import './globals';
 import { editPost } from '@frontkom/gutenberg-js';
 
 // Don't forget to import the style
-import '@frontkom/gutenberg-js/build/css/core-blocks/style.css';
+import '@frontkom/gutenberg-js/build/css/block-library/style.css';
 import '@frontkom/gutenberg-js/build/css/style.css';
-import '@frontkom/gutenberg-js/build/css/core-blocks/edit-blocks.css';
-import '@frontkom/gutenberg-js/build/css/core-blocks/theme.css';
+import '@frontkom/gutenberg-js/build/css/nux/style.css';
+import '@frontkom/gutenberg-js/build/css/editor/style.css';
+import '@frontkom/gutenberg-js/build/css/block-library/edit-blocks.css';
+import '@frontkom/gutenberg-js/build/css/block-library/theme.css';
 
 // DOM element id where editor will be displayed
 const target = 'editor';
