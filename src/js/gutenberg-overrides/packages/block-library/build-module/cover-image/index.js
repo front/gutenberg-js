@@ -21,9 +21,8 @@ import {
   RichText,
 } from '@wordpress/editor';
 
-import * as others from 'gutenberg/core-blocks/cover-image?source=node_modules';
+import * as others from 'gutenberg/packages/block-library/build-module/cover-image?source=node_modules';
 
-// required local functions
 function dimRatioToClass (ratio) {
   return (ratio === 0 || ratio === 50) ?
     null :
@@ -117,7 +116,7 @@ others.settings.edit = withNotices(({ attributes, setAttributes, isSelected, cla
               onChange={ toggleParallax }
             />
             <RangeControl
-              label={ __('Background Dimness') }
+              label={ __('Background Opacity') }
               value={ dimRatio }
               onChange={ setDimRatio }
               min={ 0 }
@@ -210,4 +209,4 @@ others.settings.save = ({ attributes, className }) => {
   );
 };
 
-export * from 'gutenberg/core-blocks/cover-image?source=node_modules';
+export * from 'gutenberg/packages/block-library/build-module/cover-image?source=node_modules';

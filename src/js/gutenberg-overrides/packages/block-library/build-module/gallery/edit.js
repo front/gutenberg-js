@@ -22,19 +22,18 @@ import {
 } from '@wordpress/components';
 import {
   BlockControls,
-  BlockAlignmentToolbar,
   MediaUpload,
   MediaPlaceholder,
   InspectorControls,
-  editorMediaUpload,
+  mediaUpload,
 } from '@wordpress/editor';
 
 /**
  * Internal dependencies
  */
-import GalleryImage from 'gutenberg/core-blocks/gallery/gallery-image';
+import GalleryImage from './gallery-image';
 
-import * as others from 'gutenberg/core-blocks/gallery/edit?source=node_modules';
+import * as others from 'gutenberg/packages/block-library/build-module/gallery/edit?source=node_modules';
 
 const MAX_COLUMNS = 8;
 const linkOptions = [
@@ -53,7 +52,6 @@ class GalleryEdit extends Component {
     this.onSelectImages = this.onSelectImages.bind(this);
     this.setLinkTo = this.setLinkTo.bind(this);
     this.setColumnsNumber = this.setColumnsNumber.bind(this);
-    this.updateAlignment = this.updateAlignment.bind(this);
     this.toggleImageCrop = this.toggleImageCrop.bind(this);
     this.onRemoveImage = this.onRemoveImage.bind(this);
     this.setImageAttributes = this.setImageAttributes.bind(this);
@@ -101,10 +99,6 @@ class GalleryEdit extends Component {
     this.props.setAttributes({ columns: value });
   }
 
-  updateAlignment (nextAlign) {
-    this.props.setAttributes({ align: nextAlign });
-  }
-
   toggleImageCrop () {
     this.props.setAttributes({ imageCrop: ! this.props.attributes.imageCrop });
   }
@@ -137,7 +131,7 @@ class GalleryEdit extends Component {
   addFiles (files) {
     const currentImages = this.props.attributes.images || [];
     const { noticeOperations, setAttributes } = this.props;
-    editorMediaUpload({
+    mediaUpload({
       allowedType: 'image',
       filesList: files,
       onFileChange: images => {
@@ -171,10 +165,6 @@ class GalleryEdit extends Component {
 
     const controls = (
       <BlockControls>
-        <BlockAlignmentToolbar
-          value={ align }
-          onChange={ this.updateAlignment }
-        />
         { !! images.length && (
           <Toolbar>
             <MediaUpload
@@ -268,10 +258,11 @@ class GalleryEdit extends Component {
             <FormFileUpload
               multiple
               isLarge
-              className="core-blocks-gallery-add-item-button"
+              className="block-library-gallery-add-item-button"
               onChange={ this.uploadFromFiles }
               accept="image/*"
-              icon="insert">
+              icon="insert"
+            >
               { __('Upload an image') }
             </FormFileUpload>
           </li>
@@ -283,4 +274,4 @@ class GalleryEdit extends Component {
 }
 
 export default withNotices(GalleryEdit);
-export * from 'gutenberg/core-blocks/gallery/edit?source=node_modules';
+export * from 'gutenberg/packages/block-library/build-module/gallery/edit?source=node_modules';

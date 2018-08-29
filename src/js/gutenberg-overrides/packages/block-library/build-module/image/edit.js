@@ -17,7 +17,7 @@ import {
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { Component, compose, Fragment } from '@wordpress/element';
+import { Component, Fragment } from '@wordpress/element';
 import { getBlobByURL, revokeBlobURL } from '@wordpress/blob';
 import {
   Button,
@@ -38,14 +38,14 @@ import {
   MediaPlaceholder,
   MediaUpload,
   BlockAlignmentToolbar,
-  editorMediaUpload,
+  mediaUpload,
 } from '@wordpress/editor';
 import { withViewportMatch } from '@wordpress/viewport';
+import { compose } from '@wordpress/compose';
 
 /**
  * Internal dependencies
  */
-import './editor.scss';
 import ImageSize from './image-size';
 
 /**
@@ -85,7 +85,7 @@ class ImageEdit extends Component {
       const file = getBlobByURL(url);
 
       if (file) {
-        editorMediaUpload({
+        mediaUpload({
           filesList: [ file ],
           onFileChange: ([ image ]) => {
             setAttributes({ ...image });
@@ -121,7 +121,6 @@ class ImageEdit extends Component {
       });
       return;
     }
-
     const toUpdate = {
       ...pick(media, [ 'alt', 'id', 'caption', 'url' ]),
       width: undefined,
@@ -282,20 +281,20 @@ class ImageEdit extends Component {
 
     const availableSizes = this.getAvailableSizes();
     const isResizable = [ 'wide', 'full' ].indexOf(align) === -1 && isLargeViewport;
-    const isLinkUrlInputDisabled = linkDestination !== LINK_DESTINATION_CUSTOM;
+    const isLinkURLInputDisabled = linkDestination !== LINK_DESTINATION_CUSTOM;
 
     const getInspectorControls = (imageWidth, imageHeight) => (
       <InspectorControls>
         <PanelBody title={ __('Image Settings') }>
           <TextareaControl
-            label={ __('Textual Alternative') }
+            label={ __('Alt Text (Alternative Text)') }
             value={ alt }
             onChange={ this.updateAlt }
             help={ __('Describe the purpose of the image. Leave empty if the image is not a key part of the content.') }
           />
           { ! isEmpty(availableSizes) && (
             <SelectControl
-              label={ __('Source Type') }
+              label={ __('Image Size') }
               value={ url }
               options={ map(availableSizes, (size, name) => ({
                 value: size.source_url,
@@ -304,59 +303,61 @@ class ImageEdit extends Component {
               onChange={ this.updateImageURL }
             />
           ) }
-          <div className="core-blocks-image__dimensions">
-            <p className="core-blocks-image__dimensions__row">
-              { __('Image Dimensions') }
-            </p>
-            <div className="core-blocks-image__dimensions__row">
-              <TextControl
-                type="number"
-                className="core-blocks-image__dimensions__width"
-                label={ __('Width') }
-                value={ width !== undefined ? width : '' }
-                placeholder={ imageWidth }
-                min={ 1 }
-                onChange={ this.updateWidth }
-              />
-              <TextControl
-                type="number"
-                className="core-blocks-image__dimensions__height"
-                label={ __('Height') }
-                value={ height !== undefined ? height : '' }
-                placeholder={ imageHeight }
-                min={ 1 }
-                onChange={ this.updateHeight }
-              />
-            </div>
-            <div className="core-blocks-image__dimensions__row">
-              <ButtonGroup aria-label={ __('Image Size') }>
-                { [ 25, 50, 75, 100 ].map(scale => {
-                  const scaledWidth = Math.round(imageWidth * (scale / 100));
-                  const scaledHeight = Math.round(imageHeight * (scale / 100));
+          { isResizable && (
+            <div className="block-library-image__dimensions">
+              <p className="block-library-image__dimensions__row">
+                { __('Image Dimensions') }
+              </p>
+              <div className="block-library-image__dimensions__row">
+                <TextControl
+                  type="number"
+                  className="block-library-image__dimensions__width"
+                  label={ __('Width') }
+                  value={ width !== undefined ? width : '' }
+                  placeholder={ imageWidth }
+                  min={ 1 }
+                  onChange={ this.updateWidth }
+                />
+                <TextControl
+                  type="number"
+                  className="block-library-image__dimensions__height"
+                  label={ __('Height') }
+                  value={ height !== undefined ? height : '' }
+                  placeholder={ imageHeight }
+                  min={ 1 }
+                  onChange={ this.updateHeight }
+                />
+              </div>
+              <div className="block-library-image__dimensions__row">
+                <ButtonGroup aria-label={ __('Image Size') }>
+                  { [ 25, 50, 75, 100 ].map(scale => {
+                    const scaledWidth = Math.round(imageWidth * (scale / 100));
+                    const scaledHeight = Math.round(imageHeight * (scale / 100));
 
-                  const isCurrent = width === scaledWidth && height === scaledHeight;
+                    const isCurrent = width === scaledWidth && height === scaledHeight;
 
-                  return (
-                    <Button
-                      key={ scale }
-                      isSmall
-                      isPrimary={ isCurrent }
-                      aria-pressed={ isCurrent }
-                      onClick={ this.updateDimensions(scaledWidth, scaledHeight) }
-                    >
-                      { scale }%
-                    </Button>
-                  );
-                }) }
-              </ButtonGroup>
-              <Button
-                isSmall
-                onClick={ this.updateDimensions() }
-              >
-                { __('Reset') }
-              </Button>
+                    return (
+                      <Button
+                        key={ scale }
+                        isSmall
+                        isPrimary={ isCurrent }
+                        aria-pressed={ isCurrent }
+                        onClick={ this.updateDimensions(scaledWidth, scaledHeight) }
+                      >
+                        { scale }%
+                      </Button>
+                    );
+                  }) }
+                </ButtonGroup>
+                <Button
+                  isSmall
+                  onClick={ this.updateDimensions() }
+                >
+                  { __('Reset') }
+                </Button>
+              </div>
             </div>
-          </div>
+          ) }
         </PanelBody>
         <PanelBody title={ __('Link Settings') }>
           <SelectControl
@@ -369,8 +370,8 @@ class ImageEdit extends Component {
             label={ __('Link URL') }
             value={ href || '' }
             onChange={ this.onSetCustomHref }
-            placeholder={ ! isLinkUrlInputDisabled && 'https://' }
-            disabled={ isLinkUrlInputDisabled }
+            placeholder={ ! isLinkURLInputDisabled ? 'https://' : undefined }
+            disabled={ isLinkURLInputDisabled }
           />
         </PanelBody>
       </InspectorControls>
@@ -398,9 +399,12 @@ class ImageEdit extends Component {
 
               if (! isResizable || ! imageWidthWithinContainer) {
                 return (
-                  <div style={ { width, height } }>
-                    { img }
-                  </div>
+                  <Fragment>
+                    { getInspectorControls(imageWidth, imageHeight) }
+                    <div style={ { width, height } }>
+                      { img }
+                    </div>
+                  </Fragment>
                 );
               }
 

@@ -1,4 +1,10 @@
-# core-blocks changelog
+# block-library changelog
+
+## 2.0.0 2018-08
+
+### Changed
+
+- core-blocks overrides to `packages/block-library/build-module` folder
 
 ## 0.0.1 2018-07-11
 
