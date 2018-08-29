@@ -1,5 +1,5 @@
 /**
- * External dependencies
+ * External Dependencies
  */
 import React from 'react';
 
@@ -12,16 +12,16 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal Dependencies
  */
-import PostStatus from 'gutenberg/edit-post/components/sidebar/post-status';
-import PostExcerpt from 'gutenberg/edit-post/components/sidebar/post-excerpt';
-import PostTaxonomies from 'gutenberg/edit-post/components/sidebar/post-taxonomies';
-import FeaturedImage from 'gutenberg/edit-post/components/sidebar/featured-image';
-import DiscussionPanel from 'gutenberg/edit-post/components/sidebar/discussion-panel';
-import LastRevision from 'gutenberg/edit-post/components/sidebar/last-revision';
-import PageAttributes from 'gutenberg/edit-post/components/sidebar/page-attributes';
-import MetaBoxes from 'gutenberg/edit-post/components/meta-boxes';
-import SettingsHeader from 'gutenberg/edit-post/components/sidebar/settings-header';
-import Sidebar from 'gutenberg/edit-post/components/sidebar';
+import PostStatus from '../post-status';
+import PostExcerpt from '../post-excerpt';
+import PostTaxonomies from '../post-taxonomies';
+import FeaturedImage from '../featured-image';
+import DiscussionPanel from '../discussion-panel';
+import LastRevision from '../last-revision';
+import PageAttributes from '../page-attributes';
+import MetaBoxes from '../../meta-boxes';
+import SettingsHeader from '../settings-header';
+import Sidebar from '../';
 
 export const { Fill, Slot } = createSlotFill('PluginDocumentSidebarPanel');
 

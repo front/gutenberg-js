@@ -4,6 +4,9 @@
 import React, { Component, Fragment } from 'react';
 import { get } from 'lodash';
 
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n';
 import { Popover } from '@wordpress/components';
 import { withSelect } from '@wordpress/data';
@@ -30,9 +33,10 @@ class MediaContainer extends Component {
 
   render () {
     const { images } = this.props;
+
     return (
       <div className="media-library__popover__content">
-        { images.map(img => {
+        { images && images.map(img => {
           const source_url = get(img, 'media_details.sizes.thumbnail.source_url', img.source_url);
           return <button
             key={ img.id }

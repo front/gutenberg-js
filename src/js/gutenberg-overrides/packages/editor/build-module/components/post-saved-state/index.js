@@ -12,13 +12,13 @@ export default compose([
   withSelect((select, { forceIsDirty, forceIsSaving }) => {
     const {
       isEditedPostNew,
-			isCurrentPostPublished,
-			isCurrentPostScheduled,
-			isEditedPostDirty,
-			isSavingPost,
-			isEditedPostSaveable,
-			getCurrentPost,
-			isAutosavingPost,
+      isCurrentPostPublished,
+      isCurrentPostScheduled,
+      isEditedPostDirty,
+      isSavingPost,
+      isEditedPostSaveable,
+      getCurrentPost,
+      isAutosavingPost,
       // extracting getEditorSettings
       getEditorSettings, // GUTENBERG JS
     } = select('core/editor');
@@ -28,13 +28,13 @@ export default compose([
 
     return {
       post: getCurrentPost(),
-			isNew: isEditedPostNew(),
-			isPublished: isCurrentPostPublished(),
-			isScheduled: isCurrentPostScheduled(),
-			isDirty: forceIsDirty || isEditedPostDirty(),
-			isSaving: forceIsSaving || isSavingPost(),
-			isSaveable: isEditedPostSaveable(),
-			isAutosaving: isAutosavingPost(),
+      isNew: isEditedPostNew(),
+      isPublished: isCurrentPostPublished(),
+      isScheduled: isCurrentPostScheduled(),
+      isDirty: forceIsDirty || isEditedPostDirty(),
+      isSaving: forceIsSaving || isSavingPost(),
+      isSaveable: isEditedPostSaveable(),
+      isAutosaving: isAutosavingPost(),
 
       // GUTENBERG JS
       // adding canSave to props

@@ -154,4 +154,5 @@ window.wpApiSettings.schema = window.wpApiSettings.schema || {};
 window.wpApiSettings.schema.routes = window.wpApiSettings.schema.routes || {};
 window.wpApiSettings.schema.routes[ '/wp/v2/posts' ] = window.wpApiSettings.schema.routes[ '/wp/v2/posts' ] || { methods: [ 'GET' ] };
 window.wpApiSettings.schema.routes[ '/wp/v2/posts/(?P<id>[\\d]+)' ] = window.wpApiSettings.schema.routes[ '/wp/v2/posts/(?P<id>[\\d]+)' ] || { methods: [ 'GET' ] };
+window.wpApiSettings.schema.routes[ '/wp/v2/media' ] = window.wpApiSettings.schema.routes[ '/wp/v2/media' ] || { methods: [ 'GET' ] };
 window.wpApiSettings.schema.routes[ '/wp/v2/media/(?P<id>[\\d]+)' ] = window.wpApiSettings.schema.routes[ '/wp/v2/media/(?P<id>[\\d]+)' ] || { methods: [ 'GET' ] };

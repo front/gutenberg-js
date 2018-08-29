@@ -208,12 +208,12 @@ const config = {
               loader: StringReplacePlugin.replace({
                 replacements: [ {
                   pattern: /.gutenberg /ig,
-                  replacement: () => ( '' ),
+                  replacement: () => (''),
                 } ],
-              } ),
+              }),
             },
           ],
-        } ),
+        }),
       },
       {
         test: /theme\.s?css$/,
