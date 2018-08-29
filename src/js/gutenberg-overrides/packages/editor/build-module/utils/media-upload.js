@@ -6,10 +6,10 @@ import { compact, forEach, get, has, includes, noop, startsWith } from 'lodash';
 /**
  * WordPress dependencies
  */
+import apiFetch from '@wordpress/api-fetch';
 import { __, sprintf } from '@wordpress/i18n';
-import apiRequest from '@wordpress/api-request';
 
-import * as others from 'gutenberg/utils/mediaupload?source=node_modules';
+import * as others from 'gutenberg/packages/editor/build-module/utils/media-upload?source=node_modules';
 
 const { getMimeTypesArray } = others;
 
@@ -18,12 +18,11 @@ function createMediaFromFile (file, additionalData) {
   // Create upload payload
   const data = new window.FormData();
   data.append('file', file, file.name || file.type.replace('/', '.'));
+  data.append('title', file.name ? file.name.replace(/\.[^.]+$/, '') : file.type.replace('/', '.'));
   forEach(additionalData, ((value, key) => data.append(key, value)));
-  return apiRequest({
+  return apiFetch({
     path: '/wp/v2/media',
-    data,
-    contentType: false,
-    processData: false,
+    body: data,
     method: 'POST',
   });
 }
@@ -33,9 +32,10 @@ others.mediaUpload = ({
   allowedType,
   additionalData = {},
   filesList,
-  maxUploadFileSize = get(window, [ '_wpMediaSettings', 'maxUploadSize' ], 0),
+  maxUploadFileSize,
   onError = noop,
   onFileChange,
+  allowedMimeTypes = null,
 })  => {
   // Cast filesList to array
   const files = [ ...filesList ];
@@ -52,7 +52,7 @@ others.mediaUpload = ({
   };
 
   // Allowed types for the current WP_User
-  const allowedMimeTypesForUser = getMimeTypesArray(get(window, [ '_wpMediaSettings', 'allowedMimeTypes' ]));
+  const allowedMimeTypesForUser = getMimeTypesArray(allowedMimeTypes);
   const isAllowedMimeTypeForUser = fileType => {
     return includes(allowedMimeTypesForUser, fileType);
   };
@@ -91,47 +91,47 @@ others.mediaUpload = ({
     filesSet.push({ url: window.URL.createObjectURL(mediaFile) });
     onFileChange(filesSet);
 
-    return createMediaFromFile(mediaFile, additionalData).then(
-      savedMedia => {
-        const mediaObject = {
-          alt: savedMedia.alt_text,
-          caption: get(savedMedia, [ 'caption', 'raw' ], ''),
-          id: savedMedia.id,
-          link: savedMedia.link,
-          // use get to get image title
-          title: get(savedMedia, [ 'title', 'raw' ], ''),
-          url: savedMedia.source_url,
-          // added data property to handle with image data attributes
-          data: savedMedia.data,
-          mediaDetails: {},
-        };
-        if (has(savedMedia, [ 'media_details', 'sizes' ])) {
-          mediaObject.mediaDetails.sizes = get(savedMedia, [ 'media_details', 'sizes' ], {});
-        }
-        setAndUpdateFiles(idx, mediaObject);
-      },
-      response => {
-        // Reset to empty on failure.
-        setAndUpdateFiles(idx, null);
-        let message;
-        if (has(response, [ 'responseJSON', 'message' ])) {
-          message = get(response, [ 'responseJSON', 'message' ]);
-        }
-        else {
-          message = sprintf(
-            // translators: %s: file name
-            __('Error while uploading file %s to the media library.'),
-            mediaFile.name
-          );
-        }
-        onError({
-          code: 'GENERAL',
-          message,
-          file: mediaFile,
-        });
+    return createMediaFromFile(mediaFile, additionalData)
+    .then(savedMedia => {
+      const mediaObject = {
+        alt: savedMedia.alt_text,
+        caption: get(savedMedia, [ 'caption', 'raw' ], ''),
+        id: savedMedia.id,
+        link: savedMedia.link,
+        // use get to get image title
+        title: get(savedMedia, [ 'title', 'raw' ], ''),
+        url: savedMedia.source_url,
+        mediaDetails: {},
+        // GUTENBERG JS
+        // added data property to handle with image data attributes
+        data: savedMedia.data,
+      };
+      if (has(savedMedia, [ 'media_details', 'sizes' ])) {
+        mediaObject.mediaDetails.sizes = get(savedMedia, [ 'media_details', 'sizes' ], {});
       }
-    );
+      setAndUpdateFiles(idx, mediaObject);
+    })
+    .catch(error => {
+      // Reset to empty on failure.
+      setAndUpdateFiles(idx, null);
+      let message;
+      if (has(error, [ 'message' ])) {
+        message = get(error, [ 'message' ]);
+      }
+      else {
+        message = sprintf(
+          // translators: %s: file name
+          __('Error while uploading file %s to the media library.'),
+          mediaFile.name
+        );
+      }
+      onError({
+        code: 'GENERAL',
+        message,
+        file: mediaFile,
+      });
+    });
   });
 };
 
-export * from 'gutenberg/utils/mediaupload?source=node_modules';
+export * from 'gutenberg/packages/editor/build-module/utils/media-upload?source=node_modules';
