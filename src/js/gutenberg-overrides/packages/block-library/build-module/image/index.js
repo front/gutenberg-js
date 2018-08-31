@@ -37,7 +37,7 @@ others.settings.save = ({ attributes }) => {
   return (
     <figure className={ classes }>
       { href ? <a href={ href }>{ image }</a> : image }
-      { caption && caption.length > 0 && <RichText.Content tagName="figcaption" value={ caption } /> }
+      { ! RichText.isEmpty(caption) && <RichText.Content tagName="figcaption" value={ caption } /> }
     </figure>
   );
 };

@@ -61,6 +61,7 @@ others.getBlockAttribute = (attributeKey, attributeSchema, innerHTML, commentAtt
     case 'children':
     case 'node':
     case 'query':
+    case 'tag':
       value = parseWithAttributeSchema(innerHTML, attributeSchema);
 
       // checks 'data' property

@@ -170,7 +170,7 @@ others.settings.edit = withNotices(({ attributes, setAttributes, isSelected, cla
         className={ classes }
         { ...data }
       >
-        { title || isSelected ? (
+        { (! RichText.isEmpty(title) || isSelected) && (
           <RichText
             tagName="p"
             className="wp-block-cover-image-text"
@@ -179,7 +179,7 @@ others.settings.edit = withNotices(({ attributes, setAttributes, isSelected, cla
             onChange={ value => setAttributes({ title: value }) }
             inlineToolbar
           />
-        ) : null }
+        ) }
       </div>
     </Fragment>
   );
@@ -202,7 +202,7 @@ others.settings.save = ({ attributes, className }) => {
 
   return (
     <div className={ classes } style={ style } { ...data }>
-      { title && title.length > 0 && (
+      { ! RichText.isEmpty(title) && (
         <RichText.Content tagName="p" className="wp-block-cover-image-text" value={ title } />
       ) }
     </div>
