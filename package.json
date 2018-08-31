@@ -1,6 +1,6 @@
 {
   "name": "@frontkom/gutenberg-js",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "gutenberg-js - An extension of the Wordpress Gutenberg editor",
   "main": "build/js/gutenberg-js.js",
   "repository": {
