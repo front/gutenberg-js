@@ -153,6 +153,7 @@ const config = {
   externals,
   resolve: {
     modules: [
+      resolve(__dirname, 'node_modules/gutenberg/node_modules'),
       __dirname,
       'node_modules',
     ],
