@@ -4,13 +4,14 @@
 import React from 'react';
 import jQuery from 'jquery';
 import tinymce from 'tinymce';
-import { parse, format } from 'url';
 import memoize from 'memize';
+import { parse, stringify } from 'qs';
 
 /**
  * Wordpress dependencies
  */
 import * as blocks from '@wordpress/blocks';
+import * as data from '@wordpress/data';
 
 window.jQuery = window.jQuery || jQuery;
 window.tinymce = window.tinymce || tinymce;
@@ -18,6 +19,7 @@ window.React = window.React || React;
 
 window.wp = window.wp || {};
 window.wp.blocks = window.wp.blocks || blocks;
+window.wp.data = window.wp.data || data;
 window.wp.components = window.wp.components || {};
 window.wp.element = window.wp.element || React;
 
@@ -32,11 +34,11 @@ window.wp.apiFetch = window.wp.apiFetch || function (options) {
 };
 
 window.wp.url = window.wp.url || { addQueryArgs: function (url, args) {
-  const parsedURL = parse(url, true);
-  const query = { ...parsedURL.query, ...args };
-  delete parsedURL.search;
+  const queryStringIndex = url.indexOf('?');
+  const query = queryStringIndex !== -1 ? parse(url.substr(queryStringIndex + 1)) : {};
+  const baseUrl = queryStringIndex !== -1 ? url.substr(0, queryStringIndex) : url;
 
-  return format({ ...parsedURL, query });
+  return baseUrl + '?' + stringify({ ...query, ...args });
 } };
 
 window.wp.shortcode = window.wp.shortcode || {};
@@ -162,7 +164,7 @@ window.wpApiSettings.root = window.wpApiSettings.root || window.location.origin;
 window.wpApiSettings.nonce = window.wpApiSettings.nonce || '123456789';
 window.wpApiSettings.schema = window.wpApiSettings.schema || {};
 window.wpApiSettings.schema.routes = window.wpApiSettings.schema.routes || {};
-window.wpApiSettings.schema.routes[ '/wp/v2/posts' ] = window.wpApiSettings.schema.routes[ '/wp/v2/posts' ] || { methods: [ 'GET' ] };
-window.wpApiSettings.schema.routes[ '/wp/v2/posts/(?P<id>[\\d]+)' ] = window.wpApiSettings.schema.routes[ '/wp/v2/posts/(?P<id>[\\d]+)' ] || { methods: [ 'GET' ] };
-window.wpApiSettings.schema.routes[ '/wp/v2/media' ] = window.wpApiSettings.schema.routes[ '/wp/v2/media' ] || { methods: [ 'GET' ] };
-window.wpApiSettings.schema.routes[ '/wp/v2/media/(?P<id>[\\d]+)' ] = window.wpApiSettings.schema.routes[ '/wp/v2/media/(?P<id>[\\d]+)' ] || { methods: [ 'GET' ] };
+// window.wpApiSettings.schema.routes[ '/wp/v2/posts' ] = window.wpApiSettings.schema.routes[ '/wp/v2/posts' ] || { methods: [ 'GET' ] };
+// window.wpApiSettings.schema.routes[ '/wp/v2/posts/(?P<id>[\\d]+)' ] = window.wpApiSettings.schema.routes[ '/wp/v2/posts/(?P<id>[\\d]+)' ] || { methods: [ 'GET' ] };
+// window.wpApiSettings.schema.routes[ '/wp/v2/media' ] = window.wpApiSettings.schema.routes[ '/wp/v2/media' ] || { methods: [ 'GET' ] };
+// window.wpApiSettings.schema.routes[ '/wp/v2/media/(?P<id>[\\d]+)' ] = window.wpApiSettings.schema.routes[ '/wp/v2/media/(?P<id>[\\d]+)' ] || { methods: [ 'GET' ] };
