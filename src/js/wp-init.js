@@ -7,16 +7,26 @@ import tinymce from 'tinymce';
 import { parse, format } from 'url';
 import memoize from 'memize';
 
+/**
+ * Wordpress dependencies
+ */
+import * as blocks from '@wordpress/blocks';
+
 window.jQuery = window.jQuery || jQuery;
 window.tinymce = window.tinymce || tinymce;
 window.React = window.React || React;
 
 window.wp = window.wp || {};
-window.wp.blocks = window.wp.blocks || {};
+window.wp.blocks = window.wp.blocks || blocks;
 window.wp.components = window.wp.components || {};
 window.wp.element = window.wp.element || React;
 
-window.wp.apiRequest = window.wp.apiRequest || function (options) {
+// window.wp.apiRequest = window.wp.apiRequest || function (options) {
+//   // do something here (this should be a promise)
+//   return jQuery.ajax(options);
+// };
+
+window.wp.apiFetch = window.wp.apiFetch || function (options) {
   // do something here (this should be a promise)
   return jQuery.ajax(options);
 };

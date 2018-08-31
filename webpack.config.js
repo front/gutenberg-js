@@ -133,8 +133,9 @@ gutenbergPackages.forEach(name => {
   alias[ `@wordpress/${name}` ] = resolve(__dirname, 'node_modules/gutenberg/packages', name);
 });
 
-// make them external global vars
-[ ...coreGlobals ].forEach(name => {
+[
+  ...coreGlobals,
+].forEach(name => {
   externals[ `@wordpress/${name}` ] = {
     this: [ 'wp', camelCaseDash(name) ],
   };
