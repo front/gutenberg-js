@@ -228,11 +228,11 @@ import { parse as parseQueryString, stringify } from 'querystring';
  * @return {String}       Updated URL
  */
 export function addQueryArgs(url, args) {
-    const parsedURL = parse( url, true );
-    const query = { ...parsedURL.query, ...args };
-    delete parsedURL.search;
+    const queryStringIndex = url.indexOf('?');
+    const query = queryStringIndex !== -1 ? parse(url.substr(queryStringIndex + 1)) : {};
+    const baseUrl = queryStringIndex !== -1 ? url.substr(0, queryStringIndex) : url;
 
-    return format( { ...parsedURL, query } );
+    return baseUrl + '?' + stringify({ ...query, ...args });
 }
 ```
 
