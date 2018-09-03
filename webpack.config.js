@@ -49,14 +49,14 @@ const extractConfig = {
     {
       loader: 'postcss-loader',
       options: {
-        plugins: require('./node_modules/gutenberg/bin/packages/post-css-config.js'),
+        plugins: require('./node_modules/gutenberg/bin/packages/post-css-config'),
       },
     },
     {
       loader: 'sass-loader',
       query: {
-        includePaths: [ 'node_modules/gutenberg/edit-post/assets/stylesheets' ],
-        data: '@import "colors"; @import "breakpoints"; @import "variables"; @import "mixins"; @import "animations";@import "z-index";',
+        includePaths: [ './node_modules/gutenberg/edit-post/assets/stylesheets' ],
+        data: '@import "colors"; @import "breakpoints"; @import "variables"; @import "mixins"; @import "animations"; @import "z-index";',
         outputStyle: 'production' === process.env.NODE_ENV ?
           'compressed' : 'nested',
       },
@@ -160,10 +160,6 @@ const config = {
   },
   module: {
     rules: [
-      /* {
-        test: /\.pegjs/,
-        use: 'pegjs-loader',
-      }, */
       {
         test: /\.js$/,
         exclude: [
@@ -191,7 +187,6 @@ const config = {
         test: /style\.s?css$/,
         include: [
           /block-library/,
-          /js\/blocks/,
         ],
         use: blocksCSSPlugin.extract(extractConfig),
       },
@@ -199,7 +194,6 @@ const config = {
         test: /editor\.s?css$/,
         include: [
           /block-library/,
-          /js\/blocks/,
         ],
         use: editBlocksCSSPlugin.extract({
           use: [
@@ -220,7 +214,6 @@ const config = {
         test: /theme\.s?css$/,
         include: [
           /block-library/,
-          /js\/blocks/,
         ],
         use: themeBlocksCSSPlugin.extract(extractConfig),
       },
@@ -228,7 +221,6 @@ const config = {
         test: /\.s?css$/,
         exclude: [
           /block-library/,
-          /js\/blocks/,
         ],
         use: mainCSSExtractTextPlugin.extract(extractConfig),
       },
