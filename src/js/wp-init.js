@@ -12,8 +12,6 @@ window.tinymce = window.tinymce || tinymce;
 window.React = window.React || React;
 
 window.wp = window.wp || {};
-window.wp.components = window.wp.components || {};
-window.wp.element = window.wp.element || React;
 
 window.wp.apiFetch = window.wp.apiFetch || function (options) {
   // do something here (this should be a promise)
