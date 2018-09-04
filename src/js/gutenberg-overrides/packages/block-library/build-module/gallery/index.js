@@ -13,8 +13,7 @@ import { RichText } from '@wordpress/editor';
  */
 import { defaultColumnsNumber } from './edit';
 
-
-import * as others from 'gutenberg/packages/block-library/build-module/gallery?source=node_modules';
+import * as others from 'gutenberg/packages/block-library/build-module/gallery/index?source=node_modules';
 
 // added data attributes (which is an object)
 others.settings.attributes.images.query.data = {
@@ -59,4 +58,4 @@ others.settings.save = ({ attributes }) => {
   );
 };
 
-export * from 'gutenberg/packages/block-library/build-module/gallery?source=node_modules';
+export * from 'gutenberg/packages/block-library/build-module/gallery/index?source=node_modules';

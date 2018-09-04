@@ -6,7 +6,7 @@ import classnames from 'classnames';
 
 import { RichText } from '@wordpress/editor';
 
-import * as others from 'gutenberg/packages/block-library/build-module/image?source=node_modules';
+import * as others from 'gutenberg/packages/block-library/build-module/image/index?source=node_modules';
 
 // added data attributes (which is an object)
 others.settings.attributes.data = {
@@ -42,4 +42,4 @@ others.settings.save = ({ attributes }) => {
   );
 };
 
-export * from 'gutenberg/packages/block-library/build-module/image?source=node_modules';
+export * from 'gutenberg/packages/block-library/build-module/image/index?source=node_modules';

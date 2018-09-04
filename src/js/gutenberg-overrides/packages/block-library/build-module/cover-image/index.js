@@ -21,7 +21,7 @@ import {
   RichText,
 } from '@wordpress/editor';
 
-import * as others from 'gutenberg/packages/block-library/build-module/cover-image?source=node_modules';
+import * as others from 'gutenberg/packages/block-library/build-module/cover-image/index?source=node_modules';
 
 function dimRatioToClass (ratio) {
   return (ratio === 0 || ratio === 50) ?
@@ -209,4 +209,4 @@ others.settings.save = ({ attributes, className }) => {
   );
 };
 
-export * from 'gutenberg/packages/block-library/build-module/cover-image?source=node_modules';
+export * from 'gutenberg/packages/block-library/build-module/cover-image/index?source=node_modules';

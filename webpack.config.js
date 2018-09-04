@@ -84,7 +84,6 @@ function camelCaseDash (string) {
 const entryPointNames = [
   'components',
   'edit-post',
-  'block-library',
 ];
 
 const gutenbergPackages = [
@@ -92,6 +91,7 @@ const gutenbergPackages = [
   'autop',
   'blob',
   'blocks',
+  'block-library',
   'block-serialization-spec-parser',
   'compose',
   'core-data',
