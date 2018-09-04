@@ -2,7 +2,7 @@
  * External dependencies
  */
 import React from 'react';
-import { isEmpty, reduce } from 'lodash';
+import { isEmpty } from 'lodash';
 import classnames from 'classnames';
 
 /**
@@ -54,9 +54,9 @@ others.settings.edit = withNotices(({ attributes, setAttributes, isSelected, cla
     const toUpdate = { url: media.url, id: media.id };
 
     if (media.data) {
-      toUpdate.data = reduce(media.data, (result, value, key) => {
-        key = key.replace('_', '-');
-        result[ `data-${key}` ] = value;
+      toUpdate.data = Object.keys(media.data)
+      .reduce((result, key) => {
+        result[`data-${key.replace('_', '-')}`] = media.data[key];
 
         return result;
       }, {});

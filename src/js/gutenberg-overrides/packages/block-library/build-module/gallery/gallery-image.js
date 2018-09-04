@@ -2,7 +2,6 @@
  * External Dependencies
  */
 import React from 'react';
-import { reduce } from 'lodash';
 import classnames from 'classnames';
 
 /**
@@ -86,9 +85,9 @@ class GalleryImage extends Component {
     }
 
     if (image && image !== prevProps.image && image.data) {
-      const data = reduce(image.data, (result, value, key) => {
-        key = key.replace('_', '-');
-        result[ `data-${key}` ] = value;
+      const data = Object.keys(image.data)
+      .reduce((result, key) => {
+        result[`data-${key.replace('_', '-')}`] = image.data[key];
 
         return result;
       }, {});

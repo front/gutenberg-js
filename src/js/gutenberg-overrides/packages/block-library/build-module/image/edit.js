@@ -9,7 +9,6 @@ import {
   isEmpty,
   map,
   pick,
-  reduce,
   startCase,
 } from 'lodash';
 
@@ -128,9 +127,9 @@ class ImageEdit extends Component {
     };
 
     if (media.data) {
-      toUpdate.data = reduce(media.data, (result, value, key) => {
-        key = key.replace('_', '-');
-        result[ `data-${key}` ] = value;
+      toUpdate.data = Object.keys(media.data)
+      .reduce((result, key) => {
+        result[`data-${key.replace('_', '-')}`] = media.data[key];
 
         return result;
       }, {});
