@@ -277,9 +277,10 @@ const settings = {
     autosaveInterval: 10,
     ...
     // @frontkom/gutenberg-js settings
-    canAutosave: false, // to disable Editor Autosave featured (default: true)
-    canPublish: false,  // to disable Editor Publish featured (default: true)
-    canSave: false,     // to disable Editor Save featured (default: true)
+    canAutosave: false,  // to disable the Editor Autosave feature (default: true)
+    canPublish: false,   // to disable the Editor Publish feature (default: true)
+    canSave: false,      // to disable the Editor Save feature (default: true)
+    mediaLibrary: false, // to disable the Media Library feature (default: true)
 };
 
 // Post properties to override
