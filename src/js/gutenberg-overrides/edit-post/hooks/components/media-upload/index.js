@@ -72,6 +72,12 @@ class MediaUpload extends Component {
   }
 
   render () {
+    if (!this.props.mediaLibrary) {
+      // console.log('Media Library is deactivated');
+      return false;
+    }
+
+
     const { isVisible } = this.state;
 
     return <Fragment>
@@ -94,4 +100,6 @@ class MediaUpload extends Component {
   }
 }
 
-export default MediaUpload;
+export default withSelect(select => ({
+  mediaLibrary: select('core/editor').getEditorSettings().mediaLibrary,
+}))(MediaUpload);
