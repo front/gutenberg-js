@@ -4,6 +4,10 @@
 import React from 'react';
 import classnames from 'classnames';
 
+/**
+ * WordPress dependencies
+ */
+import { Fragment } from '@wordpress/element';
 import { RichText } from '@wordpress/editor';
 
 import * as others from 'gutenberg/packages/block-library/build-module/image/index?source=node_modules';
@@ -34,10 +38,26 @@ others.settings.save = ({ attributes }) => {
     />
   );
 
+  const figure = (
+    <Fragment>
+      { href ? <a href={ href }>{ image }</a> : image }
+      { caption && caption.length > 0 && <RichText.Content tagName="figcaption" value={ caption } /> }
+    </Fragment>
+  );
+
+  if ('left' === align || 'right' === align || 'center' === align) {
+    return (
+      <div>
+        <figure className={ classes }>
+          { figure }
+        </figure>
+      </div>
+    );
+  }
+
   return (
     <figure className={ classes }>
-      { href ? <a href={ href }>{ image }</a> : image }
-      { ! RichText.isEmpty(caption) && <RichText.Content tagName="figcaption" value={ caption } /> }
+      { figure }
     </figure>
   );
 };
