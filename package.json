@@ -20,7 +20,7 @@
     "url": "https://github.com/front/gutenberg-js/issues"
   },
   "author": "The Frontkom Contributors",
-  "license": "ISC",
+  "license": "GPL-2.0-or-later",
   "keywords": [
     "CMS",
     "Drupal",
