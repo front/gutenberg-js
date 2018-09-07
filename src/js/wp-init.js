@@ -5,7 +5,8 @@ import React from 'react';
 import jQuery from 'jquery';
 import tinymce from 'tinymce';
 import memoize from 'memize';
-import { parse, stringify } from 'qs';
+
+import * as url from 'gutenberg/packages/url/build-module/index';
 
 window.jQuery = window.jQuery || jQuery;
 window.tinymce = window.tinymce || tinymce;
@@ -13,18 +14,17 @@ window.React = window.React || React;
 
 window.wp = window.wp || {};
 
+// apiFetch
 window.wp.apiFetch = window.wp.apiFetch || function (options) {
   // do something here (this should be a promise)
   return jQuery.ajax(options);
 };
 
-window.wp.url = window.wp.url || { addQueryArgs: function (url, args) {
-  const queryStringIndex = url.indexOf('?');
-  const query = queryStringIndex !== -1 ? parse(url.substr(queryStringIndex + 1)) : {};
-  const baseUrl = queryStringIndex !== -1 ? url.substr(0, queryStringIndex) : url;
-
-  return baseUrl + '?' + stringify({ ...query, ...args });
-} };
+// URL
+window.wp.url = window.wp.url || {};
+window.wp.url.addQueryArgs = window.wp.url.addQueryArgs || url.addQueryArgs;
+window.wp.url.isURL = window.wp.url.isURL || url.isURL;
+window.wp.url.prependHTTP = window.wp.url.prependHTTP || url.prependHTTP;
 
 window.wp.shortcode = window.wp.shortcode || {};
 window.wp.shortcode.regexp = window.wp.shortcode.regexp || memoize(function (tag) {
