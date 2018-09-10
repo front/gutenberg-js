@@ -427,7 +427,7 @@ window.customGutenberg = {
 
 ## Custom Blocks
 
-We can create custom blocks to our Gutenberg editor and used them to build our website pages.
+We can create **custom blocks** to our Gutenberg editor and used them to build our website pages.
 
 [↑ Go up to Table of contents](#table-of-contents)
 
@@ -521,7 +521,7 @@ In [Creating Block Types](https://wordpress.org/gutenberg/handbook/blocks/) sect
 
 ### Sharing
 
-A easy way to share a custom block is to publish the block as a npm package.
+An easy way to share a custom block is to publish the block as a npm package.
 
 Here is an example of a custom block npm package, the [Hero Section](https://github.com/front/g-hero-section).
 
