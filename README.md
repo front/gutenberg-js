@@ -26,6 +26,9 @@ This package is based on [Gutenberg v3.7.0](https://github.com/WordPress/gutenbe
   * [Registering Custom Blocks](#registering-custom-blocks)
 * [Customize your Gutenberg](#customize-your-gutenberg)
   * [Events](#events)
+* [Custom blocks](#custom-blocks)
+  * [Creating and Registering](#creating-and-registering)
+  * [Sharing](#sharing)
 
 ## Installation
 
@@ -419,5 +422,107 @@ window.customGutenberg = {
     ...,
 };
 ```
+
+[↑ Go up to Table of contents](#table-of-contents)
+
+## Custom Blocks
+
+We can create custom blocks to our Gutenberg editor and used them to build our website pages.
+
+[↑ Go up to Table of contents](#table-of-contents)
+
+### Creating and Registering
+
+A Gutenberg block requires some properties like a `title`, an `icon`, a `category` and the `edit` and the `save` methods which describe the structure of the block inside the editor and what block content should be saved.
+
+```js
+const myFirstBlock = {
+    title: 'My first block!',
+    icon: 'universal-access-alt',
+    category: 'cloudblocks',
+
+    edit() {
+        return <p>Hello editor.</p>;
+    },
+
+    save() {
+        return <p>Hello saved content.</p>;
+    },
+};
+```
+
+After defining all the properties, the new block must be registered so it becomes available in editor inserter dialog under the choosen category. If the blocks's category doesn't exist yet, we must add it to the editor inserter dialog.
+
+A block's category requires a slug and a title:
+
+```js
+const category = {
+    slug: 'cloudblocks',
+    title: 'Gutenberg-Cloud Blocks',
+};
+```
+
+To check which categories already exist, we can use `getCategories()` selector and to add a new category to the editor we can use `setCategories()` action. Both methods are provided by Gutenberg `core/blocks` store which are accessible througg `wp.data`.
+
+```js
+const { dispatch, select } = wp.data;
+
+const currentCategories = select('core/blocks').getCategories().filter(item => item.slug !== category.slug);
+
+dispatch('core/blocks').setCategories([ category, ...currentCategories ]);
+```
+
+Finally, we are ready to register our custom block using `registerBlockType` method:
+
+```js
+const { registerBlockType } = wp.blocks;
+
+registerBlockType(`${category.slug}/my-first-block`, { category: category.slug, ...hero.settings });
+```
+
+And the block is available in the editor inserter dialog! There is the full example:
+
+```js
+const { dispatch, select } = wp.data;
+const { registerBlockType } = wp.blocks;
+
+// Setting block's properties
+const myFirstBlock = {
+    title: 'My first block!',
+    icon: 'universal-access-alt',
+    category: 'cloudblocks',
+
+    edit() {
+        return <p>Hello editor.</p>;
+    },
+
+    save() {
+        return <p>Hello saved content.</p>;
+    },
+};
+
+// Setting category's properties
+const category = {
+    slug: 'cloudblocks',
+    title: 'Gutenberg-Cloud Blocks',
+};
+
+// Checking the category
+const currentCategories = select('core/blocks').getCategories().filter(item => item.slug !== category.slug);
+dispatch('core/blocks').setCategories([ category, ...currentCategories ]);
+
+// Registering the new block
+registerBlockType(`${category.slug}/my-first-block`, myFirstBlock);
+```
+
+In [Creating Block Types](https://wordpress.org/gutenberg/handbook/blocks/) section of Gutenberg handbook, we can check more examples of how to custom blocks with more complexity. Also we can check more details about blocks properties in [Block API](https://wordpress.org/gutenberg/handbook/block-api/) documentation.
+
+[↑ Go up to Table of contents](#table-of-contents)
+
+### Sharing
+
+A easy way to share a custom block is to publish the block as a npm package.
+
+Here is an example of a custom block npm package, the [Hero Section](https://github.com/front/g-hero-section).
 
 [↑ Go up to Table of contents](#table-of-contents)
