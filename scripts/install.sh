@@ -8,7 +8,7 @@ cd node_modules
 rm -rf gutenberg
 
 # clone gutenberg repo to node_modules
-git clone git@github.com:WordPress/gutenberg.git
+git clone https://github.com/WordPress/gutenberg.git
 
 cd gutenberg
 
