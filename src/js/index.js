@@ -17,6 +17,7 @@ import * as data from '@wordpress/data';
 import * as editor from '@wordpress/editor';
 import * as editPost from '@wordpress/edit-post';
 import * as plugins from '@wordpress/plugins';
+import * as hooks from '@wordpress/hooks';
 
 // Adding modules to global wp
 window.wp.blocks = blocks;
@@ -31,6 +32,7 @@ window.wp.editor = {
 };
 window.wp.editPost = editPost;
 window.wp.plugins = plugins;
+window.wp.hooks = hooks;
 
 export {
   i18n,
@@ -42,4 +44,5 @@ export {
   editor,
   editPost,
   plugins,
+  hooks,
 };
