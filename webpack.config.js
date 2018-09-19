@@ -92,6 +92,7 @@ const gutenbergPackages = [
   'autop',
   'blob',
   'blocks',
+  'block-library', // keep it here to overrides
   'block-serialization-default-parser',
   'block-serialization-spec-parser',
   'browserslist-config',

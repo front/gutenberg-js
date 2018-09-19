@@ -1,6 +1,12 @@
 # editor changelog
 
-## 2.0.0 2018-08
+## 2.5.0 2018-09-19
+
+### Changed
+
+- media-upload overrides according gutenberg 3.8.0 and moved it to `packages/editor/build-module/utils/media-upload/media-upload.js`
+
+## 2.0.0 2018-08-30
 
 ### Changed
 
