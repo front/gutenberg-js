@@ -84,6 +84,7 @@ function camelCaseDash (string) {
 const entryPointNames = [
   'components',
   'edit-post',
+  'block-library',
 ];
 
 const gutenbergPackages = [
@@ -91,8 +92,9 @@ const gutenbergPackages = [
   'autop',
   'blob',
   'blocks',
-  'block-library',
+  'block-serialization-default-parser',
   'block-serialization-spec-parser',
+  'browserslist-config',
   'compose',
   'core-data',
   'data',
@@ -107,10 +109,12 @@ const gutenbergPackages = [
   'i18n',
   'is-shallow-equal',
   'keycodes',
+  'list-reusable-blocks',
   'nux',
   'plugins',
   'redux-routine',
   'shortcode',
+  'token-list',
   'viewport',
   'wordcount',
 ];
