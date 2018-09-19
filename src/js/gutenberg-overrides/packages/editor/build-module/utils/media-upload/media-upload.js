@@ -10,7 +10,7 @@ import { compact, forEach, get, has, includes, noop, startsWith } from 'lodash';
 import apiFetch from '@wordpress/api-fetch';
 import { __, sprintf } from '@wordpress/i18n';
 
-import * as others from 'gutenberg/packages/editor/build-module/utils/media-upload?source=node_modules';
+import * as others from 'gutenberg/packages/editor/build-module/utils/media-upload/media-upload?source=node_modules';
 
 const { getMimeTypesArray } = others;
 
@@ -157,4 +157,4 @@ others.mediaUpload = ({
   });
 };
 
-export * from 'gutenberg/packages/editor/build-module/utils/media-upload?source=node_modules';
+export * from 'gutenberg/packages/editor/build-module/utils/media-upload/media-upload?source=node_modules';
