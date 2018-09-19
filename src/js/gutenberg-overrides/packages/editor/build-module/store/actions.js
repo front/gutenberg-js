@@ -10,14 +10,14 @@ import * as others from 'gutenberg/packages/editor/build-module/store/actions?so
 
 const { insertBlock } = others;
 
-// Override 'insertDefaultBlock' action in order to to could set
-// Section as dafault block
-others.insertDefaultBlock = (attributes, rootUID, index) => {
-  const blockName = rootUID === undefined ? getDefaultBlockName() : 'core/paragraph';
+// Override 'insertDefaultBlock' action in order to could set
+// Section as default block
+others.insertDefaultBlock = (attributes, rootClientId, index) => {
+  const blockName = rootClientId === undefined ? getDefaultBlockName() : 'core/paragraph';
   const block = createBlock(blockName, attributes);
 
   return {
-    ...insertBlock(block, index, rootUID),
+    ...insertBlock(block, index, rootClientId),
     isProvisional: blockName === 'core/paragraph',
   };
 };
