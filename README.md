@@ -4,7 +4,7 @@ We made [Gutenberg](https://github.com/Wordpress/gutenberg) editor a little more
 
 Gutenberg editor can **be easly included in your apps** with this [package](https://github.com/front/gutenberg-js). Also you can customize blocks menu panels, blocks categories, document panels and more!
 
-This package is based on [Gutenberg v3.7.0](https://github.com/WordPress/gutenberg/releases/tag/v3.7.0).
+This package is based on [Gutenberg v3.9.0](https://github.com/WordPress/gutenberg/releases/tag/v3.9.0).
 
 ## Table of contents
 
@@ -26,6 +26,7 @@ This package is based on [Gutenberg v3.7.0](https://github.com/WordPress/gutenbe
   * [Registering Custom Blocks](#registering-custom-blocks)
 * [Customize your Gutenberg](#customize-your-gutenberg)
   * [Events](#events)
+* [Rendering Dynamic Blocks](#rendering-dynamic-blocks)
 * [Custom blocks](#custom-blocks)
   * [Creating and Registering](#creating-and-registering)
   * [Sharing](#sharing)
@@ -211,6 +212,8 @@ There is no documentation for `/wp/v2/wp_blocks` or `/wp/v2/blocks` request yet,
 }
 ```
 
+Gutenberg editor allows us to create, edit, list, get one and delete one block operations, so make sure you expect GET, POST, PUT and DELETE requests.
+
 ### url
 
 ***url*** should has a function called `addQueryArgs( url, args )` that handles with `url` and `args` and returns the final url to different actions. The original implementation is the following, feel free to keep it or change it according to your needs.
@@ -257,8 +260,8 @@ import '@frontkom/gutenberg-js/build/css/block-library/style.css';
 import '@frontkom/gutenberg-js/build/css/style.css';
 import '@frontkom/gutenberg-js/build/css/nux/style.css';
 import '@frontkom/gutenberg-js/build/css/editor/style.css';
-import '@frontkom/gutenberg-js/build/css/block-library/edit-blocks.css';
 import '@frontkom/gutenberg-js/build/css/block-library/theme.css';
+import '@frontkom/gutenberg-js/build/css/block-library/edit-blocks.css';
 
 // DOM element id where editor will be displayed
 const target = 'editor';
@@ -422,6 +425,40 @@ window.customGutenberg = {
     ...,
 };
 ```
+
+[↑ Go up to Table of contents](#table-of-contents)
+
+## Rendering Dynamic Blocks
+
+As you probably know, Gutenberg allows us to create our owns blocks inside the editor and make them reusable. We can look for reusable blocks in the 'Add Blocks Menu' search bar.
+
+If we change to 'Code Editor' mode, we can check that only a `ref` id is saved for our reusable block.
+
+```js
+<!-- wp:block {"ref":1537389905603} /-->
+```
+
+Gutenberg uses `wp/v2/wp_blocks/[:id]` request to get the block content inside the editor. Make sure you do the same process when your app do the final render of the page (outside of the editor).
+
+The same happens with embed blocks:
+
+```js
+<!-- wp:core-embed/twitter {"url": "https://twitter.com/drupalgutenberg/status/1040203765452820480", "type": "rich", "providerNameSlug": "twitter"} -->
+<figure class="wp-block-embed-twitter wp-block-embed is-type-rich is-provider-twitter">
+    <div class="wp-block-embed__wrapper">
+        https://twitter.com/drupalgutenberg/status/1040203765452820480
+    </div>
+</figure>
+<!-- /wp:core-embed/twitter -->
+```
+
+And latest posts widget:
+
+```js
+<!-- wp:latest-posts /-->
+```
+
+Your app must be in charge of the render of the dynamic blocks.
 
 [↑ Go up to Table of contents](#table-of-contents)
 
