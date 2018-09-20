@@ -13,8 +13,9 @@ const { basename, resolve } = require('path');
 /**
  * Gutenberg-js dependencies
  */
-const PostCssWrapper = require('postcss-wrapper-loader');
+// const PostCssWrapper = require('postcss-wrapper-loader');
 const StringReplacePlugin = require('string-replace-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 /**
  * WordPress dependencies
@@ -152,6 +153,7 @@ const config = {
   output: {
     filename: 'js/gutenberg-js.js',
     path: resolve(__dirname, 'build'),
+    // library: ['wp'],
     libraryTarget: 'this',
   },
   externals,
@@ -202,16 +204,17 @@ const config = {
         ],
         use: editBlocksCSSPlugin.extract({
           use: [
-            ...extractConfig.use,
             {
-              // remove .gutenberg class in editor.scss files
+              // removing .gutenberg class in editor.scss files
               loader: StringReplacePlugin.replace({
                 replacements: [ {
                   pattern: /.gutenberg /ig,
-                  replacement: () => (''),
+                  // replacement: () => (''),
+                  replacement: () => ('.gutenberg__editor'),
                 } ],
               }),
             },
+            ...extractConfig.use,
           ],
         }),
       },
@@ -237,8 +240,9 @@ const config = {
     themeBlocksCSSPlugin,
     mainCSSExtractTextPlugin,
     // wrapping editor style with .gutenberg__editor class
-    new PostCssWrapper('./css/block-library/edit-blocks.css', '.gutenberg__editor'),
+    // new PostCssWrapper('./css/block-library/edit-blocks.css', '.gutenberg__editor'),
     new StringReplacePlugin(),
+    new CleanWebpackPlugin(['build']),
     // Create RTL files with a -rtl suffix
     new WebpackRTLPlugin({
       suffix: '-rtl',
