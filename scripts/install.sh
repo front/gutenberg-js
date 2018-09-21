@@ -13,9 +13,9 @@ git clone https://github.com/WordPress/gutenberg.git
 cd gutenberg
 
 # checkout to version we want
-git checkout tags/v3.9.0-rc.1
+git checkout tags/v3.9.0
 
-# remobe git references
+# remove git references
 rm -rf .git
 
 # install gutenberg dependencies
