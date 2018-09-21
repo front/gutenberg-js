@@ -93,10 +93,11 @@ const gutenbergPackages = [
   'autop',
   'blob',
   'blocks',
-  'block-library', // keep it here to overrides
+  'block-library', // keep it here because package overrides
   'block-serialization-default-parser',
   'block-serialization-spec-parser',
   'browserslist-config',
+  'components', // keep it here because package overrides
   'compose',
   'core-data',
   'data',
