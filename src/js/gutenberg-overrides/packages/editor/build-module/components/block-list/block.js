@@ -494,7 +494,7 @@ export class BlockListBlock extends Component {
           />
         ) }
         <BlockDropZone
-          // GUTENBERG JS
+          // GUTENBERG JS - added clientId (block id)
           clientId={ clientId }
           index={ order }
           rootClientId={ rootClientId }

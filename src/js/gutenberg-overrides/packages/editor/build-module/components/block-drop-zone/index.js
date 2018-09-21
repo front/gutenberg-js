@@ -64,7 +64,7 @@ class BlockDropZone extends Component {
     let clientId, type, rootClientId, fromIndex, attributes;
 
     try {
-      // GUTENBERG JS - receive attributes
+      // GUTENBERG JS - receive attributes too
       ({ clientId, type, rootClientId, fromIndex, attributes } = JSON.parse(event.dataTransfer.getData('text')));
     }
     catch (err) {
@@ -83,7 +83,7 @@ class BlockDropZone extends Component {
 
     // check blocks and insert them
     if (attributes) {
-      // GUTENBERG JS
+      // GUTENBERG JS - update existing block with new attributes
       // this.props.insertBlocks(blocks, insertIndex);
       this.props.updateBlockAttributes(this.props.clientId, attributes);
     }

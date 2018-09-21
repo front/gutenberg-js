@@ -19,8 +19,8 @@ export default compose([
       isEditedPostSaveable,
       getCurrentPost,
       isAutosavingPost,
-      // extracting getEditorSettings
-      getEditorSettings, // GUTENBERG JS
+      // GUTENBERG JS
+      getEditorSettings,
     } = select('core/editor');
 
     // getting canSave setting
@@ -35,9 +35,7 @@ export default compose([
       isSaving: forceIsSaving || isSavingPost(),
       isSaveable: isEditedPostSaveable(),
       isAutosaving: isAutosavingPost(),
-
       // GUTENBERG JS
-      // adding canSave to props
       canSave,
     };
   }),
@@ -46,8 +44,8 @@ export default compose([
   })),
   withSafeTimeout,
   // GUTENBERG JS
-  // added ifCondition to enable/disable
-  // the Save button according 'canSave' setting
+  // added the ifCondition to enable/disable
+  // the save button according 'canSave' setting
   ifCondition(({ canSave }) => canSave),
 ])(PostSavedState);
 

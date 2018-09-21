@@ -31,7 +31,7 @@ export default compose([
     autosave: dispatch('core/editor').autosave,
   })),
   // GUTENBERG JS
-  // added ifCondition to enable/disable
+  // added the ifCondition to enable/disable
   // the autoave feature according 'canSave' and 'canAutosave' settings
   ifCondition(({ canSave, canAutosave }) => canSave && canAutosave),
 ])(AutosaveMonitor);

@@ -26,7 +26,8 @@ export default compose([
       isCurrentPostScheduled,
       getCurrentPost,
       getCurrentPostType,
-      getEditorSettings, // GUTENBERG JS
+      // GUTENBERG JS
+      getEditorSettings,
     } = select('core/editor');
 
     // GUTENBERG JS
@@ -47,7 +48,7 @@ export default compose([
     };
   }),
   // GUTENBERG JS
-  // added ifCondition to enable/disable
+  // added the ifCondition to enable/disable
   // the publish button according 'canPublish' setting
   ifCondition(({ canPublish }) => canPublish),
 ])(PostPublishPanelToggle);
