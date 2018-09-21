@@ -12,6 +12,7 @@ import * as blocks from '@wordpress/blocks';
 import * as components from '@wordpress/components';
 import * as coreData from '@wordpress/core-data';
 import * as data from '@wordpress/data';
+import domReady from '@wordpress/dom-ready';
 import * as editor from '@wordpress/editor';
 import * as editPost from '@wordpress/edit-post';
 import * as element from '@wordpress/element';
@@ -30,6 +31,7 @@ window.wp.blocks = blocks;
 window.wp.components = components;
 window.wp.coreData = coreData;
 window.wp.data = data;
+window.wp.domReady = domReady;
 window.wp.editor = {
   ...window.wp.editor,
   ...editor,
@@ -46,6 +48,7 @@ export {
   components,
   coreData,
   data,
+  domReady,
   editor,
   editPost,
   element,
