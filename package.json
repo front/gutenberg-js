@@ -31,7 +31,9 @@
     "WordPress",
     "WYSIWYG"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "tinymce": "4.8.0"
+  },
   "devDependencies": {
     "@wordpress/babel-plugin-makepot": "1.0.1",
     "@wordpress/scripts": "1.2.0",

@@ -43,22 +43,22 @@ npm install @frontkom/gutenberg-js
 
 ### Dependencies
 
-Some of the Gutenberg features depend of the [TinyMCE](https://www.tinymce.com/) text editor and Gutenberg editor expects to find tinymce *plugins*, *themes* and *skins* on the project root. Assuming that you added tinymce to your *node_modules*, we suggest to use webpack and [CopyWebpackPlugin](https://github.com/webpack-contrib/copy-webpack-plugin) to handle with that.
+Some of the Gutenberg features depend on the [TinyMCE](https://www.tinymce.com/) text editor and the editor expects to find TinyMCE *plugins*, *themes* and *skins* on the project root. Since **gutenberg-js** has TinyMCE as a dependency, we suggest to use webpack and [CopyWebpackPlugin](https://github.com/webpack-contrib/copy-webpack-plugin) to handle with that.
 
 ```js
 // webpack.config.js
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-   ...
+    ...
     plugins: [
         new CopyWebpackPlugin([
-            { from: 'node_modules/tinymce/plugins', to: `${ your_root_path }/plugins` },
-            { from: 'node_modules/tinymce/themes', to: `${ your_root_path }/themes` },
-            { from: 'node_modules/tinymce/skins', to: `${ your_root_path }/skins` },
+            { from: 'node_modules/@frontkom/gutenberg-js/node_modules/tinymce/plugins', to: `${ your_root_path }/plugins` },
+            { from: 'node_modules/@frontkom/gutenberg-js/node_modules/tinymce/themes', to: `${ your_root_path }/themes` },
+            { from: 'node_modules/@frontkom/gutenberg-js/node_modules/tinymce/skins', to: `${ your_root_path }/skins` },
         ], {}),
     ],
-   ...
+    ...
 }
 ```
 
@@ -262,6 +262,7 @@ import '@frontkom/gutenberg-js/build/css/nux/style.css';
 import '@frontkom/gutenberg-js/build/css/editor/style.css';
 import '@frontkom/gutenberg-js/build/css/block-library/theme.css';
 import '@frontkom/gutenberg-js/build/css/block-library/edit-blocks.css';
+import '@frontkom/gutenberg-js/build/css/list-reusable-blocks/style.css';
 
 // DOM element id where editor will be displayed
 const target = 'editor';
