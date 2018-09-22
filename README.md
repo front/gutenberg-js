@@ -257,12 +257,12 @@ import { editPost } from '@frontkom/gutenberg-js';
 
 // Don't forget to import the style
 import '@frontkom/gutenberg-js/build/css/block-library/style.css';
-import '@frontkom/gutenberg-js/build/css/style.css';
+import '@frontkom/gutenberg-js/build/css/components/style.css';
 import '@frontkom/gutenberg-js/build/css/nux/style.css';
 import '@frontkom/gutenberg-js/build/css/editor/style.css';
 import '@frontkom/gutenberg-js/build/css/block-library/theme.css';
 import '@frontkom/gutenberg-js/build/css/block-library/edit-blocks.css';
-import '@frontkom/gutenberg-js/build/css/list-reusable-blocks/style.css';
+import '@frontkom/gutenberg-js/build/css/style.css';
 
 // DOM element id where editor will be displayed
 const target = 'editor';
