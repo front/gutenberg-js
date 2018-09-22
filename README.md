@@ -53,9 +53,9 @@ module.exports = {
     ...
     plugins: [
         new CopyWebpackPlugin([
-            { from: 'node_modules/@frontkom/gutenberg-js/node_modules/tinymce/plugins', to: `${ your_root_path }/plugins` },
-            { from: 'node_modules/@frontkom/gutenberg-js/node_modules/tinymce/themes', to: `${ your_root_path }/themes` },
-            { from: 'node_modules/@frontkom/gutenberg-js/node_modules/tinymce/skins', to: `${ your_root_path }/skins` },
+            { from: 'node_modules/tinymce/plugins', to: `${ your_root_path }/plugins` },
+            { from: 'node_modules/tinymce/themes', to: `${ your_root_path }/themes` },
+            { from: 'node_modules/tinymce/skins', to: `${ your_root_path }/skins` },
         ], {}),
     ],
     ...
