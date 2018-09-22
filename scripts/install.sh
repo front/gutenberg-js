@@ -13,7 +13,7 @@ git clone https://github.com/WordPress/gutenberg.git
 cd gutenberg
 
 # checkout to version we want
-git checkout tags/v3.7.0
+git checkout tags/v3.9.0
 
 # remobe git references
 rm -rf .git
