@@ -206,7 +206,7 @@ There is no documentation for `/wp/v2/wp_blocks` or `/wp/v2/blocks` request yet,
 
 ```js
 {
-    content: "<!-- wp:paragraph -->↵	<p>3</p>↵	<!-- /wp:paragraph -->",
+    content: "<!-- wp:paragraph -->↵    <p>3</p>↵    <!-- /wp:paragraph -->",
     id: 131,
     title: "my block",
 }
