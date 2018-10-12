@@ -1,6 +1,7 @@
 # gutenberg-js
 
-![gutenberg-js](gutenberg_js_logo.svg?raw=true "gutenberg-js")
+![gutenberg-js](gutenberg_js_logo.svg?sanitize=true "gutenberg-js")
+<img src="gutenberg_js_logo.svg?sanitize=true" />
 
 We made [Gutenberg](https://github.com/Wordpress/gutenberg) editor a little more **customizable**!
 
