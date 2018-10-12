@@ -10,6 +10,7 @@ import '../scss/style.scss';
 import * as blockLibrary from '@wordpress/block-library';
 import * as blocks from '@wordpress/blocks';
 import * as components from '@wordpress/components';
+import * as compose from '@wordpress/compose';
 import * as coreData from '@wordpress/core-data';
 import * as data from '@wordpress/data';
 import domReady from '@wordpress/dom-ready';
@@ -29,6 +30,7 @@ import 'gutenberg/block-library/style.scss';
 window.wp.blockLibrary = blockLibrary;
 window.wp.blocks = blocks;
 window.wp.components = components;
+window.wp.compose = compose;
 window.wp.coreData = coreData;
 window.wp.data = data;
 window.wp.domReady = domReady;
@@ -46,6 +48,7 @@ export {
   blockLibrary,
   blocks,
   components,
+  compose,
   coreData,
   data,
   domReady,
