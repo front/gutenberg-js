@@ -1,5 +1,7 @@
 # gutenberg-js
 
+![gutenberg-js](gutenberg_js_logo.svg?raw=true "gutenberg-js")
+
 We made [Gutenberg](https://github.com/Wordpress/gutenberg) editor a little more **customizable**!
 
 Gutenberg editor can **be easly included in your apps** with this [package](https://github.com/front/gutenberg-js). Also you can customize blocks menu panels, blocks categories, document panels and more!
