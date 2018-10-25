@@ -1,5 +1,5 @@
 /**
- * External dependencies
+ * External Dependencies
  */
 import React from 'react';
 import { castArray } from 'lodash';
@@ -18,6 +18,28 @@ import {
 import { Component } from '@wordpress/element';
 import { withDispatch, withSelect } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
+
+const parseDropEvent = event => {
+  let result = {
+    srcRootClientId: null,
+    srcClientId: null,
+    srcIndex: null,
+    type: null,
+  };
+
+  if (! event.dataTransfer) {
+    return result;
+  }
+
+  try {
+    result = Object.assign(result, JSON.parse(event.dataTransfer.getData('text')));
+  }
+  catch (err) {
+    return result;
+  }
+
+  return result;
+};
 
 class BlockDropZone extends Component {
   constructor (props) {
@@ -57,38 +79,38 @@ class BlockDropZone extends Component {
   }
 
   onDrop (event, position) {
-    if (! event.dataTransfer) {
+    const { rootClientId: dstRootClientId, clientId: dstClientId, index: dstIndex, getClientIdsOfDescendants } = this.props;
+    // GUTENBERG JS - get attributes as well
+    const { srcRootClientId, srcClientId, srcIndex, type, attributes } = parseDropEvent(event);
+
+    const isBlockDropType = dropType => dropType === 'block';
+    const isSameLevel = (srcRoot, dstRoot) => {
+      // Note that rootClientId of top-level blocks will be undefined OR a void string,
+      // so we also need to account for that case separately.
+      return (srcRoot === dstRoot) || (! srcRoot === true && ! dstRoot === true);
+    };
+    const isSameBlock = (src, dst) => src === dst;
+    const isSrcBlockAnAncestorOfDstBlock = (src, dst) => getClientIdsOfDescendants([ src ]).some(id => id === dst);
+
+    if (! isBlockDropType(type) ||
+			isSameBlock(srcClientId, dstClientId) ||
+			isSrcBlockAnAncestorOfDstBlock(srcClientId, dstClientId)) {
       return;
     }
 
-    let clientId, type, rootClientId, fromIndex, attributes;
-
-    try {
-      // GUTENBERG JS - receive attributes too
-      ({ clientId, type, rootClientId, fromIndex, attributes } = JSON.parse(event.dataTransfer.getData('text')));
-    }
-    catch (err) {
-      return;
-    }
-
-    if (type !== 'block') {
-      return;
-    }
-    const { index } = this.props;
     const positionIndex = this.getInsertIndex(position);
+    // If the block is kept at the same level and moved downwards,
+    // subtract to account for blocks shifting upward to occupy its old position.
+    const insertIndex = dstIndex && srcIndex < dstIndex && isSameLevel(srcRootClientId, dstRootClientId) ? positionIndex - 1 : positionIndex;
 
-    // If the block is kept at the same level and moved downwards, subtract
-    // to account for blocks shifting upward to occupy its old position.
-    const insertIndex = index && fromIndex < index && rootClientId === this.props.rootClientId ? positionIndex - 1 : positionIndex;
-
-    // check blocks and insert them
+    // check attributes: if they exist update block instead of move
     if (attributes) {
       // GUTENBERG JS - update existing block with new attributes
       // this.props.insertBlocks(blocks, insertIndex);
-      this.props.updateBlockAttributes(this.props.clientId, attributes);
+      this.props.updateBlockAttributes(dstClientId, attributes);
     }
     else {
-      this.props.moveBlockToPosition(clientId, rootClientId, insertIndex);
+      this.props.moveBlockToPosition(srcClientId, srcRootClientId, insertIndex);
     }
   }
 
@@ -121,7 +143,7 @@ export default compose(
     } = dispatch('core/editor');
 
     return {
-      insertBlocks (blocks, insertIndex) {
+      insertBlocks (blocks, index) {
         const { rootClientId, layout } = ownProps;
 
         if (layout) {
@@ -134,21 +156,22 @@ export default compose(
           ));
         }
 
-        insertBlocks(blocks, insertIndex, rootClientId);
+        insertBlocks(blocks, index, rootClientId);
       },
       updateBlockAttributes (...args) {
         updateBlockAttributes(...args);
       },
-      moveBlockToPosition (clientId, fromRootClientId, index) {
-        const { rootClientId, layout } = ownProps;
-        moveBlockToPosition(clientId, fromRootClientId, rootClientId, layout, index);
+      moveBlockToPosition (srcClientId, srcRootClientId, dstIndex) {
+        const { rootClientId: dstRootClientId, layout } = ownProps;
+        moveBlockToPosition(srcClientId, srcRootClientId, dstRootClientId, layout, dstIndex);
       },
     };
   }),
   withSelect((select, { rootClientId }) => {
-    const { getTemplateLock } = select('core/editor');
+    const { getClientIdsOfDescendants, getTemplateLock } = select('core/editor');
     return {
       isLocked: !! getTemplateLock(rootClientId),
+      getClientIdsOfDescendants,
     };
   })
 )(BlockDropZone);
