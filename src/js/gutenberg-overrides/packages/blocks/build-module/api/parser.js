@@ -1,12 +1,17 @@
 /**
  * External dependencies
  */
-import { get, kebabCase, map, mapKeys } from 'lodash';
+import { get, kebabCase, map, mapKeys, castArray } from 'lodash';
 import jQuery from 'jquery';
+
+/**
+ * WordPress dependencies
+ */
+import deprecated from '@wordpress/deprecated';
 
 import def, * as others from 'gutenberg/packages/blocks/build-module/api/parser?source=node_modules';
 
-const { asType, parseWithAttributeSchema } = others;
+const { asType, parseWithAttributeSchema, isAmbiguousStringSource, isOfTypes } = others;
 
 /**
  * [parseDataAttributes description]
@@ -48,7 +53,9 @@ function parseDataAttributes (innerHTML, attributeSchema, value) {
 }
 
 others.getBlockAttribute = (attributeKey, attributeSchema, innerHTML, commentAttributes) => {
+  const { type } = attributeSchema;
   let value, data;
+
   switch (attributeSchema.source) {
     // undefined source means that it's an attribute serialized to the block's "comment"
     case undefined:
@@ -74,7 +81,33 @@ others.getBlockAttribute = (attributeKey, attributeSchema, innerHTML, commentAtt
       break;
   }
 
-  return value === undefined ? attributeSchema.default : asType(value, attributeSchema.type);
+  if (value !== undefined) {
+    if (isAmbiguousStringSource(attributeSchema)) {
+      if (! isOfTypes(value, castArray(type))) {
+        deprecated('Attribute type coercion', {
+          plugin: 'Gutenberg',
+          version: '4.2',
+          hint: (
+            'Omit the source to preserve type via serialized ' +
+						'comment demarcation.'
+          ),
+        });
+
+        value = asType(value, type);
+      }
+    }
+    else if (type !== undefined && ! isOfTypes(value, castArray(type))) {
+      // Reject the value if it is not valid of type. Reverting to the
+      // undefined value ensures the default is restored, if applicable.
+      value = undefined;
+    }
+  }
+
+  if (value === undefined) {
+    return attributeSchema.default;
+  }
+
+  return value;
 };
 
 export default def;
