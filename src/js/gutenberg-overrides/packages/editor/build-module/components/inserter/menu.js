@@ -23,10 +23,11 @@ import scrollIntoView from 'dom-scroll-into-view';
  */
 import { __ } from '@wordpress/i18n';
 import { Component, findDOMNode, createRef } from '@wordpress/element';
-import { withSpokenMessages, PanelBody, IconButton } from '@wordpress/components';
+import { withSpokenMessages, PanelBody } from '@wordpress/components';
 import { getCategories, isReusableBlock } from '@wordpress/blocks';
 import { withDispatch, withSelect } from '@wordpress/data';
 import { withInstanceId, compose, withSafeTimeout } from '@wordpress/compose';
+
 // GUTENBERG JS - use addQueryArgs instead of hard coding
 // 'edit.php?post_type=wp_block'
 import { addQueryArgs } from '@wordpress/url';
@@ -294,12 +295,12 @@ export class InserterMenu extends Component {
               ref={ this.bindPanel('reusable') }
             >
               <BlockTypesList items={ reusableItems } onSelect={ onSelect } onHover={ this.onHover } />
-              <IconButton
+              <a
                 className="editor-inserter__manage-reusable-blocks"
-                icon="admin-generic"
-                label={ __('Manage All Reusable Blocks') }
                 href={ addQueryArgs('edit.php', { post_type: 'wp_block' }) }
-              />
+              >
+                { __('Manage All Reusable Blocks') }
+              </a>
             </PanelBody>
           ) }
           { isEmpty(suggestedItems) && isEmpty(reusableItems) && isEmpty(itemsPerCategory) && (
