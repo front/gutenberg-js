@@ -3,6 +3,7 @@
  */
 import { withSelect, withDispatch } from '@wordpress/data';
 import { ifCondition, withSafeTimeout, compose } from '@wordpress/compose';
+import { withViewportMatch } from '@wordpress/viewport';
 
 import * as others from 'gutenberg/packages/editor/build-module/components/post-saved-state?source=node_modules';
 
@@ -19,6 +20,7 @@ export default compose([
       isEditedPostSaveable,
       getCurrentPost,
       isAutosavingPost,
+      getEditedPostAttribute,
       // GUTENBERG JS
       getEditorSettings,
     } = select('core/editor');
@@ -35,6 +37,7 @@ export default compose([
       isSaving: forceIsSaving || isSavingPost(),
       isSaveable: isEditedPostSaveable(),
       isAutosaving: isAutosavingPost(),
+      isPending: 'pending' === getEditedPostAttribute('status'),
       // GUTENBERG JS
       canSave,
     };
@@ -43,6 +46,7 @@ export default compose([
     onSave: dispatch('core/editor').savePost,
   })),
   withSafeTimeout,
+  withViewportMatch({ isLargeViewport: 'medium' }),
   // GUTENBERG JS
   // added the ifCondition to enable/disable
   // the save button according 'canSave' setting
