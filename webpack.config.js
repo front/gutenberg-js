@@ -28,21 +28,6 @@ const mainCSSExtractTextPlugin = new ExtractTextPlugin({
   filename: './css/style.css',
 });
 
-// CSS loader for styles specific to block editing.
-const editBlocksCSSPlugin = new ExtractTextPlugin({
-  filename: './css/block-library/edit-blocks.css',
-});
-
-// CSS loader for styles specific to blocks in general.
-const blocksCSSPlugin = new ExtractTextPlugin({
-  filename: './css/block-library/style.css',
-});
-
-// CSS loader for default visual block styles.
-const themeBlocksCSSPlugin = new ExtractTextPlugin({
-  filename: './css/block-library/theme.css',
-});
-
 // Configuration for the ExtractTextPlugin.
 const extractConfig = {
   use: [
@@ -56,7 +41,7 @@ const extractConfig = {
     {
       loader: 'sass-loader',
       query: {
-        includePaths: [ './node_modules/gutenberg/edit-post/assets/stylesheets' ],
+        includePaths: [ './node_modules/gutenberg/assets/stylesheets' ],
         data: '@import "colors"; @import "breakpoints"; @import "variables"; @import "mixins"; @import "animations"; @import "z-index";',
         outputStyle: 'production' === process.env.NODE_ENV ?
           'compressed' : 'nested',
@@ -84,16 +69,16 @@ function camelCaseDash (string) {
 
 const entryPointNames = [
   'components',
-  'edit-post',
-  'block-library',
+  // 'block-library',
 ];
 
 const gutenbergPackages = [
   'a11y',
+  // 'api-fetch', // global
   'autop',
   'blob',
   'blocks',
-  'block-library', // keep it here because package overrides
+  'block-library',
   'block-serialization-default-parser',
   'block-serialization-spec-parser',
   'browserslist-config',
@@ -105,8 +90,10 @@ const gutenbergPackages = [
   'deprecated',
   'dom',
   'dom-ready',
+  'edit-post',
   'editor',
   'element',
+  'escape-html',
   'hooks',
   'html-entities',
   'i18n',
@@ -116,8 +103,10 @@ const gutenbergPackages = [
   'nux',
   'plugins',
   'redux-routine',
+  'rich-text',
   'shortcode',
   'token-list',
+  // 'url', // global
   'viewport',
   'wordcount',
 ];
@@ -192,18 +181,11 @@ const config = {
         ],
       },
       {
-        test: /style\.s?css$/,
-        include: [
-          /block-library/,
-        ],
-        use: blocksCSSPlugin.extract(extractConfig),
-      },
-      {
         test: /editor\.s?css$/,
         include: [
           /block-library/,
         ],
-        use: editBlocksCSSPlugin.extract({
+        use: mainCSSExtractTextPlugin.extract({
           use: [
             {
               // removing .gutenberg class in editor.scss files
@@ -220,25 +202,12 @@ const config = {
         }),
       },
       {
-        test: /theme\.s?css$/,
-        include: [
-          /block-library/,
-        ],
-        use: themeBlocksCSSPlugin.extract(extractConfig),
-      },
-      {
         test: /\.s?css$/,
-        exclude: [
-          /block-library/,
-        ],
         use: mainCSSExtractTextPlugin.extract(extractConfig),
       },
     ],
   },
   plugins: [
-    blocksCSSPlugin,
-    editBlocksCSSPlugin,
-    themeBlocksCSSPlugin,
     mainCSSExtractTextPlugin,
     // wrapping editor style with .gutenberg__editor class
     // new PostCssWrapper('./css/block-library/edit-blocks.css', '.gutenberg__editor'),
