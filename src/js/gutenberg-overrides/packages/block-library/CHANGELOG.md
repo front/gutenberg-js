@@ -1,5 +1,11 @@
 # block-library changelog
 
+## 2.7.0 2018-10-25
+
+### Changed
+
+- 'cover-image' to 'cover' block ([packages/block-libary/build-module/cover](https://github.com/front/gutenberg-js/blob/v2.7.0/src/js/gutenberg-overrides/packages/block-libary/build-module/cover))
+
 ## 2.0.0 2018-08
 
 ### Changed
