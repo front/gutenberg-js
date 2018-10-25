@@ -21,11 +21,6 @@ import * as hooks from '@wordpress/hooks';
 import * as i18n from '@wordpress/i18n';
 import * as plugins from '@wordpress/plugins';
 
-// and styles
-import 'gutenberg/block-library/editor.scss';
-import 'gutenberg/block-library/theme.scss';
-import 'gutenberg/block-library/style.scss';
-
 // Adding modules to wp global
 window.wp.blockLibrary = blockLibrary;
 window.wp.blocks = blocks;

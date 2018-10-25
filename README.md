@@ -6,7 +6,7 @@ We made [Gutenberg](https://github.com/Wordpress/gutenberg) editor a little more
 
 Gutenberg editor can **be easly included in your apps** with this [package](https://github.com/front/gutenberg-js). Also you can customize blocks menu panels, blocks categories, document panels and more!
 
-This package is based on [Gutenberg v3.9.0](https://github.com/WordPress/gutenberg/releases/tag/v3.9.0).
+This package is based on [Gutenberg v4.1.0](https://github.com/WordPress/gutenberg/releases/tag/v4.1.0).
 
 ## Table of contents
 
@@ -32,13 +32,14 @@ This package is based on [Gutenberg v3.9.0](https://github.com/WordPress/gutenbe
 * [Custom blocks](#custom-blocks)
   * [Creating and Registering](#creating-and-registering)
   * [Sharing](#sharing)
+* [Development](#development)
 
 ## Installation
 
 **gutenberg-js** is available through npm.
 
 ```sh
-npm install @frontkom/gutenberg-js
+$ npm install @frontkom/gutenberg-js
 ```
 
 [↑ Go up to Table of contents](#table-of-contents)
@@ -263,7 +264,8 @@ import '@frontkom/gutenberg-js/build/css/components/style.css';
 import '@frontkom/gutenberg-js/build/css/nux/style.css';
 import '@frontkom/gutenberg-js/build/css/editor/style.css';
 import '@frontkom/gutenberg-js/build/css/block-library/theme.css';
-import '@frontkom/gutenberg-js/build/css/block-library/edit-blocks.css';
+import '@frontkom/gutenberg-js/build/css/block-library/edir.css';
+import '@frontkom/gutenberg-js/build/css/edit-post/style.css';
 import '@frontkom/gutenberg-js/build/css/style.css';
 
 // DOM element id where editor will be displayed
@@ -564,5 +566,23 @@ In [Creating Block Types](https://wordpress.org/gutenberg/handbook/blocks/) sect
 An easy way to share a custom block is to publish the block as a npm package.
 
 Here is an example of a custom block npm package, the [Hero Section](https://github.com/front/g-hero-section).
+
+[↑ Go up to Table of contents](#table-of-contents)
+
+## Development
+
+### Gutenberg and install script
+
+[...]
+
+### Overrides
+
+[...]
+
+### Publising
+
+```sh
+$ npm run deploy
+```
 
 [↑ Go up to Table of contents](#table-of-contents)
