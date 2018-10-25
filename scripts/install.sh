@@ -13,7 +13,7 @@ git clone https://github.com/WordPress/gutenberg.git
 cd gutenberg
 
 # checkout to version we want
-git checkout tags/v4.0.0
+git checkout tags/v4.1.0
 
 # remove git references
 # GUTENBERG HAS A SUBMODULE NOW
