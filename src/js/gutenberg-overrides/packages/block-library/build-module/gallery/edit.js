@@ -2,7 +2,7 @@
  * External Dependencies
  */
 import React from 'react';
-import { filter, pick } from 'lodash';
+import { filter } from 'lodash';
 
 /**
  * WordPress dependencies
@@ -41,8 +41,9 @@ const linkOptions = [
   { value: 'media', label: __('Media File') },
   { value: 'none', label: __('None') },
 ];
+const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
-const { defaultColumnsNumber } = others;
+const { defaultColumnsNumber, pickRelevantMediaFiles } = others;
 
 class GalleryEdit extends Component {
   constructor (props) {
@@ -87,7 +88,7 @@ class GalleryEdit extends Component {
 
   onSelectImages (images) {
     this.props.setAttributes({
-      images: images.map(image => pick(image, [ 'alt', 'caption', 'id', 'link', 'url' ])),
+      images: images.map(image => pickRelevantMediaFiles(image)),
     });
   }
 
@@ -132,11 +133,12 @@ class GalleryEdit extends Component {
     const currentImages = this.props.attributes.images || [];
     const { noticeOperations, setAttributes } = this.props;
     mediaUpload({
-      allowedType: 'image',
+      allowedTypes: ALLOWED_MEDIA_TYPES,
       filesList: files,
       onFileChange: images => {
+        const imagesNormalized = images.map(image => pickRelevantMediaFiles(image));
         setAttributes({
-          images: currentImages.concat(images),
+          images: currentImages.concat(imagesNormalized),
         });
       },
       onError: noticeOperations.createErrorNotice,
@@ -169,7 +171,7 @@ class GalleryEdit extends Component {
           <Toolbar>
             <MediaUpload
               onSelect={ this.onSelectImages }
-              type="image"
+              allowedTypes={ ALLOWED_MEDIA_TYPES }
               multiple
               gallery
               value={ images.map(img => img.id) }
@@ -200,7 +202,7 @@ class GalleryEdit extends Component {
             } }
             onSelect={ this.onSelectImages }
             accept="image/*"
-            type="image"
+            allowedTypes={ ALLOWED_MEDIA_TYPES }
             multiple
             notices={ noticeUI }
             onError={ noticeOperations.createErrorNotice }
@@ -228,7 +230,7 @@ class GalleryEdit extends Component {
               help={ this.getImageCropHelp }
             />
             <SelectControl
-              label={ __('Link to') }
+              label={ __('Link To') }
               value={ linkTo }
               onChange={ this.setLinkTo }
               options={ linkOptions }

@@ -13,6 +13,7 @@ import { __ } from '@wordpress/i18n';
 import { BACKSPACE, DELETE } from '@wordpress/keycodes';
 import { withSelect } from '@wordpress/data';
 import { RichText } from '@wordpress/editor';
+import { isBlobURL } from '@wordpress/blob';
 
 class GalleryImage extends Component {
   constructor (props) {
@@ -97,7 +98,7 @@ class GalleryImage extends Component {
   }
 
   render () {
-    const { url, alt, id, linkTo, link, data, isSelected, caption, onRemove, setAttributes } = this.props;
+    const { url, alt, id, linkTo, link, isSelected, caption, onRemove, setAttributes, data } = this.props;
 
     let href;
 
@@ -117,7 +118,7 @@ class GalleryImage extends Component {
 
     const className = classnames({
       'is-selected': isSelected,
-      'is-transient': url && 0 === url.indexOf('blob:'),
+      'is-transient': isBlobURL(url),
     });
 
     // Disable reason: Each block can be selected by clicking on it and we should keep the same saved markup
@@ -135,7 +136,7 @@ class GalleryImage extends Component {
         </div>
         }
         { href ? <a href={ href }>{ img }</a> : img }
-        { (caption && caption.length > 0) || isSelected ? (
+        { (! RichText.isEmpty(caption) || isSelected) ? (
           <RichText
             tagName="figcaption"
             placeholder={ __('Write caption…') }
