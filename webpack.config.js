@@ -2,68 +2,17 @@
  * External dependencies
  */
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const WebpackRTLPlugin = require('webpack-rtl-plugin');
-const LiveReloadPlugin = require('webpack-livereload-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const postcss = require('postcss');
 
-const { get } = require('lodash');
-const { basename, resolve } = require('path');
+const { resolve } = require('path');
 
 /**
  * Gutenberg-js dependencies
  */
 // const PostCssWrapper = require('postcss-wrapper-loader');
-const StringReplacePlugin = require('string-replace-webpack-plugin');
+// const StringReplacePlugin = require('string-replace-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-
-/**
- * WordPress dependencies
- */
-const CustomTemplatedPathPlugin = require('./node_modules/gutenberg/packages/custom-templated-path-webpack-plugin');
-const LibraryExportDefaultPlugin = require('./node_modules/gutenberg/packages/library-export-default-webpack-plugin');
-
-// Main CSS loader for everything but blocks..
-const mainCSSExtractTextPlugin = new ExtractTextPlugin({
-  filename: './css/style.css',
-});
-
-// CSS loader for styles specific to block editing.
-const editBlocksCSSPlugin = new ExtractTextPlugin({
-  filename: './css/block-library/edit-blocks.css',
-});
-
-// CSS loader for styles specific to blocks in general.
-const blocksCSSPlugin = new ExtractTextPlugin({
-  filename: './css/block-library/style.css',
-});
-
-// CSS loader for default visual block styles.
-const themeBlocksCSSPlugin = new ExtractTextPlugin({
-  filename: './css/block-library/theme.css',
-});
-
-// Configuration for the ExtractTextPlugin.
-const extractConfig = {
-  use: [
-    { loader: 'raw-loader' },
-    {
-      loader: 'postcss-loader',
-      options: {
-        plugins: require('./node_modules/gutenberg/bin/packages/post-css-config'),
-      },
-    },
-    {
-      loader: 'sass-loader',
-      query: {
-        includePaths: [ './node_modules/gutenberg/edit-post/assets/stylesheets' ],
-        data: '@import "colors"; @import "breakpoints"; @import "variables"; @import "mixins"; @import "animations"; @import "z-index";',
-        outputStyle: 'production' === process.env.NODE_ENV ?
-          'compressed' : 'nested',
-      },
-    },
-  ],
-};
 
 /**
  * Given a string, returns a new string with dash separators converedd to
@@ -82,18 +31,13 @@ function camelCaseDash (string) {
   );
 }
 
-const entryPointNames = [
-  'components',
-  'edit-post',
-  'block-library',
-];
-
 const gutenbergPackages = [
   'a11y',
+  // 'api-fetch', // global
   'autop',
   'blob',
   'blocks',
-  'block-library', // keep it here because package overrides
+  'block-library',
   'block-serialization-default-parser',
   'block-serialization-spec-parser',
   'browserslist-config',
@@ -105,56 +49,60 @@ const gutenbergPackages = [
   'deprecated',
   'dom',
   'dom-ready',
+  'edit-post',
   'editor',
   'element',
+  'escape-html',
+  'format-library',
   'hooks',
   'html-entities',
   'i18n',
   'is-shallow-equal',
   'keycodes',
   'list-reusable-blocks',
+  'notices',
   'nux',
   'plugins',
   'redux-routine',
+  'rich-text',
   'shortcode',
   'token-list',
+  // 'url', // global
   'viewport',
   'wordcount',
 ];
 
-const coreGlobals = [
-  'api-fetch',
-  'url',
-];
-
-const externals = {};
+const externals = {
+  react: 'React',
+  'react-dom': 'ReactDOM',
+  moment: 'moment',
+  jquery: 'jQuery',
+  lodash: 'lodash',
+  'lodash-es': 'lodash',
+};
 
 const alias = {};
-
-entryPointNames.forEach(name => {
-  alias[ `@wordpress/${name}` ] = resolve(__dirname, 'node_modules/gutenberg', name);
-});
 
 gutenbergPackages.forEach(name => {
   alias[ `@wordpress/${name}` ] = resolve(__dirname, 'node_modules/gutenberg/packages', name);
 });
 
 [
-  ...coreGlobals,
+  'api-fetch',
+  'url',
 ].forEach(name => {
   externals[ `@wordpress/${name}` ] = {
     this: [ 'wp', camelCaseDash(name) ],
   };
 });
 
-const config = {
+module.exports = {
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
-
+  devtool: 'source-map',
   entry: './src/js/index.js',
   output: {
     filename: 'js/gutenberg-js.js',
     path: resolve(__dirname, 'build'),
-    // library: ['wp'],
     libraryTarget: 'this',
   },
   externals,
@@ -191,19 +139,12 @@ const config = {
           },
         ],
       },
-      {
-        test: /style\.s?css$/,
-        include: [
-          /block-library/,
-        ],
-        use: blocksCSSPlugin.extract(extractConfig),
-      },
-      {
+      /* {
         test: /editor\.s?css$/,
         include: [
           /block-library/,
         ],
-        use: editBlocksCSSPlugin.extract({
+        use: mainCSSExtractTextPlugin.extract({
           use: [
             {
               // removing .gutenberg class in editor.scss files
@@ -218,72 +159,32 @@ const config = {
             ...extractConfig.use,
           ],
         }),
-      },
-      {
-        test: /theme\.s?css$/,
-        include: [
-          /block-library/,
-        ],
-        use: themeBlocksCSSPlugin.extract(extractConfig),
-      },
+      },*/
       {
         test: /\.s?css$/,
-        exclude: [
-          /block-library/,
-        ],
-        use: mainCSSExtractTextPlugin.extract(extractConfig),
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader', // creates style nodes from JS strings
+          use: [
+            { loader: 'css-loader' },   // translates CSS into CommonJS
+            { loader: 'sass-loader' },  // compiles Sass to CSS
+          ],
+        }),
       },
     ],
   },
   plugins: [
-    blocksCSSPlugin,
-    editBlocksCSSPlugin,
-    themeBlocksCSSPlugin,
-    mainCSSExtractTextPlugin,
+    new ExtractTextPlugin('./css/style.css'),
     // wrapping editor style with .gutenberg__editor class
     // new PostCssWrapper('./css/block-library/edit-blocks.css', '.gutenberg__editor'),
-    new StringReplacePlugin(),
+    // new StringReplacePlugin(),
     new CleanWebpackPlugin(['build']),
-    // Create RTL files with a -rtl suffix
-    new WebpackRTLPlugin({
-      suffix: '-rtl',
-      minify: process.env.NODE_ENV === 'production' ? { safe: true } : false,
-    }),
-    new CustomTemplatedPathPlugin({
-      basename (path, data) {
-        let rawRequest;
-
-        const entryModule = get(data, [ 'chunk', 'entryModule' ], {});
-        switch (entryModule.type) {
-          case 'javascript/auto':
-            rawRequest = entryModule.rawRequest;
-            break;
-
-          case 'javascript/esm':
-            rawRequest = entryModule.rootModule.rawRequest;
-            break;
-        }
-
-        if (rawRequest) {
-          return basename(rawRequest);
-        }
-
-        return path;
-      },
-    }),
-    new LibraryExportDefaultPlugin([
-      'api-fetch',
-      'deprecated',
-      'dom-ready',
-      'redux-routine',
-    ].map(camelCaseDash)),
-    new CopyWebpackPlugin(
-      gutenbergPackages.map(packageName => ({
-        from: `./node_modules/gutenberg/packages/${packageName}/build-style/*.css`,
-        to: `./css/${packageName}/`,
+    new CopyWebpackPlugin([
+      {
+        from: `./node_modules/gutenberg/packages/block-library/build-style/style.css`,
+        to: `./css/block-library/`,
         flatten: true,
         transform: content => {
-          if (config.mode === 'production') {
+          if (process.env.NODE_ENV === 'production') {
             return postcss([
               require('cssnano')({
                 preset: 'default',
@@ -294,20 +195,10 @@ const config = {
           }
           return content;
         },
-      }))
-    ),
+      },
+    ]),
   ],
   stats: {
     children: false,
   },
 };
-
-if (config.mode !== 'production') {
-  config.devtool = process.env.SOURCEMAP || 'source-map';
-}
-
-if (config.mode === 'development') {
-  config.plugins.push(new LiveReloadPlugin({ port: process.env.GUTENBERG_LIVE_RELOAD_PORT || 35729 }));
-}
-
-module.exports = config;

@@ -1,5 +1,21 @@
 # editor changelog
 
+## 3.0.0
+
+### Removed
+
+- BlockDropZone override
+
+- BlockListBlock override
+
+- `insertDefaultBlock` action override
+
+- mediaUpload override
+
+### Added
+
+- `addQueryArgs` to 'Manage All Reusable Blocks' link (Inserter Menu) ([packages/editor/build-module/components/inserter/menu.js](https://github.com/front/gutenberg-js/blob/v2.7.0/src/js/gutenberg-overrides/packages/editor/build-module/components/inserter/menu.js))
+
 ## 2.5.0 2018-09-19
 
 ### Changed
@@ -49,3 +65,5 @@
 - `onDrop` override in order to accept blocks from PostItemDraggable  ([editor/components/block-drop-zone/index.js](https://github.com/front/gutenberg-js/blob/v0.0.1/src/js/gutenberg-overrides/editor/components/block-drop-zone/index.js))
 
 - `INSERTER_UTILITY_HIGH`, `INSERTER_UTILITY_MEDIUM` and `INSERTER_UTILITY_LOW` overrides with `INSERTER_UTILITY_NONE` so there is no different levels of utility and consequently no **Most Used** panel ([editor/store/selectors.js](https://github.com/front/gutenberg-js/blob/v0.0.1/src/js/gutenberg-overrides/editor/store/selectors.js))
+
+- `data` property to `mediaObject` and use `get` function to obtain image `title` in `mediaUpload` function ([utils/mediaupload.js](https://github.com/front/gutenberg-js/blob/v0.0.1/src/js/gutenberg-overrides/utils/mediaupload.js))

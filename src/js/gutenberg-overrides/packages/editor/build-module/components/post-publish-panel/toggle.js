@@ -1,18 +1,47 @@
 /**
- * External Dependencies
+ * External dependencies
  */
-import { get } from 'lodash';
+import React from 'react';
 
 /**
  * WordPress Dependencies
  */
-import { compose, ifCondition } from '@wordpress/compose';
+import { Button } from '@wordpress/components';
+import { compose, ifCondition  } from '@wordpress/compose';
+import { __ } from '@wordpress/i18n';
 import { withSelect } from '@wordpress/data';
+import { DotTip } from '@wordpress/nux';
 
-import * as others from 'gutenberg/packages/editor/build-module/components/post-publish-panel/toggle?source=node_modules';
+export function PostPublishPanelToggle ({
+  isSaving,
+  isPublishable,
+  isSaveable,
+  isPublished,
+  isBeingScheduled,
+  onToggle,
+  isOpen,
+  forceIsSaving,
+}) {
+  const isButtonEnabled = (
+    ! isSaving && ! forceIsSaving && isPublishable && isSaveable
+  ) || isPublished;
 
-const { PostPublishPanelToggle } = others;
-
+  return (
+    <Button
+      className="editor-post-publish-panel__toggle"
+      isPrimary
+      onClick={ onToggle }
+      aria-expanded={ isOpen }
+      disabled={ ! isButtonEnabled }
+      isBusy={ isSaving && isPublished }
+    >
+      { isBeingScheduled ? __('Schedule…') : __('Publish…') }
+      <DotTip tipId="core/editor.publish">
+        { __('Finished writing? That’s great, let’s get this published right now. Just click “Publish” and you’re good to go.') }
+      </DotTip>
+    </Button>
+  );
+}
 
 export default compose([
   withSelect(select => {
@@ -20,12 +49,9 @@ export default compose([
       isSavingPost,
       isEditedPostSaveable,
       isEditedPostPublishable,
-      isCurrentPostPending,
       isCurrentPostPublished,
       isEditedPostBeingScheduled,
-      isCurrentPostScheduled,
-      getCurrentPost,
-      getCurrentPostType,
+
       // GUTENBERG JS
       getEditorSettings,
     } = select('core/editor');
@@ -34,23 +60,19 @@ export default compose([
     const { canPublish } = getEditorSettings();
 
     return {
-      hasPublishAction: get(getCurrentPost(), [ '_links', 'wp:action-publish' ], false),
       isSaving: isSavingPost(),
       isSaveable: isEditedPostSaveable(),
       isPublishable: isEditedPostPublishable(),
-      isPending: isCurrentPostPending(),
       isPublished: isCurrentPostPublished(),
-      isScheduled: isCurrentPostScheduled(),
       isBeingScheduled: isEditedPostBeingScheduled(),
-      postType: getCurrentPostType(),
+
       // GUTENBERG JS
       canPublish,
     };
   }),
+
   // GUTENBERG JS
   // added the ifCondition to enable/disable
   // the publish button according 'canPublish' setting
   ifCondition(({ canPublish }) => canPublish),
 ])(PostPublishPanelToggle);
-
-export * from 'gutenberg/packages/editor/build-module/components/post-publish-panel/toggle?source=node_modules';
