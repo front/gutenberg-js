@@ -85,6 +85,7 @@ class GalleryImage extends Component {
       });
     }
 
+    // GUTENBERG JS
     if (image && image !== prevProps.image && image.data) {
       const data = Object.keys(image.data)
       .reduce((result, key) => {

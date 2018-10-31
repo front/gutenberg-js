@@ -2,7 +2,7 @@
  * External Dependencies
  */
 import React from 'react';
-import { filter } from 'lodash';
+import { filter, pick } from 'lodash';
 
 /**
  * WordPress dependencies
@@ -33,8 +33,6 @@ import {
  */
 import GalleryImage from './gallery-image';
 
-import * as others from 'gutenberg/packages/block-library/build-module/gallery/edit?source=node_modules';
-
 const MAX_COLUMNS = 8;
 const linkOptions = [
   { value: 'attachment', label: __('Attachment Page') },
@@ -43,7 +41,13 @@ const linkOptions = [
 ];
 const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
-const { defaultColumnsNumber, pickRelevantMediaFiles } = others;
+export function defaultColumnsNumber (attributes) {
+  return Math.min(3, attributes.images.length);
+}
+
+export const pickRelevantMediaFiles = image => {
+  return pick(image, [ 'alt', 'id', 'link', 'url', 'caption' ]);
+};
 
 class GalleryEdit extends Component {
   constructor (props) {
@@ -198,7 +202,7 @@ class GalleryEdit extends Component {
             className={ className }
             labels={ {
               title: __('Gallery'),
-              name: __('images'),
+              instructions: __('Drag images, upload new ones or select files from your library.'),
             } }
             onSelect={ this.onSelectImages }
             accept="image/*"
@@ -246,12 +250,12 @@ class GalleryEdit extends Component {
                 url={ img.url }
                 alt={ img.alt }
                 id={ img.id }
-                data={ img.data }
                 isSelected={ isSelected && this.state.selectedImage === index }
                 onRemove={ this.onRemoveImage(index) }
                 onSelect={ this.onSelectImage(index) }
                 setAttributes={ attrs => this.setImageAttributes(index, attrs) }
                 caption={ img.caption }
+                data={ img.data }
               />
             </li>
           )) }
@@ -276,4 +280,3 @@ class GalleryEdit extends Component {
 }
 
 export default withNotices(GalleryEdit);
-export * from 'gutenberg/packages/block-library/build-module/gallery/edit?source=node_modules';

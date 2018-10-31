@@ -28,6 +28,7 @@ import {
   TextareaControl,
   Toolbar,
   withNotices,
+  ToggleControl,
 } from '@wordpress/components';
 import { withSelect } from '@wordpress/data';
 import {
@@ -157,6 +158,7 @@ class ImageEdit extends Component {
       isEditing: false,
     });
 
+    // GUTENBERG JS
     const toUpdate = {
       ...pickRelevantMediaFiles(media),
       width: undefined,
@@ -283,7 +285,7 @@ class ImageEdit extends Component {
   render () {
     const { isEditing } = this.state;
     const { attributes, setAttributes, isLargeViewport, isSelected, className, maxWidth, noticeOperations, noticeUI, toggleSelection, isRTL } = this.props;
-    const { url, alt, caption, align, id, href, linkDestination, width, height, data } = attributes;
+    const { url, alt, caption, align, id, href, linkDestination, width, height, linkTarget, data } = attributes;
     const isExternal = isExternalImage(id, url);
 
     let toolbarEditButton;
@@ -338,10 +340,6 @@ class ImageEdit extends Component {
           { controls }
           <MediaPlaceholder
             icon="format-image"
-            labels={ {
-              title: __('Image'),
-              name: __('an image'),
-            } }
             className={ className }
             onSelect={ this.onSelectImage }
             onSelectURL={ this.onSelectURL }
@@ -372,7 +370,7 @@ class ImageEdit extends Component {
             label={ __('Alt Text (Alternative Text)') }
             value={ alt }
             onChange={ this.updateAlt }
-            help={ __('Describe the purpose of the image. Leave empty if the image is not a key part of the content.') }
+            help={ __('Alternative text describes your image to people who can’t see it. Add a short description with its key details.') }
           />
           { ! isEmpty(availableSizes) && (
             <SelectControl
@@ -449,13 +447,19 @@ class ImageEdit extends Component {
             onChange={ this.onSetLinkDestination }
           />
           { linkDestination !== LINK_DESTINATION_NONE && (
-            <TextControl
-              label={ __('Link URL') }
-              value={ href || '' }
-              onChange={ this.onSetCustomHref }
-              placeholder={ ! isLinkURLInputDisabled ? 'https://' : undefined }
-              disabled={ isLinkURLInputDisabled }
-            />
+            <Fragment>
+              <TextControl
+                label={ __('Link URL') }
+                value={ href || '' }
+                onChange={ this.onSetCustomHref }
+                placeholder={ ! isLinkURLInputDisabled ? 'https://' : undefined }
+                disabled={ isLinkURLInputDisabled }
+              />
+              <ToggleControl
+                label={ __('Open in New Tab') }
+                onChange={ () => setAttributes({ linkTarget: ! linkTarget ? '_blank' : undefined }) }
+                checked={ linkTarget === '_blank' } />
+            </Fragment>
           ) }
         </PanelBody>
       </InspectorControls>

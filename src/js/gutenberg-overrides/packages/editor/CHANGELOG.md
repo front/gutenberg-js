@@ -1,8 +1,10 @@
 # editor changelog
 
-## 2.7.0 2018-10-25
+## 3.0.0
 
 ### Removed
+
+- BlockDropZone override
 
 - BlockListBlock override
 

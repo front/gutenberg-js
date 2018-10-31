@@ -4,14 +4,9 @@
 import { get, kebabCase, map, mapKeys, castArray } from 'lodash';
 import jQuery from 'jquery';
 
-/**
- * WordPress dependencies
- */
-import deprecated from '@wordpress/deprecated';
-
 import def, * as others from 'gutenberg/packages/blocks/build-module/api/parser?source=node_modules';
 
-const { asType, parseWithAttributeSchema, isAmbiguousStringSource, isOfTypes } = others;
+const { parseWithAttributeSchema, isOfTypes } = others;
 
 /**
  * [parseDataAttributes description]
@@ -81,26 +76,10 @@ others.getBlockAttribute = (attributeKey, attributeSchema, innerHTML, commentAtt
       break;
   }
 
-  if (value !== undefined) {
-    if (isAmbiguousStringSource(attributeSchema)) {
-      if (! isOfTypes(value, castArray(type))) {
-        deprecated('Attribute type coercion', {
-          plugin: 'Gutenberg',
-          version: '4.2',
-          hint: (
-            'Omit the source to preserve type via serialized ' +
-						'comment demarcation.'
-          ),
-        });
-
-        value = asType(value, type);
-      }
-    }
-    else if (type !== undefined && ! isOfTypes(value, castArray(type))) {
-      // Reject the value if it is not valid of type. Reverting to the
-      // undefined value ensures the default is restored, if applicable.
-      value = undefined;
-    }
+  if (type !== undefined && ! isOfTypes(value, castArray(type))) {
+    // Reject the value if it is not valid of type. Reverting to the
+    // undefined value ensures the default is restored, if applicable.
+    value = undefined;
   }
 
   if (value === undefined) {
