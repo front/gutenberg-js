@@ -6,7 +6,7 @@ We made [Gutenberg](https://github.com/Wordpress/gutenberg) editor a little more
 
 Gutenberg editor can **be easly included in your apps** with this [package](https://github.com/front/gutenberg-js). Also you can customize blocks menu panels, blocks categories, document panels and more!
 
-This package is based on [Gutenberg v4.1.0](https://github.com/WordPress/gutenberg/releases/tag/v4.1.0).
+This package is based on [Gutenberg v4.2.0-rc.1](https://github.com/WordPress/gutenberg/releases/tag/v4.2.0-rc.1).
 
 ## Table of contents
 
@@ -18,10 +18,10 @@ This package is based on [Gutenberg v4.1.0](https://github.com/WordPress/gutenbe
       * [Wp block](#wp-block)
     * [Posts and Pages](#posts-and-pages)
     * [Categories](#categories)
-    * [Index](#index)
     * [Media](#media)
     * [Taxonomies](#taxonomies)
     * [Blocks](#blocks)
+    * [Themes](#themes)
   * [url](#url)
 * [Usage](#usage)
   * [Gutenberg Stores](#gutenberg-stores)
@@ -63,6 +63,17 @@ module.exports = {
     ],
     ...
 }
+```
+
+GutenbergJS expects to find React (v16.4.1), ReactDOM (v16.4.1), moment (v2.22.1), jQuery (v1.12.4) and lodash (v4.17.5) libraries in the environment it runs. Maybe you would add the following lines to your pages.
+
+```html
+<script src="https://unpkg.com/react@16.4.1/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@16.4.1/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/moment@2.22.1/min/moment.min.js"></script>
+<script src="https://unpkg.com/lodash@4.17.5/lodash.min.js"></script>
+<script>window.lodash = _.noConflict();</script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 ```
 
 [↑ Go up to Table of contents](#table-of-contents)
@@ -162,23 +173,6 @@ Check the WordPress API documentation for [Categories](https://developer.wordpre
 
 [↑ Go up to Table of contents](#table-of-contents)
 
-#### Index
-
-Gutenberg will ask for the [theme features](https://codex.wordpress.org/Theme_Features) through the index request (`/`). The response should be the following object.
-
-```js
-{
-    ...,
-    theme_supports: {
-        formats: [ 'standard', 'aside', 'image', 'video', 'quote', 'link', 'gallery', 'audio' ],
-        'post-thumbnails': true,
-    },
-    ...,
-}
-```
-
-[↑ Go up to Table of contents](#table-of-contents)
-
 #### Taxonomies
 
 Taxonomies and Categories are requested to fill Categories panel in Document sidebar. Check the WordPress API documentation for [Taxonomies](https://developer.wordpress.org/rest-api/reference/taxonomies/).
@@ -216,6 +210,25 @@ There is no documentation for `/wp/v2/wp_blocks` or `/wp/v2/blocks` request yet,
 ```
 
 Gutenberg editor allows us to create, edit, list, get one and delete one block operations, so make sure you expect GET, POST, PUT and DELETE requests.
+
+[↑ Go up to Table of contents](#table-of-contents)
+
+#### Themes
+
+Gutenberg will ask for the [theme features](https://codex.wordpress.org/Theme_Features) through the index request (`/wp/v2/themes`). The response should be the following object.
+
+```js
+{
+    ...,
+    theme_supports: {
+        formats: [ 'standard', 'aside', 'image', 'video', 'quote', 'link', 'gallery', 'audio' ],
+        'post-thumbnails': true,
+    },
+    ...,
+}
+```
+
+[↑ Go up to Table of contents](#table-of-contents)
 
 ### url
 
@@ -260,12 +273,6 @@ import { editPost } from '@frontkom/gutenberg-js';
 
 // Don't forget to import the style
 import '@frontkom/gutenberg-js/build/css/block-library/style.css';
-import '@frontkom/gutenberg-js/build/css/components/style.css';
-import '@frontkom/gutenberg-js/build/css/nux/style.css';
-import '@frontkom/gutenberg-js/build/css/editor/style.css';
-import '@frontkom/gutenberg-js/build/css/block-library/theme.css';
-import '@frontkom/gutenberg-js/build/css/block-library/edir.css';
-import '@frontkom/gutenberg-js/build/css/edit-post/style.css';
 import '@frontkom/gutenberg-js/build/css/style.css';
 
 // DOM element id where editor will be displayed
@@ -281,11 +288,16 @@ const settings = {
     availableTemplates: [],
     allowedBlockTypes: true,
     disableCustomColors: false,
+    disableCustomFontSizes: false,
     disablePostFormats: false,
     titlePlaceholder: "Add title",
     bodyPlaceholder: "Write your story",
     isRTL: false,
     autosaveInterval: 10,
+    styles: [],
+    postLock: {
+        isLocked: false,
+    },
     ...
     // @frontkom/gutenberg-js settings
     canAutosave: false,  // to disable the Editor Autosave feature (default: true)
@@ -571,13 +583,12 @@ Here is an example of a custom block npm package, the [Hero Section](https://git
 
 ## Development
 
-### Gutenberg and install script
+### Upgrading
 
-[...]
-
-### Overrides
-
-[...]
+* Update Gutenberg version in `scripts/install.sh`
+* Check `gutenbergPackages` list in `webpack.config.js`
+* Check modules list in `index.js`
+* Check `gutenberg-overrides` one by one
 
 ### Publising
 
