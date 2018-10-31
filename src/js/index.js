@@ -1,4 +1,11 @@
 /**
+ * Internal dependencies
+ */
+import './wp-init.js';
+import './url-init.js';
+import './api-fetch-init.js';
+
+/**
  * WordPress dependencies
  */
 import * as autop from '@wordpress/autop';
@@ -23,8 +30,9 @@ import * as blocks from '@wordpress/blocks';
 import domReady from '@wordpress/dom-ready';
 import * as a11y from '@wordpress/a11y';
 
-import * as url from './packages/url.js';
-import * as apiFetch from './packages/api-fetch.js';
+import * as url from '@wordpress/url';
+import apiFetch from '@wordpress/api-fetch';
+import './packages/api-fetch.js';
 
 import * as htmlEntities from '@wordpress/html-entities';
 import * as keycodes from '@wordpress/keycodes';
@@ -39,8 +47,7 @@ import * as tokenList from '@wordpress/token-list';
 import * as viewport from '@wordpress/viewport';
 import * as wordcount from '@wordpress/wordcount';
 
-import * as editor from '@wordpress/editor';
-import * as oldEditorFunctions from './oldEditor.js';
+import { editor, oldEditor } from './packages/editor.js';
 
 import * as plugins from '@wordpress/plugins';
 import * as blockLibrary from '@wordpress/block-library';
@@ -55,12 +62,7 @@ import 'gutenberg/packages/block-library/build-style/editor.css';
 import 'gutenberg/packages/edit-post/build-style/style.css';
 import '../scss/style.scss';
 
-const oldEditor = {
-  ...oldEditorFunctions,
-  ...editor,
-};
-
-// Set global wp
+// // Set global wp
 window.wp = {
   apiFetch,
   url,
@@ -97,22 +99,6 @@ window.wp = {
   plugins,
   blockLibrary,
   editPost,
-  // ...window.wp,
-};
-
-// User settings
-window.userSettings = window.userSettings || {
-  secure: '',
-  time: 1234567,
-  uid: 1,
-};
-
-// postboxes
-window.postboxes = window.postboxes || {
-  add_postbox_toggles: (page, args) => {
-    console.log('page', page);
-    console.log('args', args);
-  },
 };
 
 export {
