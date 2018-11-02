@@ -1,4 +1,4 @@
-import apiFetch from 'gutenberg/packages/api-fetch/build-module';
+import apiFetch from '@wordpress/api-fetch/build-module';
 
 if (window.wp.apiFetch) {
   const props = Object.keys(apiFetch);

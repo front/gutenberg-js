@@ -1,12 +1,41 @@
 /**
  * WordPress dependencies
  */
+import { Component } from '@wordpress/element';
 import { compose, ifCondition } from '@wordpress/compose';
 import { withSelect, withDispatch } from '@wordpress/data';
 
-import * as others from 'gutenberg/packages/editor/build-module/components/autosave-monitor?source=node_modules';
+export class AutosaveMonitor extends Component {
+  componentDidUpdate (prevProps) {
+    const { isDirty, isAutosaveable } = this.props;
 
-const { AutosaveMonitor } = others;
+    if (
+      prevProps.isDirty !== isDirty ||
+			prevProps.isAutosaveable !== isAutosaveable
+    ) {
+      this.toggleTimer(isDirty && isAutosaveable);
+    }
+  }
+
+  componentWillUnmount () {
+    this.toggleTimer(false);
+  }
+
+  toggleTimer (isPendingSave) {
+    clearTimeout(this.pendingSave);
+    const { autosaveInterval } = this.props;
+    if (isPendingSave) {
+      this.pendingSave = setTimeout(
+        () => this.props.autosave(),
+        autosaveInterval * 1000
+      );
+    }
+  }
+
+  render () {
+    return null;
+  }
+}
 
 export default compose([
   withSelect(select => {
@@ -15,9 +44,7 @@ export default compose([
       isEditedPostAutosaveable,
       getEditorSettings,
     } = select('core/editor');
-
     const { autosaveInterval, canSave, canAutosave } = getEditorSettings();
-
     return {
       isDirty: isEditedPostDirty(),
       isAutosaveable: isEditedPostAutosaveable(),
@@ -35,5 +62,3 @@ export default compose([
   // the autoave feature according 'canSave' and 'canAutosave' settings
   ifCondition(({ canSave, canAutosave }) => canSave && canAutosave),
 ])(AutosaveMonitor);
-
-export * from 'gutenberg/packages/editor/build-module/components/autosave-monitor?source=node_modules';

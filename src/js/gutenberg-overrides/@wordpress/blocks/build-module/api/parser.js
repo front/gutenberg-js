@@ -4,7 +4,7 @@
 import { get, kebabCase, map, mapKeys, castArray } from 'lodash';
 import jQuery from 'jquery';
 
-import def, * as others from 'gutenberg/packages/blocks/build-module/api/parser?source=node_modules';
+import def, * as others from '@wordpress/blocks/build-module/api/parser?source=node_modules';
 
 const { parseWithAttributeSchema, isOfTypes } = others;
 
@@ -90,4 +90,4 @@ others.getBlockAttribute = (attributeKey, attributeSchema, innerHTML, commentAtt
 };
 
 export default def;
-export * from 'gutenberg/packages/blocks/build-module/api/parser?source=node_modules';
+export * from '@wordpress/blocks/build-module/api/parser?source=node_modules';

@@ -31,47 +31,6 @@ function camelCaseDash (string) {
   );
 }
 
-const gutenbergPackages = [
-  'a11y',
-  // 'api-fetch', // global
-  'autop',
-  'blob',
-  'blocks',
-  'block-library',
-  'block-serialization-default-parser',
-  'block-serialization-spec-parser',
-  'browserslist-config',
-  'components', // keep it here because package overrides
-  'compose',
-  'core-data',
-  'data',
-  'date',
-  'deprecated',
-  'dom',
-  'dom-ready',
-  'edit-post',
-  'editor',
-  'element',
-  'escape-html',
-  'format-library',
-  'hooks',
-  'html-entities',
-  'i18n',
-  'is-shallow-equal',
-  'keycodes',
-  'list-reusable-blocks',
-  'notices',
-  'nux',
-  'plugins',
-  'redux-routine',
-  'rich-text',
-  'shortcode',
-  'token-list',
-  // 'url', // global
-  'viewport',
-  'wordcount',
-];
-
 const externals = {
   react: 'React',
   'react-dom': 'ReactDOM',
@@ -82,10 +41,6 @@ const externals = {
 };
 
 const alias = {};
-
-gutenbergPackages.forEach(name => {
-  alias[ `@wordpress/${name}` ] = resolve(__dirname, 'node_modules/gutenberg/packages', name);
-});
 
 [
   'api-fetch',
@@ -110,7 +65,7 @@ module.exports = {
     modules: [
       __dirname,
       resolve(__dirname, 'node_modules'),
-      resolve(__dirname, 'node_modules/gutenberg/node_modules'),
+      // resolve(__dirname, 'node_modules/gutenberg/node_modules'),
     ],
     alias,
   },
@@ -118,8 +73,9 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        exclude: [
-          /node_modules\/(?!(gutenberg)\/).*/,
+        include: [
+          /src/,
+          /node_modules\/@wordpress/,
         ],
         use: 'babel-loader',
       },
@@ -133,8 +89,8 @@ module.exports = {
           {
             loader: 'path-replace-loader',
             options: {
-              path: resolve(__dirname, 'node_modules/gutenberg'),
-              replacePath: resolve(__dirname, 'src/js/gutenberg-overrides'),
+              path: resolve(__dirname, 'node_modules/@wordpress'),
+              replacePath: resolve(__dirname, 'src/js/gutenberg-overrides/@wordpress'),
             },
           },
         ],
@@ -180,7 +136,7 @@ module.exports = {
     new CleanWebpackPlugin(['build']),
     new CopyWebpackPlugin([
       {
-        from: `./node_modules/gutenberg/packages/block-library/build-style/style.css`,
+        from: `./node_modules/@wordpress/block-library/build-style/style.css`,
         to: `./css/block-library/`,
         flatten: true,
         transform: content => {

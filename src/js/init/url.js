@@ -1,4 +1,4 @@
-import * as url from 'gutenberg/packages/url/build-module';
+import * as url from '@wordpress/url/build-module';
 
 if (window.wp.url) {
   const props = Object.keys(url);
