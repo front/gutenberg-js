@@ -21,11 +21,23 @@ class MediaContainer extends Component {
   onImageClick (img) {
     const { onSelect, closePopover, gallery = false, multiple = false } = this.props;
 
+    const imgObject = {
+      alt: img.alt_text,
+      caption: img.caption.raw,
+      id: img.id,
+      link: img.link,
+      mime: img.mime_type,
+      sizes: img.media_details.sizes,
+      subtype: img.mime_type.split('/')[1],
+      type: img.mime_type.split('/')[0],
+      url: img.source_url,
+    };
+
     if (gallery || multiple) {
-      onSelect([{ ...img, url: img.source_url }]);
+      onSelect([imgObject]);
     }
     else {
-      onSelect({ ...img, url: img.source_url });
+      onSelect(imgObject);
     }
 
     closePopover();
@@ -76,7 +88,6 @@ class MediaUpload extends Component {
       // console.log('Media Library is deactivated');
       return false;
     }
-
 
     const { isVisible } = this.state;
 
