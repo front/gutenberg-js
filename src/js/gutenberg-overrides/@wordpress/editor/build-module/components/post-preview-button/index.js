@@ -153,7 +153,7 @@ export class PostPreviewButton extends Component {
 
     // Request an autosave. This happens asynchronously and causes the component
     // to update when finished.
-    // this.props.autosave();
+    this.props.autosave();
 
     // Display a 'Generating preview' message in the Preview tab while we wait for the
     // autosave to finish.
