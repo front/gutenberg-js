@@ -1,9 +1,4 @@
 /**
- * External dependencies
- */
-import React from 'react';
-
-/**
  * WordPress Dependencies
  */
 import { Button } from '@wordpress/components';

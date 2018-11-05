@@ -1,6 +1,4 @@
 import * as oEditor from '@wordpress/editor';
-
-import jQuery from 'jquery';
 import tinymce from 'tinymce';
 
 window.tinymce = window.tinymce || tinymce;

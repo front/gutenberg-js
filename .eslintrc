@@ -21,7 +21,10 @@
 		"document": true,
 		"localStorage": true,
 		"sessionStorage": true,
-		"XMLHttpRequest": true
+		"XMLHttpRequest": true,
+		"React": true,
+		"moment": true,
+		"jQuery": true
 	},
 	"plugins": [
 		"react",

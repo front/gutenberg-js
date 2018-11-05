@@ -1,7 +1,6 @@
 /**
  * External Dependencies
  */
-import React from 'react';
 import { filter, pick } from 'lodash';
 
 /**

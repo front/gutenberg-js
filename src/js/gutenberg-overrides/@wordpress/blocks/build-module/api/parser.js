@@ -2,7 +2,6 @@
  * External dependencies
  */
 import { get, kebabCase, map, mapKeys, castArray } from 'lodash';
-import jQuery from 'jquery';
 
 import def, * as others from '@wordpress/blocks/build-module/api/parser?source=node_modules';
 
