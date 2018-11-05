@@ -35,8 +35,8 @@ const TEMPLATE = [
 ];
 
 class MediaTextEdit extends Component {
-  constructor () {
-    super(...arguments);
+  constructor (props) {
+    super(props);
 
     this.onSelectMedia = this.onSelectMedia.bind(this);
     this.onWidthChange = this.onWidthChange.bind(this);
@@ -132,8 +132,6 @@ class MediaTextEdit extends Component {
       mediaPosition,
       mediaType,
       mediaWidth,
-      // Gutenberg JS
-      mediaData,
     } = attributes;
     const temporaryMediaWidth = this.state.mediaWidth;
     const classNames = classnames(className, {
