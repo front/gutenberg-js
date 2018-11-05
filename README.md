@@ -4,14 +4,15 @@
 
 We made [Gutenberg](https://github.com/Wordpress/gutenberg) editor a little more **customizable**!
 
-Gutenberg editor can **be easly included in your apps** with this [package](https://github.com/front/gutenberg-js). Also you can customize blocks menu panels, blocks categories, document panels and more!
+Gutenberg editor can **be easly included in your apps** with this [package](https://github.com/front/gutenberg-js).
 
-This package is based on [Gutenberg v4.2.0-rc.1](https://github.com/WordPress/gutenberg/releases/tag/v4.2.0-rc.1).
+This package is based on [Gutenberg v4.2.0-rc.1](https://github.com/WordPress/gutenberg/releases/tag/v4.2.0-rc.1) and respective @wordpress packages versions.
 
 ## Table of contents
 
 * [Installation](#installation)
   * [Dependencies](#dependencies)
+* [Development](#development)
 * [Global variables](#global-variables)
   * [apiFetch](#apifetch)
     * [Post Types](#post-types)
@@ -32,7 +33,6 @@ This package is based on [Gutenberg v4.2.0-rc.1](https://github.com/WordPress/gu
 * [Custom blocks](#custom-blocks)
   * [Creating and Registering](#creating-and-registering)
   * [Sharing](#sharing)
-* [Development](#development)
 
 ## Installation
 
@@ -75,6 +75,23 @@ GutenbergJS expects to find React (v16.4.1), ReactDOM (v16.4.1), moment (v2.22.1
 <script>window.lodash = _.noConflict();</script>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 ```
+
+[↑ Go up to Table of contents](#table-of-contents)
+
+## Development
+
+The main goal of Gutenberg JS is to expose all Gutenberg packages and keep them up-to-date.
+
+In order to ensure Gutenberg JS never breaks because of our overrides, we had to use fixed versions for the overrided packages in `package.json`.
+
+So everytime we have to update Gutenberg JS, there are 3 steps we must follow:
+
+1. Check @wordpress packages versions from Gutenberg release we want to upgrade to and update `package.json` file.
+2. Check if there are new @wordpress packages and import them in `index.js` file'.
+3. Check if our overrides are updated and work well with new @wordpress packages versions.
+4. Check if there are new blocks containing images and apply `data` attributes override.
+5. Test, test and test. We can use [g-editor](https://github.com/front/g-editor) to test the editor.
+6. [To do: unit tests could help]
 
 [↑ Go up to Table of contents](#table-of-contents)
 
@@ -578,22 +595,5 @@ In [Creating Block Types](https://wordpress.org/gutenberg/handbook/blocks/) sect
 An easy way to share a custom block is to publish the block as a npm package.
 
 Here is an example of a custom block npm package, the [Hero Section](https://github.com/front/g-hero-section).
-
-[↑ Go up to Table of contents](#table-of-contents)
-
-## Development
-
-### Upgrading
-
-* Update Gutenberg version in `scripts/install.sh`
-* Check `gutenbergPackages` list in `webpack.config.js`
-* Check modules list in `index.js`
-* Check `gutenberg-overrides` one by one
-
-### Publising
-
-```sh
-$ npm run deploy
-```
 
 [↑ Go up to Table of contents](#table-of-contents)
