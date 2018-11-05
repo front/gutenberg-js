@@ -31,6 +31,7 @@ class MediaContainer extends Component {
       subtype: img.mime_type.split('/')[1],
       type: img.mime_type.split('/')[0],
       url: img.source_url,
+      data: img.data,
     };
 
     if (gallery || multiple) {
