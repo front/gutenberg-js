@@ -2,6 +2,10 @@
 
 ## 3.0.0
 
+### Added
+
+- 'media-text' override
+
 ### Changed
 
 - 'cover-image' to 'cover' ([packages/block-library/build-module/cover](https://github.com/front/gutenberg-js/blob/v3.0.0/src/js/gutenberg-overrides/packages/block-library/build-module/cover))

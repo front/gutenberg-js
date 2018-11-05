@@ -225,13 +225,11 @@ export const settings = {
         }
 
         // GUTENBERG JS
-        // setAttributes({
         const toUpdate = {
           url: media.url,
           id: media.id,
           backgroundType: mediaType,
         };
-        // });
 
         if (media.data) {
           toUpdate.data = Object.keys(media.data)
