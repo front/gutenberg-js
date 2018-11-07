@@ -46,6 +46,18 @@ function parseDataAttributes (innerHTML, attributeSchema, value) {
   return value;
 }
 
+/**
+ * Given an attribute key, an attribute's schema, a block's raw content and the
+ * commentAttributes returns the attribute value depending on its source
+ * definition of the given attribute key.
+ *
+ * @param {string} attributeKey      Attribute key.
+ * @param {Object} attributeSchema   Attribute's schema.
+ * @param {string} innerHTML         Block's raw content.
+ * @param {Object} commentAttributes Block's comment attributes.
+ *
+ * @return {*} Attribute value.
+ */
 others.getBlockAttribute = (attributeKey, attributeSchema, innerHTML, commentAttributes) => {
   const { type } = attributeSchema;
   let value, data;
@@ -65,7 +77,7 @@ others.getBlockAttribute = (attributeKey, attributeSchema, innerHTML, commentAtt
     case 'tag':
       value = parseWithAttributeSchema(innerHTML, attributeSchema);
 
-      // checks 'data' property
+      // GUTENBERG-JS checks 'data' property
       data = get(attributeSchema.query, [ 'data' ]);
 
       if (data && data.type === 'object') {
