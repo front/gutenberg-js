@@ -6,7 +6,7 @@ We made [Gutenberg](https://github.com/Wordpress/gutenberg) editor a little more
 
 Gutenberg editor can **be easly included in your apps** with this [package](https://github.com/front/gutenberg-js).
 
-This package is based on [Gutenberg v4.2.0-rc.1](https://github.com/WordPress/gutenberg/releases/tag/v4.2.0-rc.1) and respective @wordpress packages versions.
+This package is based on [Gutenberg v4.2.0](https://github.com/WordPress/gutenberg/releases/tag/v4.2.0) and respective @wordpress packages versions.
 
 ## Table of contents
 
@@ -84,9 +84,9 @@ The main goal of Gutenberg JS is to expose all Gutenberg packages and keep them 
 
 In order to ensure Gutenberg JS never breaks because of our overrides, we had to use fixed versions for the overrided packages in `package.json`.
 
-So everytime we have to update Gutenberg JS, there are 3 steps we must follow:
+So everytime we have to update Gutenberg JS, there are several steps we must follow:
 
-1. Check @wordpress packages versions from Gutenberg release we want to upgrade to and update `package.json` file.
+1. Check @wordpress packages versions from Gutenberg release we want to upgrade to and update `package.json` file (`npm outdated` could help).
 2. Check if there are new @wordpress packages and import them in `index.js` file'.
 3. Check if our overrides are updated and work well with new @wordpress packages versions.
 4. Check if there are new blocks containing images and apply `data` attributes override.
