@@ -2,14 +2,12 @@
  * External dependencies
  */
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const postcss = require('postcss');
 
 const { resolve } = require('path');
 
-/**
- * Gutenberg-js dependencies
- */
+const extractCSS = new ExtractTextPlugin('./css/style.css');
+const extractBLCSS = new ExtractTextPlugin('./css/block-library/style.css');
+
 // const PostCssWrapper = require('postcss-wrapper-loader');
 // const StringReplacePlugin = require('string-replace-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -65,7 +63,6 @@ module.exports = {
     modules: [
       __dirname,
       resolve(__dirname, 'node_modules'),
-      // resolve(__dirname, 'node_modules/gutenberg/node_modules'),
     ],
     alias,
   },
@@ -117,8 +114,18 @@ module.exports = {
         }),
       },*/
       {
-        test: /\.s?css$/,
-        use: ExtractTextPlugin.extract({
+        test: /style\.s?css$/,
+        use: extractCSS.extract({
+          fallback: 'style-loader', // creates style nodes from JS strings
+          use: [
+            { loader: 'css-loader' },   // translates CSS into CommonJS
+            { loader: 'sass-loader' },  // compiles Sass to CSS
+          ],
+        }),
+      },
+      {
+        test: /block-library\.s?css$/,
+        use: extractBLCSS.extract({
           fallback: 'style-loader', // creates style nodes from JS strings
           use: [
             { loader: 'css-loader' },   // translates CSS into CommonJS
@@ -129,30 +136,12 @@ module.exports = {
     ],
   },
   plugins: [
-    new ExtractTextPlugin('./css/style.css'),
+    extractCSS,
+    extractBLCSS,
     // wrapping editor style with .gutenberg__editor class
     // new PostCssWrapper('./css/block-library/edit-blocks.css', '.gutenberg__editor'),
     // new StringReplacePlugin(),
     new CleanWebpackPlugin(['build']),
-    new CopyWebpackPlugin([
-      {
-        from: `./node_modules/@wordpress/block-library/build-style/style.css`,
-        to: `./css/block-library/`,
-        flatten: true,
-        transform: content => {
-          if (process.env.NODE_ENV === 'production') {
-            return postcss([
-              require('cssnano')({
-                preset: 'default',
-              }),
-            ])
-            .process(content, { from: 'src/app.css', to: 'dest/app.css' })
-            .then(result => result.css);
-          }
-          return content;
-        },
-      },
-    ]),
   ],
   stats: {
     children: false,
