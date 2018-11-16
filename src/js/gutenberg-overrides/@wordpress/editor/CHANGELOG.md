@@ -14,6 +14,8 @@
 
 ### Added
 
+- 'post-publish-button' override
+
 - 'post-preview-button' override
 
 - `addQueryArgs` to 'Manage All Reusable Blocks' link (Inserter Menu) ([packages/editor/build-module/components/inserter/menu.js](https://github.com/front/gutenberg-js/blob/v2.7.0/src/js/gutenberg-overrides/packages/editor/build-module/components/inserter/menu.js))

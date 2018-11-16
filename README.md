@@ -6,7 +6,7 @@ We made [Gutenberg](https://github.com/Wordpress/gutenberg) editor a little more
 
 Gutenberg editor can **be easly included in your apps** with this [package](https://github.com/front/gutenberg-js).
 
-This package is based on [Gutenberg v4.2.0](https://github.com/WordPress/gutenberg/releases/tag/v4.2.0) and respective @wordpress packages versions.
+This package is based on [Gutenberg v4.4.0](https://github.com/WordPress/gutenberg/releases/tag/v4.4.0) and respective @wordpress packages versions.
 
 ## Table of contents
 
@@ -285,8 +285,8 @@ We've tried to make it easy to import **gutenberg-js** modules to your apps.
 // Importing global variables that Gutenberg requires
 import './globals';
 
-// Importing editPost module
-import { editPost } from '@frontkom/gutenberg-js';
+// Importing domReady and editPost modules
+import { domReady, editPost } from '@frontkom/gutenberg-js';
 
 // Don't forget to import the style
 import '@frontkom/gutenberg-js/build/css/block-library/style.css';
@@ -327,7 +327,11 @@ const settings = {
 const overridePost = {};
 
 // Et voilá... Initializing the editor!
-editPost.initializeEditor(target, postType, postId, settings, overridePost);
+window._wpLoadGutenbergEditor = new Promise(function (resolve) {
+    domReady(function () {
+        resolve(editPost.initializeEditor(target, postType, postId, settings, overridePost));
+    });
+});
 ```
 
 **Note**: Gutenberg requires utf-8 encoding, so don't forget to add `<meta charset="utf-8">` tag to your html `<head>`.

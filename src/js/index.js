@@ -7,35 +7,34 @@ import './init';
  * WordPress dependencies
  */
 import * as hooks from '@wordpress/hooks';
-import domReady from '@wordpress/dom-ready';
-import * as a11y from '@wordpress/a11y';
-import * as i18n from '@wordpress/i18n';
-// wp.i18n.setLocaleData
-
-import * as url from '@wordpress/url';
-import apiFetch from '@wordpress/api-fetch';
-import './scripts/api-fetch.js';
-
 import * as autop from '@wordpress/autop';
 import * as blob from '@wordpress/blob';
 import * as blockSerializationDefaultParser from '@wordpress/block-serialization-default-parser';
-import deprecated from '@wordpress/deprecated';
+
 import * as escapeHtml from '@wordpress/escape-html';
 import * as element from '@wordpress/element';
 import * as isShallowEqual from '@wordpress/is-shallow-equal';
 import * as compose from '@wordpress/compose';
 import * as reduxRoutine from '@wordpress/redux-routine';
-
 import * as data from '@wordpress/data';
-import './scripts/data.js';
+import './scripts/data';
 
 import * as dom from '@wordpress/dom';
+import * as htmlEntities from '@wordpress/html-entities';
+import * as i18n from '@wordpress/i18n';
+// wp.i18n.setLocaleData
 import * as shortcode from '@wordpress/shortcode';
 import * as blocks from '@wordpress/blocks';
 // wp.blocks.setCategories
 // wp.blocks.unstable__bootstrapServerSideBlockDefinitions
 
-import * as htmlEntities from '@wordpress/html-entities';
+import domReady from '@wordpress/dom-ready';
+import * as a11y from '@wordpress/a11y';
+import * as url from '@wordpress/url';
+import apiFetch from '@wordpress/api-fetch';
+import './scripts/api-fetch';
+
+import deprecated from '@wordpress/deprecated';
 import * as keycodes from '@wordpress/keycodes';
 import * as richText from '@wordpress/rich-text';
 import * as components from '@wordpress/components';
@@ -54,6 +53,7 @@ import { editor, oldEditor } from './scripts/editor.js';
 // window._wpGutenbergCodeEditorSettings
 
 import * as plugins from '@wordpress/plugins';
+
 import * as blockLibrary from '@wordpress/block-library';
 import * as editPost from '@wordpress/edit-post';
 import * as formatLibrary from '@wordpress/format-library';

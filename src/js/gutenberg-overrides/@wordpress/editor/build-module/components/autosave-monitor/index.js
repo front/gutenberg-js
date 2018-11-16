@@ -54,6 +54,7 @@ export default compose([
       isAutosaveable: isEditedPostAutosaveable(),
       editsReference: getReferenceByDistinctEdits(),
       autosaveInterval,
+
       // GUTENBERG JS
       canSave,
       canAutosave,
@@ -62,6 +63,7 @@ export default compose([
   withDispatch(dispatch => ({
     autosave: dispatch('core/editor').autosave,
   })),
+
   // GUTENBERG JS
   // added the ifCondition to enable/disable
   // the autoave feature according 'canSave' and 'canAutosave' settings
