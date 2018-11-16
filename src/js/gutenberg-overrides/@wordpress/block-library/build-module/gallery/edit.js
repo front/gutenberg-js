@@ -1,13 +1,13 @@
 /**
  * External Dependencies
  */
-import { filter, pick } from 'lodash';
+import { filter, pick, get } from 'lodash';
 
 /**
  * WordPress dependencies
  */
 import { Component, Fragment } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import {
   IconButton,
   DropZone,
@@ -45,7 +45,9 @@ export function defaultColumnsNumber (attributes) {
 }
 
 export const pickRelevantMediaFiles = image => {
-  return pick(image, [ 'alt', 'id', 'link', 'url', 'caption' ]);
+  const imageProps = pick(image, [ 'alt', 'id', 'link', 'caption' ]);
+  imageProps.url = get(image, [ 'sizes', 'large', 'url' ]) || get(image, [ 'media_details', 'sizes', 'large', 'source_url' ]) || image.url;
+  return imageProps;
 };
 
 class GalleryEdit extends Component {
@@ -243,21 +245,27 @@ class GalleryEdit extends Component {
         { noticeUI }
         <ul className={ `${className} align${align} columns-${columns} ${imageCrop ? 'is-cropped' : ''}` }>
           { dropZone }
-          { images.map((img, index) => (
-            <li className="blocks-gallery-item" key={ img.id || img.url }>
-              <GalleryImage
-                url={ img.url }
-                alt={ img.alt }
-                id={ img.id }
-                isSelected={ isSelected && this.state.selectedImage === index }
-                onRemove={ this.onRemoveImage(index) }
-                onSelect={ this.onSelectImage(index) }
-                setAttributes={ attrs => this.setImageAttributes(index, attrs) }
-                caption={ img.caption }
-                data={ img.data }
-              />
-            </li>
-          )) }
+          { images.map((img, index) => {
+            /* translators: %1$d is the order number of the image, %2$d is the total number of images. */
+            const ariaLabel = __(sprintf('image %1$d of %2$d in gallery', (index + 1), images.length));
+
+            return (
+              <li className="blocks-gallery-item" key={ img.id || img.url }>
+                <GalleryImage
+                  url={ img.url }
+                  alt={ img.alt }
+                  id={ img.id }
+                  isSelected={ isSelected && this.state.selectedImage === index }
+                  onRemove={ this.onRemoveImage(index) }
+                  onSelect={ this.onSelectImage(index) }
+                  setAttributes={ attrs => this.setImageAttributes(index, attrs) }
+                  caption={ img.caption }
+                  aria-label={ ariaLabel }
+                  data={ img.data }
+                />
+              </li>
+            );
+          }) }
           { isSelected &&
           <li className="blocks-gallery-item has-add-item-button">
             <FormFileUpload

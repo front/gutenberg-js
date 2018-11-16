@@ -6,15 +6,16 @@ import {
   get,
   isEmpty,
   map,
+  last,
   pick,
-  startCase,
-  keyBy,
+  compact,
 } from 'lodash';
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { getPath } from '@wordpress/url';
+import { __, sprintf } from '@wordpress/i18n';
 import { Component, Fragment } from '@wordpress/element';
 import { getBlobByURL, revokeBlobURL, isBlobURL } from '@wordpress/blob';
 import {
@@ -24,6 +25,7 @@ import {
   PanelBody,
   ResizableBox,
   SelectControl,
+  Spinner,
   TextControl,
   TextareaControl,
   Toolbar,
@@ -59,7 +61,9 @@ const LINK_DESTINATION_CUSTOM = 'custom';
 const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
 export const pickRelevantMediaFiles = image => {
-  return pick(image, [ 'alt', 'id', 'link', 'url', 'caption' ]);
+  const imageProps = pick(image, [ 'alt', 'id', 'link', 'caption' ]);
+  imageProps.url = get(image, [ 'sizes', 'large', 'url' ]) || get(image, [ 'media_details', 'sizes', 'large', 'source_url' ]) || image.url;
+  return imageProps;
 };
 
 /**
@@ -87,9 +91,7 @@ const isExternalImage = (id, url) => url && ! id && ! isBlobURL(url);
 class ImageEdit extends Component {
   constructor (props) {
     super(props);
-
     const { attributes } = props;
-
     this.updateAlt = this.updateAlt.bind(this);
     this.updateAlignment = this.updateAlignment.bind(this);
     this.onFocusCaption = this.onFocusCaption.bind(this);
@@ -102,7 +104,9 @@ class ImageEdit extends Component {
     this.updateDimensions = this.updateDimensions.bind(this);
     this.onSetCustomHref = this.onSetCustomHref.bind(this);
     this.onSetLinkDestination = this.onSetLinkDestination.bind(this);
+    this.getFilename = this.getFilename.bind(this);
     this.toggleIsEditing = this.toggleIsEditing.bind(this);
+    this.onUploadError = this.onUploadError.bind(this);
 
     this.state = {
       captionFocused: false,
@@ -142,6 +146,14 @@ class ImageEdit extends Component {
         captionFocused: false,
       });
     }
+  }
+
+  onUploadError (message) {
+    const { noticeOperations } = this.props;
+    noticeOperations.createErrorNotice(message);
+    this.setState({
+      isEditing: true,
+    });
   }
 
   onSelectImage (media) {
@@ -264,8 +276,11 @@ class ImageEdit extends Component {
     };
   }
 
-  getImageSizes () {
-    return get(this.props.image, [ 'media_details', 'sizes' ], {});
+  getFilename (url) {
+    const path = getPath(url);
+    if (path) {
+      return last(path.split('/'));
+    }
   }
 
   getLinkDestinationOptions () {
@@ -283,6 +298,20 @@ class ImageEdit extends Component {
     });
   }
 
+  getImageSizeOptions () {
+    const { imageSizes, image } = this.props;
+    return compact(map(imageSizes, ({ name, slug }) => {
+      const sizeUrl = get(image, [ 'media_details', 'sizes', slug, 'source_url' ]);
+      if (! sizeUrl) {
+        return null;
+      }
+      return {
+        value: sizeUrl,
+        label: name,
+      };
+    }));
+  }
+
   render () {
     const { isEditing } = this.state;
     const {
@@ -292,15 +321,13 @@ class ImageEdit extends Component {
       isSelected,
       className,
       maxWidth,
-      noticeOperations,
       noticeUI,
       toggleSelection,
       isRTL,
-      availableImageSizes,
     } = this.props;
     const { url, alt, caption, align, id, href, linkDestination, width, height, linkTarget, data } = attributes;
     const isExternal = isExternalImage(id, url);
-    const availableImageSizesBySlug = keyBy(availableImageSizes, 'slug');
+    const imageSizeOptions = this.getImageSizeOptions();
 
     let toolbarEditButton;
     if (url) {
@@ -358,7 +385,7 @@ class ImageEdit extends Component {
             onSelect={ this.onSelectImage }
             onSelectURL={ this.onSelectURL }
             notices={ noticeUI }
-            onError={ noticeOperations.createErrorNotice }
+            onError={ this.onUploadError }
             accept="image/*"
             allowedTypes={ ALLOWED_MEDIA_TYPES }
             value={ { id, src } }
@@ -373,7 +400,6 @@ class ImageEdit extends Component {
       'is-focused': isSelected,
     });
 
-    const imageSizes = this.getImageSizes();
     const isResizable = [ 'wide', 'full' ].indexOf(align) === -1 && isLargeViewport;
     const isLinkURLInputDisabled = linkDestination !== LINK_DESTINATION_CUSTOM;
 
@@ -386,14 +412,11 @@ class ImageEdit extends Component {
             onChange={ this.updateAlt }
             help={ __('Alternative text describes your image to people who can’t see it. Add a short description with its key details.') }
           />
-          { ! isEmpty(imageSizes) && (
+          { ! isEmpty(imageSizeOptions) && (
             <SelectControl
               label={ __('Image Size') }
               value={ url }
-              options={ map(imageSizes, (size, slug) => ({
-                value: size.source_url,
-                label: availableImageSizesBySlug[ slug ] ? availableImageSizesBySlug[ slug ].name : startCase(slug),
-              })) }
+              options={ imageSizeOptions }
               onChange={ this.updateImageURL }
             />
           ) }
@@ -494,10 +517,28 @@ class ImageEdit extends Component {
                 imageHeight,
               } = sizes;
 
-              // Disable reason: Image itself is not meant to be
-              // interactive, but should direct focus to block
-              // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-              const img = <img src={ url } alt={ alt } onClick={ this.onImageClick } { ...data } />;
+              const filename = this.getFilename(url);
+              let defaultedAlt;
+              if (alt) {
+                defaultedAlt = alt;
+              }
+              else if (filename) {
+                defaultedAlt = sprintf(__('This image has an empty alt attribute; its file name is %s'), filename);
+              }
+              else {
+                defaultedAlt = __('This image has an empty alt attribute');
+              }
+
+              const img = (
+                // Disable reason: Image itself is not meant to be interactive, but
+                // should direct focus to block.
+                /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+                <Fragment>
+                  <img src={ url } alt={ defaultedAlt } onClick={ this.onImageClick } { ...data } />
+                  { isBlobURL(url) && <Spinner /> }
+                </Fragment>
+                /* eslint-enable jsx-a11y/no-noninteractive-element-interactions */
+              );
 
               if (! isResizable || ! imageWidthWithinContainer) {
                 return (
@@ -516,6 +557,13 @@ class ImageEdit extends Component {
               const ratio = imageWidth / imageHeight;
               const minWidth = imageWidth < imageHeight ? MIN_SIZE : MIN_SIZE * ratio;
               const minHeight = imageHeight < imageWidth ? MIN_SIZE : MIN_SIZE / ratio;
+
+              // With the current implementation of ResizableBox, an image needs an explicit pixel value for the max-width.
+              // In absence of being able to set the content-width, this max-width is currently dictated by the vanilla editor style.
+              // The following variable adds a buffer to this vanilla style, so 3rd party themes have some wiggleroom.
+              // This does, in most cases, allow you to scale the image beyond the width of the main column, though not infinitely.
+              // @todo It would be good to revisit this once a content-width variable becomes available.
+              const maxWidthBuffer = maxWidth * 2.5;
 
               let showRightHandle = false;
               let showLeftHandle = false;
@@ -561,9 +609,9 @@ class ImageEdit extends Component {
                       } : undefined
                     }
                     minWidth={ minWidth }
-                    maxWidth={ maxWidth }
+                    maxWidth={ maxWidthBuffer }
                     minHeight={ minHeight }
-                    maxHeight={ maxWidth / ratio }
+                    maxHeight={ maxWidthBuffer / ratio }
                     lockAspectRatio
                     enable={ {
                       top: false,

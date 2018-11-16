@@ -398,7 +398,7 @@ export const settings = {
     }
   ),
 
-  save ({ attributes, className }) {
+  save ({ attributes }) {
     const {
       align,
       backgroundType,
@@ -421,7 +421,6 @@ export const settings = {
     }
 
     const classes = classnames(
-      className,
       dimRatioToClass(dimRatio),
       overlayColorClass,
       {
@@ -495,11 +494,10 @@ export const settings = {
       },
     },
 
-    save ({ attributes, className }) {
+    save ({ attributes }) {
       const { url, title, hasParallax, dimRatio, align } = attributes;
       const style = backgroundImageStyles(url);
       const classes = classnames(
-        className,
         dimRatioToClass(dimRatio),
         {
           'has-background-dim': dimRatio !== 0,
