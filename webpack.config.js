@@ -33,7 +33,6 @@ const externals = {
   react: 'React',
   'react-dom': 'ReactDOM',
   moment: 'moment',
-  jquery: 'jQuery',
   lodash: 'lodash',
   'lodash-es': 'lodash',
 };

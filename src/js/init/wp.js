@@ -1,3 +1,6 @@
+import jQuery from 'jquery';
+
+window.jQuery = window.jQuery || jQuery;
 window.wp = window.wp || {};
 
 // User settings
@@ -8,7 +11,6 @@ window.userSettings = window.userSettings || {
 };
 
 // API settings
-
 window.wpApiSettings = window.wpApiSettings || {};
 window.wpApiSettingsroot = window.wpApiSettings.root || window.location.origin;
 window.wpApiSettingsnonce = window.wpApiSettings.nonce || '123456789';
