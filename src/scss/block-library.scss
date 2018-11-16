@@ -3,8 +3,3 @@
 /*
  * TEMPORARY FIXES
  */
-
-// gutenberg/packages/block-library/src/media-text/style.scss
-.wp-block-media-text.has-media-on-the-right {
-  grid-template-areas: "media-text-content media-text-media";
-}
