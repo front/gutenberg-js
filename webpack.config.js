@@ -33,8 +33,7 @@ const externals = {
   react: 'React',
   'react-dom': 'ReactDOM',
   moment: 'moment',
-  lodash: 'lodash',
-  'lodash-es': 'lodash',
+  jquery: 'jQuery',
 };
 
 const alias = {};

@@ -1,6 +1,3 @@
-import jQuery from 'jquery';
-
-window.jQuery = window.jQuery || jQuery;
 window.wp = window.wp || {};
 
 // User settings
