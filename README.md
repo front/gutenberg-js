@@ -65,14 +65,13 @@ module.exports = {
 }
 ```
 
-GutenbergJS expects to find React (v16.4.1), ReactDOM (v16.4.1), moment (v2.22.1) and lodash (v4.17.5) libraries in the environment it runs. Maybe you would add the following lines to your pages.
+GutenbergJS expects to find React (v16.6.3), ReactDOM (v16.6.3), moment (v2.22.1) and jquery (v1.12.4) libraries in the environment it runs. Maybe you would add the following lines to your pages.
 
 ```html
-<script src="https://unpkg.com/react@16.4.1/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@16.4.1/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/react@16.6.3/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@16.6.3/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/moment@2.22.1/min/moment.min.js"></script>
-<script src="https://unpkg.com/lodash@4.17.5/lodash.min.js"></script>
-<script>window.lodash = _.noConflict();</script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 ```
 
 [↑ Go up to Table of contents](#table-of-contents)
