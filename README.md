@@ -4,7 +4,7 @@
 
 We made [Gutenberg](https://github.com/Wordpress/gutenberg) editor a little more **customizable**!
 
-Gutenberg editor can **be easly included in your apps** with this [package](https://github.com/front/gutenberg-js).
+Gutenberg editor can **be easily included in your apps** with this [package](https://github.com/front/gutenberg-js).
 
 This package is based on [Gutenberg v4.4.0](https://github.com/WordPress/gutenberg/releases/tag/v4.4.0) and respective @wordpress packages versions.
 
@@ -127,9 +127,9 @@ We are working to include on **gutenberg-js** all settings that shouldn't be par
 
 ### apiFetch
 
-Those two are very important for comunication between the editor and remaining app, so you should set them up according your needs.
+Those two are very important for communication between the editor and remaining app, so you should set them up according your needs.
 
-***apiFetch*** is the method that will handle with data operations on Gutenberg, like getting resources (categories for example), saving page changes or deleting pages, etc. It receives an object with `path`, `method`, `data`, etc, so you can treat it as you want.
+***apiFetch*** is the method that will handle data operations on Gutenberg, like getting resources (categories for example), saving page changes or deleting pages, etc. It receives an object with `path`, `method`, `data`, etc, so you can treat it as you want.
 
 ```js
 function apiFetch(options) {
@@ -445,7 +445,7 @@ blocks.registerBlockType('custom/my-block', {
 
 ## Customize your Gutenberg
 
-Following the same logic, we've created the `customGutenberg` global object where you can set eveything that we made customizable on Gutenberg.
+Following the same logic, we've created the `customGutenberg` global object where you can set everything that we made customizable on Gutenberg.
 
 ```js
 window.customGutenberg = { ... };
@@ -538,9 +538,9 @@ const myFirstBlock = {
 };
 ```
 
-After defining all the properties, the new block must be registered so it becomes available in editor inserter dialog under the choosen category. If the blocks's category doesn't exist yet, we must add it to the editor inserter dialog.
+After defining all the properties, the new block must be registered so it becomes available in editor inserter dialog under the chosen category. If the blocks's category doesn't exist yet, we must add it to the editor inserter dialog.
 
-A block's category requires a slug and a title:
+A blocks category requires a slug and a title:
 
 ```js
 const category = {
@@ -567,7 +567,7 @@ const { registerBlockType } = wp.blocks;
 registerBlockType(`${category.slug}/my-first-block`, { category: category.slug, ...hero.settings });
 ```
 
-And the block is available in the editor inserter dialog! There is the full example:
+And the block is available in the editor inserter dialog! Full example:
 
 ```js
 const { dispatch, select } = wp.data;
