@@ -210,6 +210,20 @@ Here is the WordPress API documentation for [Media](https://developer.wordpress.
 }
 ```
 
+The editor also requests for `wp/v2/media` OPTIONS:
+
+```js
+{
+    headers: {
+        get: value => {
+            if (value === 'allow') {
+                return [ 'POST' ];
+            }
+        },
+    },
+}
+```
+
 [↑ Go up to Table of contents](#table-of-contents)
 
 #### Blocks
