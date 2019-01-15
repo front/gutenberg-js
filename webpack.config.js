@@ -1,10 +1,9 @@
 /**
  * External dependencies
  */
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-
 const { resolve } = require('path');
 
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const extractCSS = new ExtractTextPlugin('./css/style.css');
 const extractBLCSS = new ExtractTextPlugin('./css/block-library/style.css');
 
@@ -28,6 +27,13 @@ function camelCaseDash (string) {
     (match, letter) => letter.toUpperCase()
   );
 }
+
+const babelLoader = {
+  loader: 'babel-loader',
+  options: {
+    presets: ['@babel/preset-react'],
+  },
+};
 
 const externals = {
   react: 'React',
@@ -72,14 +78,14 @@ module.exports = {
           /src/,
           /node_modules\/@wordpress/,
         ],
-        use: 'babel-loader',
+        use: babelLoader,
       },
       {
         test: /\.js$/,
         oneOf: [
           {
             resourceQuery: /\?source=node_modules/,
-            use: 'babel-loader',
+            use: babelLoader,
           },
           {
             loader: 'path-replace-loader',
