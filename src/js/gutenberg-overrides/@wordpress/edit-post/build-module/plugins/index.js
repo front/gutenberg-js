@@ -17,25 +17,25 @@ import CopyContentMenuItem from './copy-content-menu-item';
 import KeyboardShortcutsHelpMenuItem from './keyboard-shortcuts-help-menu-item';
 import ToolsMoreMenuGroup from '../components/header/tools-more-menu-group';
 
-registerPlugin('edit-post', {
-  render () {
-    return (
-      <Fragment>
-        <ToolsMoreMenuGroup>
-          { ({ onClose }) => (
-            <Fragment>
-              <MenuItem
-                role="menuitem"
-                href={ addQueryArgs('edit.php', { post_type: 'wp_block' }) }
-              >
-                { __('Manage All Reusable Blocks') }
-              </MenuItem>
-              <KeyboardShortcutsHelpMenuItem onSelect={ onClose } />
-              <CopyContentMenuItem />
-            </Fragment>
-          ) }
-        </ToolsMoreMenuGroup>
-      </Fragment>
-    );
-  },
-});
+registerPlugin( 'edit-post', {
+	render() {
+		return (
+			<Fragment>
+				<ToolsMoreMenuGroup>
+					{ ( { onClose } ) => (
+						<Fragment>
+							<MenuItem
+								role="menuitem"
+								href={ addQueryArgs( 'edit.php', { post_type: 'wp_block' } ) }
+							>
+								{ __( 'Manage All Reusable Blocks' ) }
+							</MenuItem>
+							<KeyboardShortcutsHelpMenuItem onSelect={ onClose } />
+							<CopyContentMenuItem />
+						</Fragment>
+					) }
+				</ToolsMoreMenuGroup>
+			</Fragment>
+		);
+	},
+} );
