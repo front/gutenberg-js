@@ -8,77 +8,77 @@ import { __ } from '@wordpress/i18n';
 import { withSelect } from '@wordpress/data';
 import { DotTip } from '@wordpress/nux';
 
-export function PostPublishPanelToggle ({
-  isSaving,
-  isPublishable,
-  isSaveable,
-  isPublished,
-  isBeingScheduled,
-  onToggle,
-  isOpen,
-  forceIsSaving,
-  forceIsDirty,
-}) {
-  const isButtonDisabled =
+export function PostPublishPanelToggle( {
+	isSaving,
+	isPublishable,
+	isSaveable,
+	isPublished,
+	isBeingScheduled,
+	onToggle,
+	isOpen,
+	forceIsSaving,
+	forceIsDirty,
+} ) {
+	const isButtonDisabled =
 		isPublished ||
 		isSaving ||
 		forceIsSaving ||
 		! isSaveable ||
-		(! isPublishable && ! forceIsDirty);
+		( ! isPublishable && ! forceIsDirty );
 
-  deprecated('PostPublishPanelToggle', {
-    version: '4.5',
-    alternative: 'PostPublishButton',
-    plugin: 'Gutenberg',
-  });
+	deprecated( 'PostPublishPanelToggle', {
+		version: '4.5',
+		alternative: 'PostPublishButton',
+		plugin: 'Gutenberg',
+	} );
 
-  return (
-    <Button
-      className="editor-post-publish-panel__toggle"
-      isPrimary
-      onClick={ onToggle }
-      aria-expanded={ isOpen }
-      disabled={ isButtonDisabled }
-      isBusy={ isSaving && isPublished }
-    >
-      { isBeingScheduled ? __('Schedule…') : __('Publish…') }
-      <DotTip tipId="core/editor.publish">
-        { __('Finished writing? That’s great, let’s get this published right now. Just click “Publish” and you’re good to go.') }
-      </DotTip>
-    </Button>
-  );
+	return (
+		<Button
+			className="editor-post-publish-panel__toggle"
+			isPrimary
+			onClick={ onToggle }
+			aria-expanded={ isOpen }
+			disabled={ isButtonDisabled }
+			isBusy={ isSaving && isPublished }
+		>
+			{ isBeingScheduled ? __( 'Schedule…' ) : __( 'Publish…' ) }
+			<DotTip tipId="core/editor.publish">
+				{ __( 'Finished writing? That’s great, let’s get this published right now. Just click “Publish” and you’re good to go.' ) }
+			</DotTip>
+		</Button>
+	);
 }
 
-export default compose([
-  withSelect(select => {
-    const {
-      isSavingPost,
-      isEditedPostSaveable,
-      isEditedPostPublishable,
-      isCurrentPostPublished,
-      isEditedPostBeingScheduled,
+export default compose( [
+	withSelect( ( select ) => {
+		const {
+			isSavingPost,
+			isEditedPostSaveable,
+			isEditedPostPublishable,
+			isCurrentPostPublished,
+			isEditedPostBeingScheduled,
 
-      // GUTENBERG JS
-      getEditorSettings,
-    } = select('core/editor');
+			// GUTENBERG JS
+			getEditorSettings,
+		} = select( 'core/editor' );
 
-    // GUTENBERG JS
-    const { canPublish } = getEditorSettings();
+		// GUTENBERG JS
+		const { canPublish } = getEditorSettings();
 
-    return {
-      isSaving: isSavingPost(),
-      isSaveable: isEditedPostSaveable(),
-      isPublishable: isEditedPostPublishable(),
-      isPublished: isCurrentPostPublished(),
-      isBeingScheduled: isEditedPostBeingScheduled(),
+		return {
+			isSaving: isSavingPost(),
+			isSaveable: isEditedPostSaveable(),
+			isPublishable: isEditedPostPublishable(),
+			isPublished: isCurrentPostPublished(),
+			isBeingScheduled: isEditedPostBeingScheduled(),
 
-      // GUTENBERG JS
-      canPublish,
-    };
-  }),
+			// GUTENBERG JS
+			canPublish,
+		};
+	} ),
 
-  // GUTENBERG JS
-  // added the ifCondition to enable/disable
-  // the publish button according 'canPublish' setting
-  ifCondition(({ canPublish }) => canPublish),
-])(PostPublishPanelToggle);
+	// GUTENBERG JS
+	// added the ifCondition to enable/disable
+	// the publish button according 'canPublish' setting
+	ifCondition( ( { canPublish } ) => canPublish ),
+] )( PostPublishPanelToggle );

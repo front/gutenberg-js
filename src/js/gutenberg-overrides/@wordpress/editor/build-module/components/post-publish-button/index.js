@@ -18,151 +18,148 @@ import { DotTip } from '@wordpress/nux';
  */
 import PublishButtonLabel from './label';
 export class PostPublishButton extends Component {
-  constructor (props) {
-    super(props);
-    this.buttonNode = createRef();
-  }
-  componentDidMount () {
-    if (this.props.focusOnMount) {
-      this.buttonNode.current.focus();
-    }
-  }
+	constructor( props ) {
+		super( props );
+		this.buttonNode = createRef();
+	}
+	componentDidMount() {
+		if ( this.props.focusOnMount ) {
+			this.buttonNode.current.focus();
+		}
+	}
 
-  render () {
-    const {
-      forceIsDirty,
-      forceIsSaving,
-      hasPublishAction,
-      isBeingScheduled,
-      isOpen,
-      isPostSavingLocked,
-      isPublishable,
-      isPublished,
-      isSaveable,
-      isSaving,
-      isToggle,
-      onSave,
-      onStatusChange,
-      onSubmit = noop,
-      onToggle,
-      visibility,
-    } = this.props;
-    const isButtonDisabled =
+	render() {
+		const {
+			forceIsDirty,
+			forceIsSaving,
+			hasPublishAction,
+			isBeingScheduled,
+			isOpen,
+			isPostSavingLocked,
+			isPublishable,
+			isPublished,
+			isSaveable,
+			isSaving,
+			isToggle,
+			onSave,
+			onStatusChange,
+			onSubmit = noop,
+			onToggle,
+			visibility,
+		} = this.props;
+		const isButtonDisabled =
 			isSaving ||
 			forceIsSaving ||
 			! isSaveable ||
 			isPostSavingLocked ||
-			(! isPublishable && ! forceIsDirty);
+			( ! isPublishable && ! forceIsDirty );
 
-    const isToggleDisabled =
+		const isToggleDisabled =
 			isPublished ||
 			isSaving ||
 			forceIsSaving ||
 			! isSaveable ||
-			(! isPublishable && ! forceIsDirty);
+			( ! isPublishable && ! forceIsDirty );
 
-    let publishStatus;
-    if (! hasPublishAction) {
-      publishStatus = 'pending';
-    }
-    else if (isBeingScheduled) {
-      publishStatus = 'future';
-    }
-    else if (visibility === 'private') {
-      publishStatus = 'private';
-    }
-    else {
-      publishStatus = 'publish';
-    }
+		let publishStatus;
+		if ( ! hasPublishAction ) {
+			publishStatus = 'pending';
+		} else if ( isBeingScheduled ) {
+			publishStatus = 'future';
+		} else if ( visibility === 'private' ) {
+			publishStatus = 'private';
+		} else {
+			publishStatus = 'publish';
+		}
 
-    const onClick = () => {
-      onSubmit();
-      onStatusChange(publishStatus);
-      onSave();
-    };
+		const onClick = () => {
+			onSubmit();
+			onStatusChange( publishStatus );
+			onSave();
+		};
 
-    const buttonProps = {
-      'aria-disabled': isButtonDisabled,
-      className: 'editor-post-publish-button',
-      isBusy: isSaving && isPublished,
-      isLarge: true,
-      isPrimary: true,
-      onClick,
-    };
+		const buttonProps = {
+			'aria-disabled': isButtonDisabled,
+			className: 'editor-post-publish-button',
+			isBusy: isSaving && isPublished,
+			isLarge: true,
+			isPrimary: true,
+			onClick,
+		};
 
-    const toggleProps = {
-      'aria-disabled': isToggleDisabled,
-      'aria-expanded': isOpen,
-      className: 'editor-post-publish-panel__toggle',
-      isBusy: isSaving && isPublished,
-      isPrimary: true,
-      onClick: onToggle,
-    };
+		const toggleProps = {
+			'aria-disabled': isToggleDisabled,
+			'aria-expanded': isOpen,
+			className: 'editor-post-publish-panel__toggle',
+			isBusy: isSaving && isPublished,
+			isPrimary: true,
+			onClick: onToggle,
+		};
 
-    const toggleChildren = isBeingScheduled ? __('Schedule…') : __('Publish…');
-    const buttonChildren = <PublishButtonLabel forceIsSaving={ forceIsSaving } />;
+		const toggleChildren = isBeingScheduled ? __( 'Schedule…' ) : __( 'Publish…' );
+		const buttonChildren = <PublishButtonLabel forceIsSaving={ forceIsSaving } />;
 
-    const componentProps = isToggle ? toggleProps : buttonProps;
-    const componentChildren = isToggle ? toggleChildren : buttonChildren;
-    return (
-      <Button
-        ref={ this.buttonNode }
-        { ...componentProps }
-      >
-        { componentChildren }
-        <DotTip tipId="core/editor.publish">
-          { __('Finished writing? That’s great, let’s get this published right now. Just click “Publish” and you’re good to go.') }
-        </DotTip>
-      </Button>
-    );
-  }
+		const componentProps = isToggle ? toggleProps : buttonProps;
+		const componentChildren = isToggle ? toggleChildren : buttonChildren;
+		return (
+			<Button
+				ref={ this.buttonNode }
+				{ ...componentProps }
+			>
+				{ componentChildren }
+				<DotTip tipId="core/editor.publish">
+					{ __( 'Finished writing? That’s great, let’s get this published right now. Just click “Publish” and you’re good to go.' ) }
+				</DotTip>
+			</Button>
+		);
+	}
 }
 
-export default compose([
-  withSelect(select => {
-    const {
-      isSavingPost,
-      isEditedPostBeingScheduled,
-      getEditedPostVisibility,
-      isCurrentPostPublished,
-      isEditedPostSaveable,
-      isEditedPostPublishable,
-      isPostSavingLocked,
-      getCurrentPost,
-      getCurrentPostType,
+export default compose( [
+	withSelect( ( select ) => {
+		const {
+			isSavingPost,
+			isEditedPostBeingScheduled,
+			getEditedPostVisibility,
+			isCurrentPostPublished,
+			isEditedPostSaveable,
+			isEditedPostPublishable,
+			isPostSavingLocked,
+			getCurrentPost,
+			getCurrentPostType,
 
-      // GUTENBERG JS
-      getEditorSettings,
-    } = select('core/editor');
+			// GUTENBERG JS
+			getEditorSettings,
+		} = select( 'core/editor' );
 
-    // GUTENBERG JS
-    const { canPublish } = getEditorSettings();
+		// GUTENBERG JS
+		const { canPublish } = getEditorSettings();
 
-    return {
-      isSaving: isSavingPost(),
-      isBeingScheduled: isEditedPostBeingScheduled(),
-      visibility: getEditedPostVisibility(),
-      isSaveable: isEditedPostSaveable(),
-      isPostSavingLocked: isPostSavingLocked(),
-      isPublishable: isEditedPostPublishable(),
-      isPublished: isCurrentPostPublished(),
-      hasPublishAction: get(getCurrentPost(), [ '_links', 'wp:action-publish' ], false),
-      postType: getCurrentPostType(),
+		return {
+			isSaving: isSavingPost(),
+			isBeingScheduled: isEditedPostBeingScheduled(),
+			visibility: getEditedPostVisibility(),
+			isSaveable: isEditedPostSaveable(),
+			isPostSavingLocked: isPostSavingLocked(),
+			isPublishable: isEditedPostPublishable(),
+			isPublished: isCurrentPostPublished(),
+			hasPublishAction: get( getCurrentPost(), [ '_links', 'wp:action-publish' ], false ),
+			postType: getCurrentPostType(),
 
-      // GUTENBERG
-      canPublish,
-    };
-  }),
-  withDispatch(dispatch => {
-    const { editPost, savePost } = dispatch('core/editor');
-    return {
-      onStatusChange: status => editPost({ status }),
-      onSave: savePost,
-    };
-  }),
+			// GUTENBERG JS
+			canPublish,
+		};
+	} ),
+	withDispatch( ( dispatch ) => {
+		const { editPost, savePost } = dispatch( 'core/editor' );
+		return {
+			onStatusChange: ( status ) => editPost( { status } ),
+			onSave: savePost,
+		};
+	} ),
 
-  // GUTENBERG JS
-  // added the ifCondition to enable/disable
-  // the publish button according 'canPublish' setting
-  ifCondition(({ canPublish }) => canPublish),
-])(PostPublishButton);
+	// GUTENBERG JS
+	// added the ifCondition to enable/disable
+	// the publish button according 'canPublish' setting
+	ifCondition( ( { canPublish } ) => canPublish ),
+] )( PostPublishButton );
