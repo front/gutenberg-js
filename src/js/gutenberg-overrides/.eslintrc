@@ -2,5 +2,8 @@
 	"extends": [
 		"plugin:@wordpress/eslint-plugin/recommended",
 		"plugin:jest/recommended"
-	]
+	],
+	"rules": {
+		"prefer-rest-params": "off"
+	}
 }

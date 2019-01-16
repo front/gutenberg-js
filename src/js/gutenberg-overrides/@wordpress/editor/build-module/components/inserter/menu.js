@@ -96,8 +96,8 @@ export const normalizeTerm = ( term ) => {
 };
 
 export class InserterMenu extends Component {
-	constructor( props ) {
-		super( props );
+	constructor() {
+		super( ...arguments );
 		this.state = {
 			childItems: [],
 			filterValue: '',
@@ -285,14 +285,14 @@ export class InserterMenu extends Component {
 					/>
 
 					{ !! suggestedItems.length &&
-					<PanelBody
-						title={ _x( 'Most Used', 'blocks' ) }
-						opened={ isPanelOpen( 'suggested' ) }
-						onToggle={ this.onTogglePanel( 'suggested' ) }
-						ref={ this.bindPanel( 'suggested' ) }
-					>
-						<BlockTypesList items={ suggestedItems } onSelect={ onSelect } onHover={ this.onHover } />
-					</PanelBody>
+						<PanelBody
+							title={ _x( 'Most Used', 'blocks' ) }
+							opened={ isPanelOpen( 'suggested' ) }
+							onToggle={ this.onTogglePanel( 'suggested' ) }
+							ref={ this.bindPanel( 'suggested' ) }
+						>
+							<BlockTypesList items={ suggestedItems } onSelect={ onSelect } onHover={ this.onHover } />
+						</PanelBody>
 					}
 
 					<InserterInlineElements filterValue={ filterValue } />
@@ -340,7 +340,7 @@ export class InserterMenu extends Component {
 				</div>
 
 				{ hoveredItem && isReusableBlock( hoveredItem ) &&
-				<BlockPreview name={ hoveredItem.name } attributes={ hoveredItem.initialAttributes } />
+					<BlockPreview name={ hoveredItem.name } attributes={ hoveredItem.initialAttributes } />
 				}
 			</div>
 		);
@@ -351,8 +351,6 @@ export class InserterMenu extends Component {
 export default compose(
 	withSelect( ( select, { rootClientId } ) => {
 		const {
-			getEditedPostAttribute,
-			getSelectedBlock,
 			getInserterItems,
 			getBlockName,
 		} = select( 'core/editor' );
@@ -363,14 +361,12 @@ export default compose(
 		const rootBlockName = getBlockName( rootClientId );
 
 		return {
-			selectedBlock: getSelectedBlock(),
 			rootChildBlocks: getChildBlockNames( rootBlockName ),
-			title: getEditedPostAttribute( 'title' ),
 			items: getInserterItems( rootClientId ),
 			rootClientId,
 		};
 	} ),
-	withDispatch( ( dispatch, ownProps ) => {
+	withDispatch( ( dispatch, ownProps, { select } ) => {
 		const {
 			__experimentalFetchReusableBlocks: fetchReusableBlocks,
 			showInsertionPoint,
@@ -386,9 +382,11 @@ export default compose(
 					replaceBlocks,
 					insertBlock,
 				} = dispatch( 'core/editor' );
-				const { selectedBlock, index, rootClientId } = ownProps;
+				const { getSelectedBlock } = select( 'core/editor' );
+				const { index, rootClientId } = ownProps;
 				const { name, initialAttributes } = item;
 
+				const selectedBlock = getSelectedBlock();
 				const insertedBlock = createBlock( name, initialAttributes );
 				if ( selectedBlock && isUnmodifiedDefaultBlock( selectedBlock ) ) {
 					replaceBlocks( selectedBlock.clientId, insertedBlock );
