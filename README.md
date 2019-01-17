@@ -6,7 +6,7 @@ We made [Gutenberg](https://github.com/Wordpress/gutenberg) editor a little more
 
 Gutenberg editor can **be easily included in your apps** with this [package](https://github.com/front/gutenberg-js).
 
-This package is based on [Gutenberg v4.4.0](https://github.com/WordPress/gutenberg/releases/tag/v4.4.0) and respective @wordpress packages versions.
+This package is based on [Gutenberg v4.8.0](https://github.com/WordPress/gutenberg/releases/tag/v4.8.0) and respective @wordpress packages versions.
 
 ## Table of contents
 
