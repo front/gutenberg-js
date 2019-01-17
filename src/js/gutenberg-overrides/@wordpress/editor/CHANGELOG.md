@@ -1,5 +1,11 @@
 # editor changelog
 
+## 4.0.0
+
+### Changed
+
+- Moved 'post-publish-panel' override from toggle.js to index.js. `PostPublishPanelToggle` has been deprecated and no longer exists.
+
 ## 3.0.0
 
 ### Removed
