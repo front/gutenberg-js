@@ -44,17 +44,19 @@ class MediaContainer extends Component {
 	}
 
 	render() {
-		const { images } = this.props;
+		const { media, allowedTypes } = this.props;
+
+		console.log({ media });
 
 		return (
 			<div className="media-library__popover__content">
-				{ images && images.map( ( img ) => {
-					const sourceUrl = get( img, 'media_details.sizes.thumbnail.source_url', img.source_url );
+				{ media && media.filter((item) => allowedTypes.includes(item.media_type) ).map( ( item ) => {
+					const sourceUrl = get( item, 'media_details.sizes.thumbnail.source_url', item.source_url );
 					return <button
-						key={ img.id }
+						key={ item.id }
 						className="media-library-thumbnail"
 						style={ { backgroundImage: `url(${ sourceUrl })` } }
-						onClick={ () => this.onImageClick( img ) }
+						onClick={ () => this.onImageClick( item ) }
 					></button>;
 				} ) }
 			</div>
@@ -62,8 +64,8 @@ class MediaContainer extends Component {
 	}
 }
 
-const MediaLibrary = withSelect( ( select ) => ( {
-	images: select( 'core' ).getMediaItems(),
+const MediaLibrary = withSelect( ( select, props ) => ( {
+	media: select( 'core' ).getMediaItems(),
 } ) )( MediaContainer );
 
 class MediaUpload extends Component {
