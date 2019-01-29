@@ -46,8 +46,6 @@ class MediaContainer extends Component {
 	render() {
 		const { media, allowedTypes } = this.props;
 
-		console.log({ media });
-
 		return (
 			<div className="media-library__popover__content">
 				{ media && media.filter((item) => allowedTypes.includes(item.media_type) ).map( ( item ) => {
@@ -64,7 +62,7 @@ class MediaContainer extends Component {
 	}
 }
 
-const MediaLibrary = withSelect( ( select, props ) => ( {
+const MediaLibrary = withSelect( ( select ) => ( {
 	media: select( 'core' ).getMediaItems(),
 } ) )( MediaContainer );
 
