@@ -48,7 +48,7 @@ class MediaContainer extends Component {
 
 		return (
 			<div className="media-library__popover__content">
-				{ media && media.filter((item) => allowedTypes.includes(item.media_type) ).map( ( item ) => {
+				{ media && media.filter( ( item ) => allowedTypes.includes( item.media_type ) ).map( ( item ) => {
 					const sourceUrl = get( item, 'media_details.sizes.thumbnail.source_url', item.source_url );
 					return <button
 						key={ item.id }
