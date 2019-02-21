@@ -44,16 +44,19 @@ class MediaContainer extends Component {
 	}
 
 	render() {
-		const { media, allowedTypes } = this.props;
-
+		const { media, allowedTypes = [] } = this.props;
+		const items = media && media.filter( ( item ) => ! allowedTypes.length || allowedTypes.includes( item.media_type ) );
 		return (
 			<div className="media-library__popover__content">
-				{ media && media.filter( ( item ) => allowedTypes.includes( item.media_type ) ).map( ( item ) => {
-					const sourceUrl = get( item, 'media_details.sizes.thumbnail.source_url', item.source_url );
+				{ items && items.map( ( item ) => {
+					const sourceUrl = get( item, 'media_details.sizes.thumbnail.source_url' ) ||
+						( item.media_type === 'image' && item.source_url );
+					const buttonStyle = sourceUrl ? { backgroundImage: `url(${ sourceUrl })` } : {};
+
 					return <button
 						key={ item.id }
 						className="media-library-thumbnail"
-						style={ { backgroundImage: `url(${ sourceUrl })` } }
+						style={ buttonStyle }
 						onClick={ () => this.onImageClick( item ) }
 					></button>;
 				} ) }
