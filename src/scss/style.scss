@@ -213,4 +213,9 @@
             }
         }
     }
+
+    .components-color-palette__item:focus:after {
+        top: -3px;
+        left: -3px;
+    }
 }
