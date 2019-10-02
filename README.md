@@ -1,3 +1,13 @@
+**DEPRECATED**
+
+On our 2 main projects that used to depend on gutenberg-js, we have moved away and started using the Gutenberg packages directly.
+
+Please check:
+
+* https://www.drupal.org/project/gutenberg
+* https://github.com/front/g-editor
+_____
+
 ![gutenberg-js](gutenberg_js_logo.svg?sanitize=true "gutenberg-js")
 
 # gutenberg-js
